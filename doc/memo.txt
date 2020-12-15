@@ -1,0 +1,10 @@
+
+---- mysql ----
+
+- create new user
+  CREATE USER 'vmer'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Surachai!1234';
+  GRANT ALL ON vmer.* TO 'vmer'@'localhost';
+  UPDATE mysql.user SET Host='%' WHERE User='vmer'; FLUSH PRIVILEGES;
+  
+  ALTER USER 'vmer'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Surachai!1234';
+
