@@ -94,10 +94,22 @@ function init_web(){
           cb( null, fname);
         }
       })
-    }).single('photo'), function (req, res) {
-    res.send(req.files)
-    console.log('upload : '+ simpleStringify(req));
-  });
+    }).single('photo'),
+    (req, res) => {
+      console.log('simpleStringify(req) : '+ simpleStringify(req));
+      console.log('req.files : '+ req.files);
+      console.log('req.file.filename : '+ req.file.filename);
+      console.log('req.photo : '+ req.photo);
+      console.log('req.fname : '+ req.fname);
+      console.log('req.detail : '+ req.detail);
+      console.log('req.fimage : '+ req.fimage);
+      var data = { fname:req.body.fname, detail:req.body.detail, image:req.file.filename};
+      console.log('data: ' + simpleStringify(data));
+      console.log(req.body.fname);
+      console.log(req.body.detail);
+      process_api( req, res, 'upload', data );
+    }
+  );
 
   app.get('/',function(req,res){
     res.redirect('/index.html');
