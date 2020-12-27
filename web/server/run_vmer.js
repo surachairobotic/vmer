@@ -12,7 +12,7 @@ var PATH = require('path');
 var static_path = PATH.resolve( '../static' );
 var db = require('./db_mysql');
 var formidable = require('formidable');
-//var multer = require('multer')
+var multer = require('multer')
 var fs = require('fs')
 
 /*
@@ -22,10 +22,12 @@ var storage = multer.diskStorage(
         filename: function ( req, file, cb ) {
             //req.body is empty...
             //How could I get the new_file_name property sent from client here?
-            cb( null, file.originalname+ '-' + Date.now());
+            var fname = file.originalname+ '-' + Date.now();
+            console.log('multer.diskStorage');
+            console.log(file);
+            cb( null, fname);
         }
-    }
-);
+    });
 */
 
 var server = http.createServer(function (req, res) {
@@ -76,8 +78,25 @@ function init_web(){
     process_api( req, res, req.params.api, data );
   });
 
-  app.post('/api/:api', function(req,res,next){
+  app.post('/api/:api'/*, multer({ storage: storage }).single('photo')*/, function(req,res,next){
     process_api( req, res, req.params.api, req.body );
+  });
+
+  app.post(
+    '/upload', 
+    multer({
+      storage: multer.diskStorage({
+        destination: './uploads/',
+        filename: function ( req, file, cb ) {
+          var fname = file.originalname+ '-' + Date.now();
+          console.log('multer.diskStorage');
+          console.log(file);
+          cb( null, fname);
+        }
+      })
+    }).single('photo'), function (req, res) {
+    res.send(req.files)
+    console.log('upload : '+ simpleStringify(req));
   });
 
   app.get('/',function(req,res){
@@ -87,12 +106,6 @@ function init_web(){
     process_page(req, res);
   });
   
-  /*
-  app.post('/upload', function (req, res) {
-    res.send(req.files)
-    console.log('upload : '+ simpleStringify(req));
-  });
-  */
 }
 
 function simpleStringify (object){
@@ -159,7 +172,10 @@ function process_api( req, res, api_name, data ){
       });
     }
     else if( api_name=='upload' ){
-      return db.insert_machineType( conn, data.fname, data.detail, data.image )
+      var timeName = Date.now() + data.image;
+      console.log('upload : '+timeName);
+      //multer({ filename:timeName, dest:'./uploads/' }).single('photo');
+      return db.insert_machineType( conn, data.fname, data.detail, timeName )
       .then((ret)=>{
         res.send({
           result: 'success',

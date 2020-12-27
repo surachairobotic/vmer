@@ -77,7 +77,7 @@ $(function(){
       $('#p1').text(JSON.stringify(ret))
     });
   });
-
+  /*
   $("#uploadform").submit(function( event ) {
     alert( "Handler for .submit() called." );
     event.preventDefault();
@@ -88,4 +88,5 @@ $(function(){
       $('#p1').text(JSON.stringify(ret))
     });
   });
+  */
 });
