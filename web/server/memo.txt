@@ -1,0 +1,5 @@
+INSERT INTO machine_type(name, detail, image) value('ABC 01', 'Detail 01', 'abc01.jpg');
+return conn.query('INSERT INTO machine_type(name, detail, image) value(\'ABC 02\', \'Detail 02\', \'abc02.jpg\')');
+
+return conn.query('select * from machine_type');
+

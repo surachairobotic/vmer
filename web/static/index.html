@@ -19,6 +19,20 @@
     </select>
   </div>
   <div id="div_route"></div>
+  
+  <button type="button" onclick="alert('Hello world!')">Click Me!</button>
+  
+  <button id="btnDemo">Click me to change my text color.</button>
+  <p id="p1">This is some text in a paragraph.</p> 
+
+  <form id="uploadform" action="/upload" method="post" enctype="multipart/form-data">
+    <label for="fname">Machine type:</label><br>
+    <input type="text" id="fname" name="fname"><br>
+    <label for="fdetail">Detail:</label><br>
+    <input type="text" id="detail" name="detail">
+    <input type="file" id="fimage" name="photo">
+    <input type="submit" value="upload">
+  </form>
 
   <!-- Javascript -->
   <script src="/js/jquery-3.3.1.min.js"></script>
@@ -26,3 +40,5 @@
 </body>
 
 </html>
+
+

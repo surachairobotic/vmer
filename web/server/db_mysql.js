@@ -58,6 +58,7 @@ module.exports = {
   get_factory_list: get_factory_list,
   get_route_list: get_route_list,
   get_route: get_route,
+  insert_machineType: insert_machineType,
 };
 
 function get_factory_list( conn ){
@@ -90,5 +91,14 @@ function get_route( conn, route_id ){
   });
 }
 
+function show_databases( conn ){
+  return conn.query('show databases');
+};
 
-
+function insert_machineType( conn, _name, _detail, _image){
+  console.log( 'insert_machineType');
+  console.log( 'name : ',_name );
+  console.log( 'detail : ',_detail );
+  console.log( 'image : ',_image );
+  return conn.query('INSERT INTO machine_type(name, detail, image) value(?, ?, ?)', [_name, _detail, _image]);
+};

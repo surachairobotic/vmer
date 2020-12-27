@@ -11,6 +11,22 @@ const bodyParser = require('body-parser');
 var PATH = require('path');
 var static_path = PATH.resolve( '../static' );
 var db = require('./db_mysql');
+var formidable = require('formidable');
+//var multer = require('multer')
+var fs = require('fs')
+
+/*
+var storage = multer.diskStorage(
+    {
+        destination: './uploads/',
+        filename: function ( req, file, cb ) {
+            //req.body is empty...
+            //How could I get the new_file_name property sent from client here?
+            cb( null, file.originalname+ '-' + Date.now());
+        }
+    }
+);
+*/
 
 var server = http.createServer(function (req, res) {
   app(req,res);
@@ -18,9 +34,10 @@ var server = http.createServer(function (req, res) {
 
 function init(){
   return db.init()
-  .then(()=>{
+  .then( () => {
     return db.get_connection();
-  }).then((conn)=>{
+  })
+  .then((conn)=>{
     init_web();
     server.on('error', function (e) {
       // Handle your error here
@@ -41,6 +58,7 @@ function init_web(){
       extended: true
   }));
   app.use(bodyParser.json());
+  //app.use(multer({ storage: storage }).single('photo'));
 
   app.get('/api/:api', function(req,res){
     var data;
@@ -68,8 +86,31 @@ function init_web(){
   app.get('/:page',function(req,res){
     process_page(req, res);
   });
+  
+  /*
+  app.post('/upload', function (req, res) {
+    res.send(req.files)
+    console.log('upload : '+ simpleStringify(req));
+  });
+  */
 }
 
+function simpleStringify (object){
+    var simpleObject = {};
+    for (var prop in object ){
+        if (!object.hasOwnProperty(prop)){
+            continue;
+        }
+        if (typeof(object[prop]) == 'object'){
+            continue;
+        }
+        if (typeof(object[prop]) == 'function'){
+            continue;
+        }
+        simpleObject[prop] = object[prop];
+    }
+    return JSON.stringify(simpleObject); // returns cleaned up JSON
+};
 
 // send error message back to client if error with API
 function api_error(req, res, err){
@@ -117,6 +158,15 @@ function process_api( req, res, api_name, data ){
         });
       });
     }
+    else if( api_name=='upload' ){
+      return db.insert_machineType( conn, data.fname, data.detail, data.image )
+      .then((ret)=>{
+        res.send({
+          result: 'success',
+          route: ret
+        });
+      });
+    }
     else{
       api_error(req, res, 'invalid api : '+api_name);
     }
@@ -149,3 +199,5 @@ if (require.main === module) {
   init();
   console.log('running on port : '+PORT);
 }
+
+

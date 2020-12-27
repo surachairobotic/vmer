@@ -35,6 +35,12 @@ function myapi( api_name, data, callback ){
   });
 }
 
+function myFunction() {
+  document.getElementById("demo").style.color = "red";
+  console.error('test : Click me to change my text color.');
+  
+}
+
 $(function(){
   myapi( 'get_factory_list', null, (ret)=>{
     var s = '<option value="" disabled="disabled" selected>- กรุณาเลือก -</option>';
@@ -63,6 +69,23 @@ $(function(){
         s+= '<p class="machine_name">Machine : '+escapeHtml(m.name)+'</p>';
       });
       $('#div_route').html( s );
+    });
+  });
+  
+  $('#btnDemo').click(function(){
+    myapi( 'get_factory_list', null, (ret)=>{
+      $('#p1').text(JSON.stringify(ret))
+    });
+  });
+
+  $("#uploadform").submit(function( event ) {
+    alert( "Handler for .submit() called." );
+    event.preventDefault();
+    console.log($('#fname').val());
+    console.log($('#detail').val());
+    console.log($('#fimage').val());
+    myapi( 'upload', {fname:$('#fname').val(), detail:$('#detail').val(), image:$('#fimage').val()}, (ret)=>{
+      $('#p1').text(JSON.stringify(ret))
     });
   });
 });
