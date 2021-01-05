@@ -41,6 +41,25 @@ function myFunction() {
   
 }
 
+$(document).ready(function () {
+   var element = $("#html-content-holder"); // global variable
+   var getCanvas; // global variable
+
+     html2canvas(element, {
+         onrendered: function (canvas) {
+            $("#previewImage").append(canvas);
+               getCanvas = canvas;
+            }
+         });
+
+     $("#btn-Convert-Html2Image").on('click', function () {
+       var imgageData = getCanvas.toDataURL("image/png");
+       // Now browser starts downloading it instead of just showing it
+       var newData = imgageData.replace(/^data:image\/png/, "data:application/octet-stream");
+       $("#btn-Convert-Html2Image").attr("download", "your_pic_name.png").attr("href", newData);
+       });
+     });
+
 $(function(){
   myapi( 'get_factory_list', null, (ret)=>{
     var s = '<option value="" disabled="disabled" selected>- กรุณาเลือก -</option>';
@@ -77,6 +96,26 @@ $(function(){
       $('#p1').text(JSON.stringify(ret))
     });
   });
+
+  $('#btnShowImg').click(function(){
+    $('#myImg').append('<img src=http://localhost:8080/22222.png-1609079041203>');
+    $('#myImg').append('<img src=http://localhost:8080/11111111111.png-1609079150408>');
+  });
+
+  $('#btnDelImg').click(function(){
+    $('#myImg').remove();
+  });
+
+  $('#btnQuery').click(function(){
+    myapi('get_image', null, (ret)=>{
+      $('#p1').text(JSON.stringify(ret))
+      ret.route.forEach((f)=>{
+        var s = '<img src=http://localhost:8080/' + escapeHtml(f.image) + '>';
+        $('#myImg').append(s);
+      });
+    });
+  });
+
   /*
   $("#uploadform").submit(function( event ) {
     alert( "Handler for .submit() called." );

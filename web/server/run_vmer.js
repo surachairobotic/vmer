@@ -61,6 +61,7 @@ function init_web(){
   }));
   app.use(bodyParser.json());
   //app.use(multer({ storage: storage }).single('photo'));
+  app.use(express.static('uploads'));
 
   app.get('/api/:api', function(req,res){
     var data;
@@ -184,10 +185,17 @@ function process_api( req, res, api_name, data ){
       });
     }
     else if( api_name=='upload' ){
-      var timeName = Date.now() + data.image;
-      console.log('upload : '+timeName);
-      //multer({ filename:timeName, dest:'./uploads/' }).single('photo');
-      return db.insert_machineType( conn, data.fname, data.detail, timeName )
+      return db.insert_machineType( conn, data.fname, data.detail, data.image )
+      .then((ret)=>{
+        res.send({
+          result: 'success',
+          route: ret
+        });
+      });
+    }
+    else if( api_name=='get_image' ){
+      console.log('get_image: ');
+      return db.get_imageMachineType( conn )
       .then((ret)=>{
         res.send({
           result: 'success',

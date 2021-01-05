@@ -58,7 +58,9 @@ module.exports = {
   get_factory_list: get_factory_list,
   get_route_list: get_route_list,
   get_route: get_route,
+  show_databases: show_databases,
   insert_machineType: insert_machineType,
+  get_imageMachineType: get_imageMachineType,
 };
 
 function get_factory_list( conn ){
@@ -93,6 +95,10 @@ function get_route( conn, route_id ){
 
 function show_databases( conn ){
   return conn.query('show databases');
+};
+
+function get_imageMachineType( conn ){
+  return conn.query('select image from machine_type');
 };
 
 function insert_machineType( conn, _name, _detail, _image){
