@@ -71,5 +71,3 @@ Thumbs.db
 *.dll
 *.exe
 
-desktop/vpower/build*/
-desktop/*/build*/

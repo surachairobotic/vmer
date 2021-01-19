@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(vpower LANGUAGES CXX)
-
-add_compile_options(-std=c++11 -g -O0)
+project(qtreewidget LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -26,40 +24,30 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED Sql)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED Sql)
-
-set(TS_FILES vpower_en_US.ts)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
-        cRoute.h
-        cDB.h
-        mainwindow.h
-        cDB.cpp
-        mainwindow.cpp
         main.cpp
+        mainwindow.cpp
+        mainwindow.h
         mainwindow.ui
-        ${TS_FILES}
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(vpower
+    qt_add_executable(qtreewidget
         ${PROJECT_SOURCES}
     )
-
-    qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()
     if(ANDROID)
-        add_library(vpower SHARED
+        add_library(qtreewidget SHARED
             ${PROJECT_SOURCES}
         )
     else()
-        add_executable(vpower
+        add_executable(qtreewidget
             ${PROJECT_SOURCES}
         )
     endif()
-
-    qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(vpower PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Sql)
+target_link_libraries(qtreewidget PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
