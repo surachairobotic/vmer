@@ -1,0 +1,39 @@
+Running C:\Qt\Tools\CMake_32\bin\cmake.exe -S C:/vmer/desktop/vmer_desktop -B C:/Users/Laylase/AppData/Local/Temp/QtCreator-kQGDqH/qtc-cmake-nfGIHtXf -GNinja "-DCMAKE_BUILD_TYPE:String=Debug" "-DQT_QMAKE_EXECUTABLE:STRING=C:/Qt/5.15.2/msvc2019_64/bin/qmake.exe" "-DCMAKE_PREFIX_PATH:STRING=C:/Qt/5.15.2/msvc2019_64" "-DCMAKE_C_COMPILER:STRING=C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.28.29333/bin/HostX64/x64/cl.exe" "-DCMAKE_CXX_COMPILER:STRING=C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.28.29333/bin/HostX86/x64/cl.exe" in C:\Users\Laylase\AppData\Local\Temp\QtCreator-kQGDqH\qtc-cmake-nfGIHtXf.
+-- The CXX compiler identification is MSVC 19.28.29336.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - failed
+-- Check for working CXX compiler: C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.28.29333/bin/HostX86/x64/cl.exe
+-- Check for working CXX compiler: C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.28.29333/bin/HostX86/x64/cl.exe - broken
+CMake Error at C:/Qt/Tools/CMake_32/share/cmake-3.19/Modules/CMakeTestCXXCompiler.cmake:59 (message):
+  The C++ compiler
+
+    "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.28.29333/bin/HostX86/x64/cl.exe"
+
+  is not able to compile a simple test program.
+
+  It fails with the following output:
+
+    Change Dir: C:/Users/Laylase/AppData/Local/Temp/QtCreator-kQGDqH/qtc-cmake-nfGIHtXf/CMakeFiles/CMakeTmp
+    
+    Run Build Command(s):C:/Qt/Tools/Ninja/ninja.exe cmTC_56535 && [1/2] Building CXX object CMakeFiles\cmTC_56535.dir\testCXXCompiler.cxx.obj
+    [2/2] Linking CXX executable cmTC_56535.exe
+    FAILED: cmTC_56535.exe 
+    cmd.exe /C "cd . && C:\Qt\Tools\CMake_32\bin\cmake.exe -E vs_link_exe --intdir=CMakeFiles\cmTC_56535.dir --rc=rc --mt=CMAKE_MT-NOTFOUND --manifests  -- C:\PROGRA~2\MICROS~3\2019\COMMUN~1\VC\Tools\MSVC\1428~1.293\bin\Hostx86\x64\link.exe /nologo CMakeFiles\cmTC_56535.dir\testCXXCompiler.cxx.obj  /out:cmTC_56535.exe /implib:cmTC_56535.lib /pdb:cmTC_56535.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+    RC Pass 1: command "rc /fo CMakeFiles\cmTC_56535.dir/manifest.res CMakeFiles\cmTC_56535.dir/manifest.rc" failed (exit code 0) with the following output:
+    The system cannot find the file specified
+    ninja: build stopped: subcommand failed.
+    
+    
+
+  
+
+  CMake will not be able to correctly generate this project.
+Call Stack (most recent call first):
+  CMakeLists.txt:3 (project)
+
+
+-- Configuring incomplete, errors occurred!
+See also "C:/Users/Laylase/AppData/Local/Temp/QtCreator-kQGDqH/qtc-cmake-nfGIHtXf/CMakeFiles/CMakeOutput.log".
+See also "C:/Users/Laylase/AppData/Local/Temp/QtCreator-kQGDqH/qtc-cmake-nfGIHtXf/CMakeFiles/CMakeError.log".
+CMake process exited with exit code 1.
+Elapsed time: 00:01.
