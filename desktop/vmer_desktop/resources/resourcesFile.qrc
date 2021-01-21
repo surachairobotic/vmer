@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>folder16.png</file>
+        <file>folder24.png</file>
+        <file>folder32.png</file>
+        <file>folder64.png</file>
+        <file>cow.png</file>
+    </qresource>
+</RCC>

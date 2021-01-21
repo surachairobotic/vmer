@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setFocus();
     btn1 = new QPushButton("OK");
 }
 
@@ -20,9 +21,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionNew_Project_triggered()
 {
+    cNewProject *w = new cNewProject(this);
+    //w->setFocus();
+    w->show();
+    /*
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                                  "C:/Users/Laylase/Documents/VmerProjects/",
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
     qDebug() << dir;
+    */
 }

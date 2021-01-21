@@ -1,13 +1,13 @@
 #ifndef CNEWPROJECT_H
 #define CNEWPROJECT_H
 
-#include <QMainWindow>
+#include <QWidget>
 
 namespace Ui {
 class cNewProject;
 }
 
-class cNewProject : public QMainWindow
+class cNewProject : public QWidget
 {
     Q_OBJECT
 
@@ -17,6 +17,7 @@ public:
 
 private:
     Ui::cNewProject *ui;
+    QWidget *myparent;
 };
 
 #endif // CNEWPROJECT_H

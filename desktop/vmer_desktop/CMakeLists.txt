@@ -40,6 +40,8 @@ set(PROJECT_SOURCES
         cNewProject.ui
 )
 
+qt5_add_resources(PROJECT_SOURCES resources/resourcesFile.qrc)
+
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(vmer_desktop
         ${PROJECT_SOURCES}
