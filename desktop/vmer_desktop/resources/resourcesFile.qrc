@@ -6,4 +6,7 @@
         <file>folder64.png</file>
         <file>cow.png</file>
     </qresource>
+    <qresource prefix="/db_scripts">
+        <file>vmer_sqlite_script.sql</file>
+    </qresource>
 </RCC>

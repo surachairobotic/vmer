@@ -6,7 +6,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
+    /*
     qDebug() << "A";
     cDB db;
     if (!db.init()) {
@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
     route.print();
 
     qDebug() << "D";
+    */
     MainWindow w;
     w.show();
     return a.exec();

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>cNewProject</class>
- <widget class="QWidget" name="cNewProject">
+ <class>cNewProjectDialog</class>
+ <widget class="QDialog" name="cNewProjectDialog">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>110</height>
+    <width>373</width>
+    <height>139</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +20,10 @@
    <iconset resource="resources/resourcesFile.qrc">
     <normaloff>:/icon/cow.png</normaloff>:/icon/cow.png</iconset>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
@@ -34,7 +40,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QLineEdit" name="lineEdit_fname"/>
      </item>
      <item>
       <widget class="QLabel" name="label_fpath">
@@ -52,7 +58,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QLineEdit" name="lineEdit_2"/>
+        <widget class="QLineEdit" name="lineEdit_fpath"/>
        </item>
        <item>
         <widget class="QPushButton" name="btnBrowse">
@@ -65,6 +71,10 @@
          <property name="text">
           <string/>
          </property>
+         <property name="icon">
+          <iconset resource="resources/resourcesFile.qrc">
+           <normaloff>:/icon/folder16.png</normaloff>:/icon/folder16.png</iconset>
+         </property>
          <property name="iconSize">
           <size>
            <width>16</width>
@@ -74,6 +84,16 @@
         </widget>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QDialogButtonBox" name="buttonBox">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="standardButtons">
+        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

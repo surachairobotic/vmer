@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -22,17 +25,42 @@
       </property>
       <widget class="QTabWidget" name="tabWidgetLeft">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="plants">
         <attribute name="title">
          <string>Plants</string>
         </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QTreeWidget" name="treeWidgetDB">
+           <attribute name="headerVisible">
+            <bool>false</bool>
+           </attribute>
+           <column>
+            <property name="text">
+             <string notr="true">1</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+        </layout>
        </widget>
        <widget class="QWidget" name="elements">
         <attribute name="title">
          <string>Elements</string>
         </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QTreeWidget" name="treeWidgetElement">
+           <column>
+            <property name="text">
+             <string notr="true">1</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
       <widget class="QTabWidget" name="tabWidgetRight">
@@ -69,8 +97,20 @@
     </property>
     <addaction name="actionNew_Project"/>
     <addaction name="actionOpen"/>
+    <addaction name="separator"/>
+    <addaction name="actionClose_Project"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuTEST">
+    <property name="title">
+     <string>TEST</string>
+    </property>
+    <addaction name="actionECHO_DATABASE"/>
+    <addaction name="actionQUERY_ALL_TABLES"/>
    </widget>
    <addaction name="menu_File"/>
+   <addaction name="menuTEST"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNew_Project">
@@ -81,6 +121,26 @@
   <action name="actionOpen">
    <property name="text">
     <string>Open Project</string>
+   </property>
+  </action>
+  <action name="actionECHO_DATABASE">
+   <property name="text">
+    <string>ECHO DATABASE</string>
+   </property>
+  </action>
+  <action name="actionClose_Project">
+   <property name="text">
+    <string>Close Project</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionQUERY_ALL_TABLES">
+   <property name="text">
+    <string>QUERY_ALL_TABLES</string>
    </property>
   </action>
  </widget>
