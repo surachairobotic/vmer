@@ -77,6 +77,7 @@ public:
     int id;
     QString name, desc;
     QList<cMachine*> machines;
+    QList<cElementInModel*> element_in_models;
 };
 
 class cMachine {
@@ -95,9 +96,9 @@ public:
         : id(_id), shop_id(_shop_id), name(_name), desc(_desc) {}
     void print() {
         qDebug() << "Route : " << name;
+        /*
         for (int i = 0; i < machines.size(); i++) {
             qDebug() << "  Machine : " << machines[i]->name;
-            /*
             for (int j = 0; j < machines[i].elements.size(); j++) {
                 qDebug() << "    Element : " << machines[i].elements[j].name;
                 for (int k = 0; k < machines[i].elements[j].points.size(); k++) {
@@ -105,12 +106,13 @@ public:
                         << "\n        " << machines[i].elements[j].points[k].config;
                 }
             }
-            */
         }
+        */
     }
     int id, shop_id;
     QString name, desc;
-    QList<cMachine*> machines;
+    QList<cMachineInRoute*> machine_in_routes;
+    QList<cPointInRoute*> point_in_routes;
 };
 
 class cElementInModel {
@@ -119,8 +121,6 @@ public:
         : id(_id), model_id(_model_id), element_id(_element_id), name(_name), desc(_desc) {}
     int id, model_id, element_id;
     QString name, desc;
-    QList<cElement*> elements;
-    QList<cModel*> models;
 };
 
 class cMachineInRoute {
@@ -129,7 +129,6 @@ public:
         : id(_id), route_id(_route_id), machine_id(_machine_id), desc(_desc) {}
     int id, route_id, machine_id;
     QString desc;
-    QList<cPointInRoute*> point_in_routes;
 };
 
 class cPointInRoute {

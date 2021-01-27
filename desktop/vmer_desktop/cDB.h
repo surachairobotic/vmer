@@ -39,6 +39,19 @@ public:
     void print_machine_in_route_table();
     void print_point_in_route_table();
 
+    bool link_db_table();
+    bool link_element_table();
+    bool link_point_table();
+    bool link_company_table();
+    bool link_plant_table();
+    bool link_shop_table();
+    bool link_route_table();
+    bool link_models_table();
+    bool link_machine_table();
+    bool link_element_in_model_table();
+    bool link_machine_in_route_table();
+    bool link_point_in_route_table();
+
     bool get_db_table(QList<cDBTable> *dbTable);
     bool get_shop(QList<cShop> *shop, int plant_id);
     bool get_company(QList<cCompany> *company, int db_id);

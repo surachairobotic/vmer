@@ -52,12 +52,24 @@
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <widget class="QTreeWidget" name="treeWidgetElement">
-           <column>
-            <property name="text">
-             <string notr="true">1</string>
-            </property>
-           </column>
+          <widget class="QSplitter" name="splitter_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <widget class="QTreeWidget" name="treeWidgetModel">
+            <column>
+             <property name="text">
+              <string notr="true">1</string>
+             </property>
+            </column>
+           </widget>
+           <widget class="QTreeWidget" name="treeWidgetElement">
+            <column>
+             <property name="text">
+              <string notr="true">1</string>
+             </property>
+            </column>
+           </widget>
           </widget>
          </item>
         </layout>
