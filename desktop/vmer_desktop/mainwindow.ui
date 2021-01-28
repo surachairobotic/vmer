@@ -27,7 +27,7 @@
        <property name="currentIndex">
         <number>1</number>
        </property>
-       <widget class="QWidget" name="plants">
+       <widget class="QWidget" name="widgetPlants">
         <attribute name="title">
          <string>Plants</string>
         </attribute>
@@ -46,7 +46,7 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="elements">
+       <widget class="QWidget" name="widgetElements">
         <attribute name="title">
          <string>Elements</string>
         </attribute>
@@ -57,6 +57,9 @@
             <enum>Qt::Vertical</enum>
            </property>
            <widget class="QTreeWidget" name="treeWidgetModel">
+            <property name="headerHidden">
+             <bool>true</bool>
+            </property>
             <column>
              <property name="text">
               <string notr="true">1</string>
@@ -64,6 +67,9 @@
             </column>
            </widget>
            <widget class="QTreeWidget" name="treeWidgetElement">
+            <property name="headerHidden">
+             <bool>true</bool>
+            </property>
             <column>
              <property name="text">
               <string notr="true">1</string>

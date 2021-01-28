@@ -57,8 +57,9 @@ public:
     bool get_company(QList<cCompany> *company, int db_id);
     bool get_plant(QList<cPlant> *plant, int company_id);
 
-private:
-    QSqlDatabase db;
+    bool get_element(QTreeWidgetItem *item, cElement *elm);
+    bool get_point(QTreeWidgetItem *item, cPoint *pnt);
+
     QList<cDBTable> dbTables;
     QList<cElement> elements;
     QList<cPoint> points;
@@ -71,4 +72,10 @@ private:
     QList<cElementInModel> element_in_models;
     QList<cMachineInRoute> machine_in_routes;
     QList<cPointInRoute> point_in_routes;
+
+protected slots:
+    void deletePoint(int id);
+
+private:
+    QSqlDatabase db;
 };

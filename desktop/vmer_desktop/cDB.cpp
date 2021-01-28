@@ -362,6 +362,9 @@ void cDB::print_db_table() {
         qDebug() << dbTables[i].id
                  << " | " << dbTables[i].name
                  << " | " << dbTables[i].desc;
+        qDebug() << "+++  *company  +++";
+        for(int j=0; j<dbTables[i].companies.size(); j++)
+            qDebug() << dbTables[i].companies[j]->name;
     }
 }
 void cDB::print_element_table() {
@@ -372,6 +375,23 @@ void cDB::print_element_table() {
                  << " | " << elements[i].name
                  << " | " << elements[i].image
                  << " | " << elements[i].desc;
+        qDebug() << "+++  *points  +++";
+        for(int j=0; j<elements[i].points.size(); j++)
+            qDebug() << elements[i].points[j]->name;
+        qDebug() << "+++  *point_in_routes  +++";
+        for(int j=0; j<elements[i].point_in_routes.size(); j++) {
+            int indx_route = elements[i].point_in_routes[j]->route_id;
+            int indx_machine = elements[i].point_in_routes[j]->machine_id;
+            int indx_point = elements[i].point_in_routes[j]->point_id;
+            qDebug() << "route:" << routes[indx_route-1].name
+                     << "|machine:" << machines[indx_machine-1].name
+                     << "|point:" << points[indx_point-1].name;
+        }
+        qDebug() << "+++  *element_in_models  +++";
+        for(int j=0; j<elements[i].element_in_models.size(); j++) {
+            int indx_model = elements[i].element_in_models[j]->model_id;
+            qDebug() << "model:" << models[indx_model-1].name;
+        }
     }
 }
 void cDB::print_point_table() {
@@ -493,6 +513,7 @@ bool cDB::link_element_table() {
         return false;
     for(int i=0; i<points.size(); i++) {
         int indx_id = points[i].element_id;
+        elements[indx_id-1].item.addChild(&points[i].item);
         elements[indx_id-1].points.push_back(&points[i]);
     }
     if(point_in_routes.size()<1)
@@ -598,4 +619,39 @@ bool cDB::link_machine_in_route_table() {
 }
 bool cDB::link_point_in_route_table() {
     return true;
+}
+
+bool cDB::get_element(QTreeWidgetItem *item, cElement *elm) {
+    for(int i=0; i<elements.size(); i++) {
+        qDebug() << elements[i].item.text(0) << "==" << item->text(0);
+        if(elements[i].item.text(0) == item->text(0)) {
+            qDebug() << elm->name;
+            //elm = &(elements[i]);
+            elm->image = elements[i].image;
+            elm->desc = elements[i].desc;
+            elm->name = elements[i].name;
+            elm->id = elements[i].id;
+            qDebug() << elm->name;
+            qDebug() << "return true;";
+            return true;
+        }
+    }
+    return false;
+}
+bool cDB::get_point(QTreeWidgetItem *item, cPoint *pnt) {
+    for(int i=0; i<points.size(); i++) {
+        qDebug() << points[i].item.text(0) << "==" << item->text(0);
+        if(points[i].item.text(0) == item->text(0)) {
+            qDebug() << pnt->name;
+            //pnt = &(points[i]);
+            pnt->config = points[i].config;
+            pnt->desc = points[i].desc;
+            pnt->name = points[i].name;
+            pnt->id = points[i].id;
+            qDebug() << pnt->name;
+            qDebug() << "return true;";
+            return true;
+        }
+    }
+    return false;
 }

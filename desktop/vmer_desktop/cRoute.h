@@ -1,6 +1,7 @@
 #pragma once
 #include <QtCore>
 #include <QList>
+#include <QTreeWidgetItem>
 
 class cDB;
 
@@ -15,23 +16,23 @@ class cMachineInRoute;
 
 class cPoint {
 public:
-    cPoint(const int _id, const int _element_id, const QString _name, const QString _config, const QString _desc)
-        : id(_id), element_id(_element_id), name(_name), config(_config), desc(_desc) {}
-    bool Update(const cDB *dbSql);
+    cPoint(const int _id, const int _element_id, const QString _name, const QString _config, const QString _desc);
+    ~cPoint();
     int id, element_id;
     QString name, config, desc;
     QList<cPointInRoute*> point_in_routes;
+    QTreeWidgetItem item;
 };
 
 class cElement {
 public:
-    cElement(const int _id, const QString _name, const QString _image, const QString _desc)
-        : id(_id), name(_name), image(_image), desc(_desc) {}
+    cElement(const int _id, const QString _name, const QString _image, const QString _desc);
     int id;
     QString name, image, desc;
     QList<cPoint*> points;
     QList<cPointInRoute*> point_in_routes;
     QList<cElementInModel*> element_in_models;
+    QTreeWidgetItem item;
 };
 
 class cDBTable {

@@ -31,6 +31,11 @@ private slots:
 
     void on_actionQUERY_ALL_TABLES_triggered();
 
+    void on_treeWidgetElement_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
+    void elementRightClickMenu(const QPoint &pos);
+    void deletePoint(QTreeWidgetItem *item);
+
 private:
     void cNewProjectDialogTerminate();
     bool displayDBTree();

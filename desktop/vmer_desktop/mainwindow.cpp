@@ -3,6 +3,8 @@
 #include "QFileDialog"
 #include "QDebug"
 #include "cDB.h"
+#include "QSize"
+#include "QTreeWidget"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -11,6 +13,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->actionClose_Project->setEnabled(false);
+    QSize size = this->size();
+    int width = size.width();
+    ui->splitter->setSizes(QList<int>({width/3, width/3*2}));
+    ui->treeWidgetElement->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->treeWidgetElement, &QTreeWidget::customContextMenuRequested, this, &MainWindow::elementRightClickMenu);
     this->setFocus();
 }
 
@@ -77,7 +84,7 @@ void MainWindow::on_actionECHO_DATABASE_triggered() {
         db->get_route(1, route);
         route.print();
         */
-        displayDBTree();
+        displayElementTree();
     }
 }
 
@@ -147,44 +154,12 @@ bool MainWindow::displayDBTree()
 
 bool MainWindow::displayElementTree()
 {
-    QList<cDBTable> *db_table = new QList<cDBTable>();
-    qDebug() << "1. db_table->size() : " << db_table->size();
-    if(!db->get_db_table(db_table))
-        return false;
-    qDebug() << "2. db_table->size() : " << db_table->size();
-
-    if(db_table->size() != 1)
-        return false;
-
-    QTreeWidgetItem *root = new QTreeWidgetItem(ui->treeWidgetDB);
-    root->setText(0, (*db_table)[0].name);
+    QTreeWidgetItem *root = new QTreeWidgetItem(ui->treeWidgetElement);
+    root->setText(0, "Elements");
     ui->treeWidgetDB->addTopLevelItem(root);
 
-    for(int i=0; i<db_table->size(); i++) {
-        QList<cCompany> *company = new QList<cCompany>();
-        if(!db->get_company(company, (*db_table)[i].id))
-            continue;
-        for(int j=0; j<company->size(); j++) {
-            QTreeWidgetItem *childCompany = new QTreeWidgetItem();
-            childCompany->setText(0, (*company)[j].name);
-            root->addChild(childCompany);
-            QList<cPlant> *plant = new QList<cPlant>();
-            if(!db->get_plant(plant, (*company)[j].id))
-                continue;
-            for(int k=0; k<plant->size(); k++) {
-                QTreeWidgetItem *childPlant = new QTreeWidgetItem();
-                childPlant->setText(0, (*plant)[k].name);
-                childCompany->addChild(childPlant);
-                QList<cShop> *shop = new QList<cShop>();
-                if(!db->get_shop(shop, (*plant)[j].id))
-                    continue;
-                for(int k=0; k<shop->size(); k++) {
-                    QTreeWidgetItem *childShop = new QTreeWidgetItem();
-                    childShop->setText(0, (*shop)[k].name);
-                    childPlant->addChild(childShop);
-                }
-            }
-        }
+    for(int i=0; i<db->elements.size(); i++) {
+        root->addChild(&db->elements[i].item);
     }
     return false;
 }
@@ -195,28 +170,90 @@ void MainWindow::on_actionQUERY_ALL_TABLES_triggered()
         qDebug() << "No Database.";
     else {
         qDebug() << "query_db_table : " << db->query_db_table();
-        db->print_db_table();
         qDebug() << "query_element_table : " << db->query_element_table();
-        db->print_element_table();
         qDebug() << "query_point_table : " << db->query_point_table();
-        db->print_point_table();
         qDebug() << "query_company_table : " << db->query_company_table();
-        db->print_company_table();
         qDebug() << "query_plant_table : " << db->query_plant_table();
-        db->print_plant_table();
         qDebug() << "query_shop_table : " << db->query_shop_table();
-        db->print_shop_table();
         qDebug() << "query_route_table : " << db->query_route_table();
-        db->print_route_table();
         qDebug() << "query_models_table : " << db->query_models_table();
-        db->print_models_table();
         qDebug() << "query_machine_table : " << db->query_machine_table();
-        db->print_machine_table();
         qDebug() << "query_element_in_model_table : " << db->query_element_in_model_table();
-        db->print_element_in_model_table();
         qDebug() << "query_machine_in_route_table : " << db->query_machine_in_route_table();
-        db->print_machine_in_route_table();
         qDebug() << "query_point_in_route_table : " << db->query_point_in_route_table();
+
+        db->link_company_table();
+        db->link_db_table();
+        db->link_element_table();
+        db->link_point_table();
+        db->link_company_table();
+        db->link_plant_table();
+        db->link_shop_table();
+        db->link_route_table();
+        db->link_models_table();
+        db->link_machine_table();
+        db->link_element_in_model_table();
+        db->link_machine_in_route_table();
+        db->link_point_in_route_table();
+
+        db->print_db_table();
+        db->print_element_table();
+        db->print_point_table();
+        db->print_company_table();
+        db->print_plant_table();
+        db->print_shop_table();
+        db->print_route_table();
+        db->print_models_table();
+        db->print_machine_table();
+        db->print_element_in_model_table();
+        db->print_machine_in_route_table();
         db->print_point_in_route_table();
     }
+}
+
+void MainWindow::on_treeWidgetElement_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+{
+    if(current->whatsThis(0).contains("Element")) {
+        cElement *elm = new cElement(0,"xName","xImage","xDesc");
+        if(db->get_element(current, elm)) {
+            qDebug() << "elm->name:" << elm->name;
+            QString txt = "NULL";
+            if(elm!=nullptr) {
+                txt = elm->name;
+            }
+            qDebug() << "current_element.name: " << txt;
+        }
+    }
+    else if(current->whatsThis(0).contains("Point")) {
+        cPoint *pnt = new cPoint(0,0,"xName","xConfig","xDesc");
+        if(db->get_point(current, pnt)) {
+            qDebug() << "pnt->name:" << pnt->name;
+            QString txt = "NULL";
+            if(pnt!=nullptr) {
+                txt = pnt->name;
+            }
+            qDebug() << "current_point.name: " << txt;
+        }
+    }
+}
+
+void MainWindow::elementRightClickMenu(const QPoint &pos)
+{
+    QTreeWidget *tree = ui->treeWidgetElement;
+    QTreeWidgetItem *nd = tree->itemAt(pos);
+
+    qDebug()<<pos<<nd->text(0);
+
+    QAction *deleteAct = new QAction("Delete", this);
+    deleteAct->setStatusTip("new sth");
+    connect(deleteAct, SIGNAL(triggered()), this, SLOT(deletePoint(nd)));
+
+    QMenu menu(this);
+    menu.addAction(deleteAct);
+
+    QPoint pt(pos);
+    menu.exec( tree->mapToGlobal(pt) );
+}
+void MainWindow::deletePoint(QTreeWidgetItem *item) {
+    qDebug() << item->text(0);
 }
