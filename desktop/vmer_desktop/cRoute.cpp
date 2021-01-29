@@ -6,6 +6,9 @@ cPoint::cPoint(const int _id, const int _element_id, const QString _name, const 
     item.setText(0, _name);
     item.setWhatsThis(0, "Point");
 }
+cPoint::~cPoint() {
+
+}
 
 cElement::cElement(const int _id, const QString _name, const QString _image, const QString _desc)
     : id(_id), name(_name), image(_image), desc(_desc)

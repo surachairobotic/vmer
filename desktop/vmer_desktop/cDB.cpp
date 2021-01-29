@@ -655,3 +655,8 @@ bool cDB::get_point(QTreeWidgetItem *item, cPoint *pnt) {
     }
     return false;
 }
+
+void cDB::deletePoint(int id) {
+    cPoint* delPnt = &points[id-1];
+    machines
+}
