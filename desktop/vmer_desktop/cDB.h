@@ -1,6 +1,7 @@
 #pragma once
 #include <QtCore>
 #include <QtSql/QSqlDatabase>
+#include <QDataWidgetMapper>
 #include "cRoute.h"
 
 class cDB {
@@ -72,6 +73,9 @@ public:
     QList<cElementInModel> element_in_models;
     QList<cMachineInRoute> machine_in_routes;
     QList<cPointInRoute> point_in_routes;
+
+    QDataWidgetMapper *mapper;
+    void testMapper();
 
 protected slots:
     void deletePoint(int id);

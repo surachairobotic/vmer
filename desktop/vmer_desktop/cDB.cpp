@@ -28,6 +28,13 @@ bool cDB::init(const char *db_file) {
 	return true;
 }
 
+void cDB::testMapper() {
+    mapper = new QDataWidgetMapper();
+    for(int i=0; i<points.size(); i++) {
+        mapper->addMapping(points[i].item->
+    }
+}
+
 bool cDB::load_script_file(const char *script_file) {
 	QFile file(script_file);
 	if (!file.open(QIODevice::ReadOnly)) {
