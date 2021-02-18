@@ -14,87 +14,98 @@ class cRoute;
 class cMachine;
 class cMachineInRoute;
 
+class cPoint;
+class cPointWidget : public QTreeWidgetItem {
+public:
+        cPoint *cParent;
+};
+
 class cPoint {
 public:
     cPoint(const int _id, const int _element_id, const QString _name, const QString _config, const QString _desc);
     ~cPoint();
+    void printInfo();
+    QTreeWidgetItem* get_widget();
     int id, element_id;
     QString name, config, desc;
     QList<cPointInRoute*> point_in_routes;
-    QTreeWidgetItem item;
+    cPointWidget *pntWdgt;
 };
 
+class cElement;
+class cElementWidget : public QTreeWidgetItem {
+public:
+        cElement *cParent;
+};
 class cElement {
 public:
     cElement(const int _id, const QString _name, const QString _image, const QString _desc);
+    bool pushBackPoint(cPoint* pnt);
+    void printInfo();
+    //override void clear();
+    QTreeWidgetItem* get_widget();
     int id;
     QString name, image, desc;
     QList<cPoint*> points;
     QList<cPointInRoute*> point_in_routes;
     QList<cElementInModel*> element_in_models;
-    QTreeWidgetItem item;
+    cElementWidget *elmWdgt;
 };
 
-class cDBTable {
+class cDBTable : public QTreeWidgetItem {
 public:
-    cDBTable(int _id, QString _name, QString _desc)
-        : id(_id), name(_name), desc(_desc) {;}
+    cDBTable(int _id, QString _name, QString _desc);
+    bool pushBackCompany(cCompany* comp);
     int id;
     QString name, desc;
     QList<cCompany*> companies;
 };
 
-class cCompany {
+class cCompany : public QTreeWidgetItem {
 public:
-    cCompany(int _id, int _db_id, QString _name, QString _desc)
-        : id(_id), db_id(_db_id), name(_name), desc(_desc) {;}
+    cCompany(int _id, int _db_id, QString _name, QString _desc);
+    bool pushBackPlant(cPlant* plnt);
     int id, db_id;
     QString name, desc;
     QList<cPlant*> plants;
 };
 
-class cPlant {
+/*
+class cCompany;
+class cCompanyWidget : public QTreeWidgetItem {
+    cCompany *company;
+}
+*/
+
+class cPlant : public QTreeWidgetItem {
 public:
-    cPlant(int _id, int _company_id, QString _name, QString _desc)
-        : id(_id), company_id(_company_id), name(_name), desc(_desc) {;}
+    cPlant(int _id, int _company_id, QString _name, QString _desc);
+    bool pushBackShop(cShop* shop);
     int id, company_id;
     QString name, desc;
     QList<cShop*> shops;
 };
 
-class cShop {
+class cShop : public QTreeWidgetItem {
 public:
-    cShop(int _id, int _plant_id, QString _name, QString _desc)
-        : id(_id), plant_id(_plant_id), name(_name), desc(_desc) {;}
+    cShop(int _id, int _plant_id, QString _name, QString _desc);
     int id, plant_id;
     QString name, desc;
     QList<cRoute*> routes;
 };
 
-class cModel {
+class cMachine : public QTreeWidgetItem {
 public:
-    cModel(const int _id, const QString _name, const QString _desc)
-        : id(_id), name(_name), desc(_desc) {}
-    int id;
-    QString name, desc;
-    QList<cMachine*> machines;
-    QList<cElementInModel*> element_in_models;
-};
-
-class cMachine {
-public:
-    cMachine(const int _id, const int _model_id, const QString _name, const QString _serial, const QString _desc)
-        : id(_id), model_id(_model_id), name(_name), serial_number(_serial), desc(_desc) {}
+    cMachine(const int _id, const int _model_id, const QString _name, const QString _serial, const QString _desc);
     int id, model_id;
     QString name, serial_number, desc;
     QList<cMachineInRoute*> machine_in_routes;
     QList<cPointInRoute*> point_in_routes;
 };
 
-class cRoute {
+class cRoute : public QTreeWidgetItem {
 public:
-    cRoute(const int _id, const int _shop_id, const QString _name, const QString _desc)
-        : id(_id), shop_id(_shop_id), name(_name), desc(_desc) {}
+    cRoute(const int _id, const int _shop_id, const QString _name, const QString _desc);
     void print() {
         qDebug() << "Route : " << name;
         /*

@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>715</width>
-    <height>482</height>
+    <width>1006</width>
+    <height>492</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -89,6 +89,11 @@
         <attribute name="title">
          <string>Informations</string>
         </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <layout class="QVBoxLayout" name="vLayoutElementInfo"/>
+         </item>
+        </layout>
        </widget>
        <widget class="QWidget" name="properties">
         <attribute name="title">
@@ -105,7 +110,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>715</width>
+     <width>1006</width>
      <height>21</height>
     </rect>
    </property>

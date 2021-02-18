@@ -33,18 +33,28 @@ private slots:
 
     void on_treeWidgetElement_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
+    void modelRightClickMenu(const QPoint &pos);
     void elementRightClickMenu(const QPoint &pos);
-    void deletePoint(QTreeWidgetItem *item);
 
 private:
     void cNewProjectDialogTerminate();
     bool displayDBTree();
     bool displayElementTree();
+    bool displayModelTree();
+    void updateDatabase();
+
+    bool newElement();
+    bool newPoint(int element_id);
+    void delPoint(QTreeWidgetItem *item);
+    void delElement(QTreeWidgetItem *item);
+
 
     Ui::MainWindow *ui;
     cNewProjectDialog *newprojDialog;
     cDB *db;
-    QString currProjName, currProjPath;
+    QString currProjName, currProjPath, currProjImage;
     bool hasDB;
+    QAction *newAct, *delAct;
+    QList<QTreeWidgetItem*> modelWdgt;
 };
 #endif // MAINWINDOW_H

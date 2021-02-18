@@ -3,6 +3,7 @@
 #include <QtSql/QSqlDatabase>
 #include <QDataWidgetMapper>
 #include "cRoute.h"
+#include "cModel.h"
 
 class cDB {
 public:
@@ -26,6 +27,7 @@ public:
     bool query_element_in_model_table();
     bool query_machine_in_route_table();
     bool query_point_in_route_table();
+    bool query_all();
 
     void print_db_table();
     void print_element_table();
@@ -52,6 +54,7 @@ public:
     bool link_element_in_model_table();
     bool link_machine_in_route_table();
     bool link_point_in_route_table();
+    bool link_all();
 
     bool get_db_table(QList<cDBTable> *dbTable);
     bool get_shop(QList<cShop> *shop, int plant_id);
@@ -60,6 +63,13 @@ public:
 
     bool get_element(QTreeWidgetItem *item, cElement *elm);
     bool get_point(QTreeWidgetItem *item, cPoint *pnt);
+    bool get_model(QList<QTreeWidgetItem*> *modelWdgt);
+    //bool get_db(QList<QTreeWidgetItem*> *modelWdgt);
+
+    bool insert(const cElement *ele);
+    bool insert(const cPoint *pnt);
+
+    bool clear();
 
     QList<cDBTable> dbTables;
     QList<cElement> elements;
@@ -74,11 +84,14 @@ public:
     QList<cMachineInRoute> machine_in_routes;
     QList<cPointInRoute> point_in_routes;
 
+    QList<cElementWidget> elementsWdgt;
+    QList<cPointWidget> pointsWdgt;
+    QList<cModelWidget*> modelWdgt;
+
     QDataWidgetMapper *mapper;
     void testMapper();
 
-protected slots:
-    void deletePoint(int id);
+    void deleteDB(QString table, int id);
 
 private:
     QSqlDatabase db;

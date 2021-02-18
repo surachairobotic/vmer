@@ -5,6 +5,7 @@
         <file>folder32.png</file>
         <file>folder64.png</file>
         <file>cow.png</file>
+        <file>plus512.png</file>
     </qresource>
     <qresource prefix="/db_scripts">
         <file>vmer_sqlite_script.sql</file>

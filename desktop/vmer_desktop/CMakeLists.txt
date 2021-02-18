@@ -32,13 +32,23 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        mainNewProj.cpp
+        mainTest.cpp
         cRoute.h
         cRoute.cpp
-        cDb.h
-        cDb.cpp
+        cDB.h
+        cDB.cpp
+        cDBQuery.cpp
+        cDBLink.cpp
+        cDBPrint.cpp
+        cModel.h
+        cModel.cpp
         cNewProjectDialog.h
         cNewProjectDialog.cpp
         cNewProjectDialog.ui
+        #cNewElement.h
+        #cNewElement.cpp
+        #cNewElement.ui
 )
 
 qt5_add_resources(PROJECT_SOURCES resources/resourcesFile.qrc)
