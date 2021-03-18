@@ -194,30 +194,56 @@ bool cDB::query_element_table() {
     QSqlQuery query(db);
     query.prepare("SELECT * FROM element");
     query.exec();
-    bool chk=false;
+    QList<int> indx;
+    for(int i=0; i<elements.size(); i++)
+        indx.push_back(i);
     while(query.next()) {
-        if(!chk)
-            elements.clear();
-        chk=true;
-        elements.push_back(cElement(query.value(0).toInt(), query.value(1).toString(),
-                                    query.value(2).toString(), query.value(3).toString()));
+        cElement data(query.value(0).toInt(), query.value(1).toString(),
+                      query.value(2).toString(), query.value(3).toString());
+        bool chk=false;
+        for(int i=0; indx.size(); i++) {
+            if(elements[indx[i]]==data) {
+                indx.removeAt(i);
+                chk=true;
+                break;
+            }
+        }
+        if(!chk) {
+            elements.push_back(data);
+        }
     }
-    return chk;
+    for(int i=indx.size()-1; i>=0; i--) {
+        elements.removeAt(indx[i]);
+    }
+    return false;
 }
 bool cDB::query_point_table() {
     QSqlQuery query(db);
     query.prepare("SELECT * FROM point");
     query.exec();
-    bool chk=false;
+    QList<int> indx;
+    for(int i=0; i<points.size(); i++)
+        indx.push_back(i);
     while(query.next()) {
-        if(!chk)
-            points.clear();
-        chk=true;
-        points.push_back(cPoint(query.value(0).toInt(), query.value(1).toInt(),
-                                query.value(2).toString(), query.value(3).toString(),
-                                query.value(4).toString()));
+        cPoint data(query.value(0).toInt(), query.value(1).toInt(),
+                     query.value(2).toString(), query.value(3).toString(),
+                     query.value(4).toString());
+        bool chk=false;
+        for(int i=0; indx.size(); i++) {
+            if(points[indx[i]]==data) {
+                indx.removeAt(i);
+                chk=true;
+                break;
+            }
+        }
+        if(!chk) {
+            points.push_back(data);
+        }
     }
-    return chk;
+    for(int i=indx.size()-1; i>=0; i--) {
+        points.removeAt(indx[i]);
+    }
+    return false;
 }
 bool cDB::query_company_table() {
     QSqlQuery query(db);

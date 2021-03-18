@@ -1,12 +1,24 @@
 #include "cModel.h"
+#include "cRoute.h"
 
 cModel::cModel(const int _id, const QString _name, const QString _desc)
     : id(_id), name(_name), desc(_desc)
 {
-    ;
+    mdlWdg = nullptr;
 }
 void cModel::printInfo() {
     qDebug() << id << ", " << name << ", " << desc;
+    for(int i=0; i<elements.size(); i++) {
+        qDebug() << ":: " << elements[i]->id << ", " << elements[i]->name;
+    }
+}
+void cModel::printInfo(QString msg) {
+    qDebug() << "msg: " << msg << ", " << id << ", " << name << ", " << desc;
+    qDebug() << "address of this: " << this;
+    for(int i=0; i<elements.size(); i++) {
+        qDebug() << "address :: " << elements[i];
+        qDebug() << ":: " << elements[i]->id << ", " << elements[i]->name;
+    }
 }
 QTreeWidgetItem* cModel::get_widget() {
     this->mdlWdg = new cModelWidget();
@@ -24,3 +36,4 @@ QTreeWidgetItem* cModel::get_widget() {
     */
     return static_cast<QTreeWidgetItem*>(this->mdlWdg);
 }
+

@@ -4,6 +4,10 @@
 #include <QMainWindow>
 #include "cNewProjectDialog.h"
 #include <cDB.h>
+#include <QPixmap>
+#include <QGraphicsView>
+#include <QTableWidget>
+#include <QHBoxLayout>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -33,8 +37,11 @@ private slots:
 
     void on_treeWidgetElement_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
+    void dbRightClickMenu(const QPoint &pos);
     void modelRightClickMenu(const QPoint &pos);
     void elementRightClickMenu(const QPoint &pos);
+
+    void on_treeWidgetModel_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
 private:
     void cNewProjectDialogTerminate();
@@ -43,10 +50,13 @@ private:
     bool displayModelTree();
     void updateDatabase();
 
+    bool newModel();
     bool newElement();
     bool newPoint(int element_id);
     void delPoint(QTreeWidgetItem *item);
     void delElement(QTreeWidgetItem *item);
+
+    void elementGraphics(const cElement *ele, bool del=true);
 
 
     Ui::MainWindow *ui;
@@ -55,6 +65,10 @@ private:
     QString currProjName, currProjPath, currProjImage;
     bool hasDB;
     QAction *newAct, *delAct;
-    QList<QTreeWidgetItem*> modelWdgt;
+    QList<QTreeWidgetItem*> modelWdgt, dbWdgt, eleWdgt;
+    QPixmap *img;
+    QHBoxLayout *hLayout;
+    QGraphicsView *gView;
+    QGraphicsScene *scene;
 };
 #endif // MAINWINDOW_H

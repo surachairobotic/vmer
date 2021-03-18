@@ -25,6 +25,7 @@ public:
     cPoint(const int _id, const int _element_id, const QString _name, const QString _config, const QString _desc);
     ~cPoint();
     void printInfo();
+    friend bool operator==(const cPoint& l, const cPoint& r);
     QTreeWidgetItem* get_widget();
     int id, element_id;
     QString name, config, desc;
@@ -43,6 +44,7 @@ public:
     bool pushBackPoint(cPoint* pnt);
     void printInfo();
     //override void clear();
+    friend bool operator==(const cElement& l, const cElement& r);
     QTreeWidgetItem* get_widget();
     int id;
     QString name, image, desc;
@@ -52,22 +54,36 @@ public:
     cElementWidget *elmWdgt;
 };
 
-class cDBTable : public QTreeWidgetItem {
+class cDBTable;
+class cDBTableWidget : public QTreeWidgetItem {
+public:
+        cDBTable *cParent;
+};
+class cDBTable {
 public:
     cDBTable(int _id, QString _name, QString _desc);
     bool pushBackCompany(cCompany* comp);
+    QTreeWidgetItem* get_widget();
     int id;
     QString name, desc;
     QList<cCompany*> companies;
+    cDBTableWidget *dbWdgt;
 };
 
-class cCompany : public QTreeWidgetItem {
+class cCompany;
+class cCompanyWidget : public QTreeWidgetItem {
+public:
+        cCompany *cParent;
+};
+class cCompany {
 public:
     cCompany(int _id, int _db_id, QString _name, QString _desc);
     bool pushBackPlant(cPlant* plnt);
+    QTreeWidgetItem* get_widget();
     int id, db_id;
     QString name, desc;
     QList<cPlant*> plants;
+    cCompanyWidget *comWdgt;
 };
 
 /*
@@ -77,21 +93,35 @@ class cCompanyWidget : public QTreeWidgetItem {
 }
 */
 
-class cPlant : public QTreeWidgetItem {
+class cPlant;
+class cPlantWidget : public QTreeWidgetItem {
+public:
+        cPlant *cParent;
+};
+class cPlant {
 public:
     cPlant(int _id, int _company_id, QString _name, QString _desc);
     bool pushBackShop(cShop* shop);
+    QTreeWidgetItem* get_widget();
     int id, company_id;
     QString name, desc;
     QList<cShop*> shops;
+    cPlantWidget *plntWdgt;
 };
 
-class cShop : public QTreeWidgetItem {
+class cShop;
+class cShopWidget : public QTreeWidgetItem {
+public:
+        cShop *cParent;
+};
+class cShop {
 public:
     cShop(int _id, int _plant_id, QString _name, QString _desc);
+    QTreeWidgetItem* get_widget();
     int id, plant_id;
     QString name, desc;
     QList<cRoute*> routes;
+    cShopWidget *shpWdgt;
 };
 
 class cMachine : public QTreeWidgetItem {

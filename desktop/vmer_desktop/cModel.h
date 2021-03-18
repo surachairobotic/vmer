@@ -9,12 +9,16 @@ class cElement;
 class cModel;
 class cModelWidget : public QTreeWidgetItem {
 public:
-        cModel *cParent;
+    cModelWidget() {
+        cParent = nullptr;
+    }
+    cModel *cParent;
 };
 class cModel {
 public:
     cModel(const int _id, const QString _name, const QString _desc);
     void printInfo();
+    void printInfo(QString msg);
     QTreeWidgetItem* get_widget();
     int id;
     QString name, desc;

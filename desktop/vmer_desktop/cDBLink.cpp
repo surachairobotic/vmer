@@ -14,6 +14,9 @@ bool cDB::link_db_table() {
     return true;
 }
 bool cDB::link_element_table() {
+    for(int j=0; j<elements.size(); j++) {
+        elements[j].points.clear();
+    }
     if(points.size()<1)
         return false;
     for(int i=0; i<points.size(); i++) {
@@ -138,8 +141,19 @@ bool cDB::link_models_table() {
                 break;
             }
         }
-        if(state==2)
+        if(state==2) {
             models[modelIndx].elements.push_back(&elements[elementIndx]);
+            qDebug() << "model.id: " << models[modelIndx].id << ", element.id: " << elements[elementIndx].id;
+            int s = models[modelIndx].elements.size()-1;
+            qDebug() << "models[modelIndx].elements[size-1]: " << models[modelIndx].elements[s] << "elements[elementIndx]: " << &elements[elementIndx];
+        }
+    }
+
+    //qDebug() << "link_print_info_model, " << models.size();
+    for(int i=0; i<models.size(); i++) {
+        //qDebug() << "[" << i << "]";
+        models[i].printInfo();
+        //qDebug() << "==" << i << "==";
     }
     return true;
 }

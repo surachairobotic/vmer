@@ -62,12 +62,22 @@ public:
     bool get_plant(QList<cPlant> *plant, int company_id);
 
     bool get_element(QTreeWidgetItem *item, cElement *elm);
+    bool get_element(QList<QTreeWidgetItem*> *eleWdgt);
     bool get_point(QTreeWidgetItem *item, cPoint *pnt);
     bool get_model(QList<QTreeWidgetItem*> *modelWdgt);
-    //bool get_db(QList<QTreeWidgetItem*> *modelWdgt);
+    bool get_db(QList<QTreeWidgetItem*> *dbWdgt);
 
     bool insert(const cElement *ele);
     bool insert(const cPoint *pnt);
+    bool insert_model(const int _id, const QString _name, const QString _desc);
+    bool insert_model(const int _id, const QString _name, const QString _desc, const QList<int> &_element_id);
+    bool insert_element_in_model(const int _id, const int _model_id, const int _element_id, const QString _name, const QString _desc);
+
+    bool delete_data(const QString _table, const int _id);
+    bool delete_point(const int _id);
+    bool delete_element(const int _id);
+    bool delete_element_in_model(const int _id);
+    bool delete_model(const int _id);
 
     bool clear();
 

@@ -34,6 +34,7 @@ set(PROJECT_SOURCES
         mainwindow.ui
         mainNewProj.cpp
         mainTest.cpp
+        mainDisplayTree.cpp
         cRoute.h
         cRoute.cpp
         cDB.h

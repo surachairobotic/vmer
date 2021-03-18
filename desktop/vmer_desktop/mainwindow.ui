@@ -25,11 +25,11 @@
       </property>
       <widget class="QTabWidget" name="tabWidgetLeft">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="widgetPlants">
         <attribute name="title">
-         <string>Plants</string>
+         <string>Company</string>
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
@@ -48,7 +48,7 @@
        </widget>
        <widget class="QWidget" name="widgetElements">
         <attribute name="title">
-         <string>Elements</string>
+         <string>Machines</string>
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
