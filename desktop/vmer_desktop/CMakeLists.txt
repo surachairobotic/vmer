@@ -35,6 +35,8 @@ set(PROJECT_SOURCES
         mainNewProj.cpp
         mainTest.cpp
         mainDisplayTree.cpp
+        mainNewElementWindow.cpp
+        mainNewModelWindow.cpp
         cRoute.h
         cRoute.cpp
         cDB.h
@@ -47,6 +49,15 @@ set(PROJECT_SOURCES
         cNewProjectDialog.h
         cNewProjectDialog.cpp
         cNewProjectDialog.ui
+        cNewElementWindow.h
+        cNewElementWindow.cpp
+        cNewElementWindow.ui
+        cNewModelWindow.h
+        cNewModelWindow.cpp
+        cNewModelWindow.ui
+        cNewShopWindow.h
+        cNewShopWindow.cpp
+        cNewShopWindow.ui
         #cNewElement.h
         #cNewElement.cpp
         #cNewElement.ui

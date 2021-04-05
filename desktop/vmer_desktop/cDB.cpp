@@ -86,11 +86,17 @@ bool cDB::insert(const cPoint *pnt) {
     QString desc = "NULL";
     if(pnt->desc != "")
         desc = pnt->desc;
-    QString msg = QString("INSERT INTO `point` VALUES (%1,%2,'%3','%4',%5)").arg(QString::number(pnt->id),
+
+    QString msg = QString("INSERT INTO point (\"element_id\",\"name\",\"config\",\"description\") VALUES (%1,%2,'%3',%4)").arg(
                                                                                QString::number(pnt->element_id),
                                                                                pnt->name,
                                                                                pnt->config,
                                                                                desc);
+//    QString msg = QString("INSERT INTO `point` VALUES (%1,%2,'%3','%4',%5)").arg(QString::number(pnt->id),
+//                                                                               QString::number(pnt->element_id),
+//                                                                               pnt->name,
+//                                                                               pnt->config,
+//                                                                               desc);
     qDebug().noquote() << msg;
     query.prepare(msg);
     query.exec();

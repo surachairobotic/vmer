@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "cNewProjectDialog.h"
+#include "cNewElementWindow.h"
+#include "cNewModelWindow.h"
 #include <cDB.h>
 #include <QPixmap>
 #include <QGraphicsView>
@@ -43,6 +45,9 @@ private slots:
 
     void on_treeWidgetModel_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
+    void on_actionNew_Element_Window_triggered();
+    void on_actionNew_Model_Window_triggered();
+
 private:
     void cNewProjectDialogTerminate();
     bool displayDBTree();
@@ -61,6 +66,8 @@ private:
 
     Ui::MainWindow *ui;
     cNewProjectDialog *newprojDialog;
+    cNewElementWindow *newEleWin;
+    cNewModelWindow *newMdlWin;
     cDB *db;
     QString currProjName, currProjPath, currProjImage;
     bool hasDB;

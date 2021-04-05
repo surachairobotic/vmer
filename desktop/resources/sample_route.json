@@ -1,0 +1,29 @@
+{
+	"routeName": "Monday",
+	"routeId": 2,
+	"dbName": "Database 01",
+	"dbId": 1,
+	"companyName": "MTEC",
+	"companyId": 4,
+	"plantName": "Pirot Plant",
+	"plantId": 1,
+	"machineList": [{
+		"machineName": "Motor 01",
+		"machineId": 1,
+		"serial_number": "ABC452",
+		"elementList": [{
+			"elementName": "element 01",
+			"elementId": 5,
+			"pointList": [{	
+				"pointName": "pnt01",
+				"pointId": 7,
+				"property": {"V": 1, "H": 1, "A": 0}
+			},
+			{
+				"pointName": "pnt02",
+				"pointId": 4,
+				"property": {"V": 1, "H": 1, "A": 0}
+			}]
+		}]
+	}]
+}

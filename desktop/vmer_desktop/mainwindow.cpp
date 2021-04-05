@@ -244,8 +244,9 @@ void MainWindow::elementRightClickMenu(const QPoint &pos)
         QAction *selected = menu.exec( tree->mapToGlobal(pt) );
         if (selected->text() == "New Element") {
             qDebug() << "selected" << selected->text();
-            newElement();
-            bUpdate=true;
+            //newElement();
+            //bUpdate=true;
+            on_actionNew_Element_Window_triggered();
         }
     }
     if(bUpdate)
@@ -344,8 +345,9 @@ void MainWindow::modelRightClickMenu(const QPoint &pos)
         QAction *selected = menu.exec( tree->mapToGlobal(pt) );
         if (selected->text() == "New Model") {
             qDebug() << "selected" << selected->text();
-            newModel();
-            bUpdate=true;
+            on_actionNew_Model_Window_triggered();
+            //newModel();
+            //bUpdate=true;
         }
     }
     if(bUpdate)
