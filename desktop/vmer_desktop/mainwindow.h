@@ -48,6 +48,10 @@ private slots:
     void on_actionNew_Element_Window_triggered();
     void on_actionNew_Model_Window_triggered();
 
+    void newElementMain(int x, int y, int z);
+
+    void on_actionSave_Project_triggered();
+
 private:
     void cNewProjectDialogTerminate();
     bool displayDBTree();
@@ -62,6 +66,8 @@ private:
     void delElement(QTreeWidgetItem *item);
 
     void elementGraphics(const cElement *ele, bool del=true);
+    bool rmDir(const QString &dirPath);
+    bool cpDir(const QString &srcPath, const QString &dstPath);
 
 
     Ui::MainWindow *ui;
@@ -69,7 +75,7 @@ private:
     cNewElementWindow *newEleWin;
     cNewModelWindow *newMdlWin;
     cDB *db;
-    QString currProjName, currProjPath, currProjImage;
+    QString currProjName, currProjPath, currProjImage, realProjName, realProjPath, realProjImage;
     bool hasDB;
     QAction *newAct, *delAct;
     QList<QTreeWidgetItem*> modelWdgt, dbWdgt, eleWdgt;

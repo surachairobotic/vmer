@@ -61,6 +61,7 @@ set(PROJECT_SOURCES
         #cNewElement.h
         #cNewElement.cpp
         #cNewElement.ui
+        cDirHandle.h
 )
 
 qt5_add_resources(PROJECT_SOURCES resources/resourcesFile.qrc)

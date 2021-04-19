@@ -15,40 +15,21 @@ public:
     explicit cNewElementWindow(QWidget *parent = nullptr);
     ~cNewElementWindow();
 
-
+Q_SIGNALS:
+    void newElementAccepted(int x, int y, int z);
+    //void setMainwindow(MainWindow *main);
 
 private slots:
     void on_btn_addPoint_clicked();
-
     void on_btn_addTemplate_clicked();
-
     void on_buttonBox_accepted();
-
     void on_btn_editImage_clicked();
 
 private:
+    void add_graphics_standard();
+
     Ui::cNewElementWindow *ui;
+    //MainWindow *main;
 };
 
 #endif // CNEWELEMENTWINDOW_H
-/*
-#include <QAbstractButton>
-
-public:
-    explicit cNewProjectDialog(QWidget *parent = nullptr);
-    ~cNewProjectDialog();
-
-signals:
-    void accepted(QString fname, QString fpath);
-    void rejected();
-
-private slots:
-    void on_btnBrowse_clicked();
-    void on_buttonBox_clicked(QAbstractButton *button);
-
-private:
-    Ui::cNewProjectDialog *ui;
-};
-
-#endif // CNEWPROJECTDIALOG_H
-*/

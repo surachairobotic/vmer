@@ -76,13 +76,21 @@ void MainWindow::on_actionOpen_triggered() {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Project"), path,
                                                     tr("Project Files (*.sqlite3)"));
     qDebug() << fileName;
-    currProjName = fileName.section('/', -2, -2);
-    currProjPath = fileName.section('/', 0, -2) + "/";
+    realProjName = fileName.section('/', -2, -2);
+    realProjPath = fileName.section('/', 0, -2) + "/";
+    realProjImage = (realProjPath+"images/");
+
+    currProjName = realProjName;
+    currProjPath = path + "vmer_tmp/" + currProjName + '/';
     currProjImage = (currProjPath+"images/");
 
     qDebug() << "currProjName : " << currProjName;
     qDebug() << "currProjPath : " << currProjPath;
     qDebug() << "currProjImage : " << currProjImage;
+
+    cpDir(realProjPath, currProjPath);
+
+    fileName = currProjPath + '/' + currProjName + ".sqlite3";
     openDB(&fileName, false);
     updateDatabase();
 
@@ -91,8 +99,55 @@ void MainWindow::on_actionOpen_triggered() {
     displayModelTree();
 }
 
+bool MainWindow::rmDir(const QString &dirPath)
+{
+    QDir dir(dirPath);
+    if (!dir.exists())
+        return true;
+    foreach(const QFileInfo &info, dir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot)) {
+        if (info.isDir()) {
+            if (!rmDir(info.filePath()))
+                return false;
+        } else {
+            if (!dir.remove(info.fileName()))
+                return false;
+        }
+    }
+    QDir parentDir(QFileInfo(dirPath).path());
+    return parentDir.rmdir(QFileInfo(dirPath).fileName());
+}
 
+bool MainWindow::cpDir(const QString &srcPath, const QString &dstPath)
+{
+    rmDir(dstPath);
+    QDir parentDstDir(QFileInfo(dstPath).path());
+    //QString strDstPath = QFileInfo(dstPath).fileName();
+    if (!parentDstDir.mkpath(dstPath))
+        return false;
 
+    QDir srcDir(srcPath);
+    foreach(const QFileInfo &info, srcDir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot)) {
+        QString srcItemPath = srcPath + "/" + info.fileName();
+        QString dstItemPath = dstPath + "/" + info.fileName();
+        int chk=0;
+        if (info.isDir()) {
+            if (!cpDir(srcItemPath, dstItemPath)) {
+                return false;
+            }
+            chk=1;
+        } else if (info.isFile()) {
+            if (!QFile::copy(srcItemPath, dstItemPath)) {
+                return false;
+            }
+            chk=2;
+        } else {
+            qDebug() << "Unhandled item" << info.filePath() << "in cpDir";
+            chk=3;
+        }
+        qDebug() << "chk = " << chk;
+    }
+    return true;
+}
 void MainWindow::on_treeWidgetElement_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
     if(hasDB) {
@@ -281,6 +336,10 @@ bool MainWindow::newElement() {
     displayElementTree();
     return false;
 }
+void MainWindow::newElementMain(int x, int y, int z) {
+    qDebug() << "X: " << x << ", Y: " << y << ", Z: " << z;
+}
+
 bool MainWindow::newPoint(int element_id) {
     int idP = 1;
     for(int i=0; i<db->points.size(); i++) {
@@ -441,4 +500,9 @@ void MainWindow::on_treeWidgetModel_currentItemChanged(QTreeWidgetItem *current,
             }
         }
     }
+}
+
+void MainWindow::on_actionSave_Project_triggered()
+{
+    cpDir(currProjPath, realProjPath);
 }

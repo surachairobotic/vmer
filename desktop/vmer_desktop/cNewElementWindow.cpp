@@ -8,6 +8,7 @@
 #include <QGraphicsScene>
 #include <QImage>
 #include <QPixmap>
+#include <QMessageBox>
 
 cNewElementWindow::cNewElementWindow(QWidget *parent) :
     QDialog(parent),
@@ -32,8 +33,13 @@ void cNewElementWindow::on_btn_addPoint_clicked()
     ui->tableWidget->setRowCount(row+1);
 }
 
-void cNewElementWindow::on_btn_addTemplate_clicked()
+void cNewElementWindow::on_btn_addTemplate_clicked() {
+
+}
+
+void cNewElementWindow::add_graphics_standard()
 {
+    /*
     QString hostname = QDir::home().dirName();
     QString path = "C:/Users/"+hostname+"/Documents/VmerProjects/";
     QString fileName = QFileDialog::getOpenFileName(this, tr("Select image file."), path,
@@ -45,11 +51,18 @@ void cNewElementWindow::on_btn_addTemplate_clicked()
     scene->addPixmap(*pm);
     ui->graphics_standard->setScene(scene);
     ui->graphics_standard->show();
+    */
 }
 
 void cNewElementWindow::on_buttonBox_accepted()
 {
-
+    if(ui->textEdit->toPlainText() == "") {
+        QMessageBox msgBox;
+        msgBox.setText("");
+        msgBox.exec();
+    }
+    else
+        emit newElementAccepted(5, 6, 7);
 }
 
 void cNewElementWindow::on_btn_editImage_clicked()
@@ -61,7 +74,7 @@ void cNewElementWindow::on_btn_editImage_clicked()
     qDebug() << fileName;
     QGraphicsScene *scene = new QGraphicsScene(this);
     QPixmap *pm = new QPixmap(fileName);
-    *pm = pm->scaled(ui->graphics_standard->width(), ui->graphics_standard->height(), Qt::KeepAspectRatio);
+    *pm = pm->scaled(ui->graphics_user->width(), ui->graphics_user->height(), Qt::KeepAspectRatio);
     scene->addPixmap(*pm);
     ui->graphics_user->setScene(scene);
     ui->graphics_user->show();
