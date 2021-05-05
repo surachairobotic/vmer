@@ -25,7 +25,7 @@
       </property>
       <widget class="QTabWidget" name="tabWidgetLeft">
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="widgetPlants">
         <attribute name="title">
@@ -76,6 +76,25 @@
              </property>
             </column>
            </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="widgetRoute">
+        <attribute name="title">
+         <string>Page</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <item>
+          <widget class="QTreeWidget" name="treeWidgetRoute">
+           <property name="headerHidden">
+            <bool>true</bool>
+           </property>
+           <column>
+            <property name="text">
+             <string notr="true">1</string>
+            </property>
+           </column>
           </widget>
          </item>
         </layout>

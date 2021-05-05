@@ -161,3 +161,14 @@ bool MainWindow::displayElementTree()
     hasDB = true;
     return false;
 }
+bool MainWindow::displayRouteTree()
+{
+    qDebug() << "displayRouteTree()";
+    hasDB = false;
+    ui->treeWidgetRoute->clear();
+    QTreeWidgetItem *root = new QTreeWidgetItem(ui->treeWidgetRoute);
+    root->setExpanded(true);
+    hasDB = true;
+
+    return true;
+}

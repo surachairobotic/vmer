@@ -57,6 +57,7 @@ private:
     bool displayDBTree();
     bool displayElementTree();
     bool displayModelTree();
+    bool displayRouteTree();
     void updateDatabase();
 
     bool newModel();
