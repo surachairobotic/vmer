@@ -132,8 +132,7 @@ bool MainWindow::displayModelTree()
     qDebug() << "------- end: displayModelTree() ------";
     return false;
 }
-bool MainWindow::displayElementTree()
-{
+bool MainWindow::displayElementTree() {
     qDebug() << "displayElementTree()";
     hasDB = false;
     ui->treeWidgetElement->clear();
@@ -161,8 +160,7 @@ bool MainWindow::displayElementTree()
     hasDB = true;
     return false;
 }
-bool MainWindow::displayRouteTree()
-{
+bool MainWindow::displayRouteTree() {
     qDebug() << "displayRouteTree()";
     hasDB = false;
     ui->treeWidgetRoute->clear();

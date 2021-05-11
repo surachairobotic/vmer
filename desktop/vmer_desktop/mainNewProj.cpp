@@ -18,18 +18,27 @@ void MainWindow::newprojDialog_accepted(const QString fname, const QString fpath
     qDebug() << fpath;
     //currProjName = new QString(fname);
     //currProjPath = new QString(fpath);
-    currProjName = fname;
-    currProjPath = fpath;
-    currProjImage = (fpath+"images/");
-    QDir *pathDir = new QDir(currProjPath);
+    realProjName = fname;
+    realProjPath = fpath;
+    realProjImage = (fpath+"images/");
+    QDir *pathDir = new QDir(realProjPath);
     if(!pathDir->exists())
-        pathDir->mkpath(currProjPath);
-    pathDir = new QDir(currProjImage);
+        pathDir->mkpath(realProjPath);
+    pathDir = new QDir(realProjImage);
     if(!pathDir->exists())
-        pathDir->mkpath(currProjImage);
+        pathDir->mkpath(realProjImage);
+
+    //qDebug() << realProjName;
+    //qDebug() << realProjPath.section('/', 0, -3)+'/';
+    //qDebug() << realProjImage;
+    openDB(&realProjName, &realProjPath, true);
+    openProject(realProjName,
+                realProjPath,
+                true);
+    //openDB(&currProjName, &currProjPath, true);
 
     cNewProjectDialogTerminate();
-    openDB(&currProjName, &currProjPath, true);
+    //openDB(&currProjName, &currProjPath, true);
 }
 void MainWindow::newprojDialog_rejected() {
     qDebug() << "MainWindow::cNewProjectDialog_rejected";

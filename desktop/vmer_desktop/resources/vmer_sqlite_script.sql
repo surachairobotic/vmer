@@ -6,14 +6,15 @@ DROP TABLE IF EXISTS `element`;
 CREATE TABLE `element` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `name` varchar(64) NOT NULL,
+  `std_image` varchar(64) NOT NULL,
   `image` varchar(64) NOT NULL,
   `description` text
 );
 
-INSERT INTO `element` VALUES (1,'Machine Element 01','ele01.jpg',NULL)
-  ,(2,'Machine Element 02','ele02.jpg',NULL);
-
--- --------------------------------------------------------
+INSERT INTO `element` VALUES (1,'Machine Element 01','std_num_1.jpg','ele01.jpg',NULL)
+  ,(2,'Machine Element 02','std_num_2.jpg','ele02.jpg',NULL)
+  ,(3,'Machine Element 03','std_num_3.png','ele03.jpg',NULL)
+  ,(4,'Machine Element 04','std_num_4.jpg','ele02.jpg',NULL);
 
 -- Measuring points --
 DROP TABLE IF EXISTS `point`;

@@ -19,63 +19,66 @@ cNewElementWindow::cNewElementWindow(QWidget *parent) :
     ui->tableWidget->setColumnCount(1);
     ui->tableWidget->horizontalHeader()->hide();
     ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
+
+    eleName = stdImg = userImg = "";
+
+    //connect(ui->btn_stdImage, SIGNAL(clicked()), SLOT(on_btn_stdImage_clicked()));
+    //connect(ui->btn_userImage, SIGNAL(clicked()), SLOT(on_btn_userImage_clicked()));
+    //connect(ui->btn_addPoint, SIGNAL(clicked()), SLOT(on_btn_addPoint_clicked()));
 }
 
-cNewElementWindow::~cNewElementWindow()
-{
+cNewElementWindow::~cNewElementWindow() {
     delete ui;
 }
 
-void cNewElementWindow::on_btn_addPoint_clicked()
-{
+void cNewElementWindow::on_btn_addPoint_clicked() {
     //QTableWidgetItem *itm = new QTableWidgetItem();
     int row = ui->tableWidget->rowCount();
     ui->tableWidget->setRowCount(row+1);
 }
 
-void cNewElementWindow::on_btn_addTemplate_clicked() {
-
+void cNewElementWindow::on_btn_stdImage_clicked() {
+    stdImg = img_browse(currProjImage+"standard_elements/", ui->graphics_standard);
 }
 
-void cNewElementWindow::add_graphics_standard()
-{
-    /*
-    QString hostname = QDir::home().dirName();
-    QString path = "C:/Users/"+hostname+"/Documents/VmerProjects/";
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Select image file."), path,
-                                                    tr("Image Files (*.png *.jpg *.jpeg)"));
-    qDebug() << fileName;
+void cNewElementWindow::add_graphics(QString fname, QGraphicsView *gView) {
     QGraphicsScene *scene = new QGraphicsScene(this);
-    QPixmap *pm = new QPixmap(fileName);
-    *pm = pm->scaled(ui->graphics_standard->width(), ui->graphics_standard->height(), Qt::KeepAspectRatio);
+    QPixmap *pm = new QPixmap(fname);
+    *pm = pm->scaled(gView->width(), gView->height(), Qt::KeepAspectRatio);
     scene->addPixmap(*pm);
-    ui->graphics_standard->setScene(scene);
-    ui->graphics_standard->show();
-    */
+    gView->setScene(scene);
+    gView->show();
 }
 
-void cNewElementWindow::on_buttonBox_accepted()
-{
-    if(ui->textEdit->toPlainText() == "") {
+void cNewElementWindow::on_buttonBox_accepted() {
+    eleName = ui->textEdit->toPlainText();
+    if(eleName == "" || (stdImg == "" && userImg == "")) {
         QMessageBox msgBox;
-        msgBox.setText("");
+        msgBox.setText("Error !");
         msgBox.exec();
     }
-    else
-        emit newElementAccepted(5, 6, 7);
+    else {
+        int row = ui->tableWidget->rowCount();
+        for(int i=0; i<row; i++) {
+            QTableWidgetItem *itm = ui->tableWidget->takeItem(i, 0);
+            QString name="";
+            if(itm) {
+                name = itm->text();
+                if(name != "")
+                    pntName.push_back(name);
+            }
+        }
+        emit newElementAccepted(eleName, stdImg, userImg, pntName);
+    }
 }
 
-void cNewElementWindow::on_btn_editImage_clicked()
-{
-    QString hostname = QDir::home().dirName();
-    QString path = "C:/Users/"+hostname+"/Documents/VmerProjects/";
+void cNewElementWindow::on_btn_userImage_clicked() {
+    userImg = img_browse(currProjImage+"user_elements/", ui->graphics_user);
+}
+
+QString cNewElementWindow::img_browse(QString path, QGraphicsView *gView) {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Select image file."), path,
                                                     tr("Image Files (*.png *.jpg *.jpeg)"));
-    qDebug() << fileName;
-    QGraphicsScene *scene = new QGraphicsScene(this);
-    QPixmap *pm = new QPixmap(fileName);
-    *pm = pm->scaled(ui->graphics_user->width(), ui->graphics_user->height(), Qt::KeepAspectRatio);
-    scene->addPixmap(*pm);
-    ui->graphics_user->setScene(scene);
-    ui->graphics_user->show();
+    add_graphics(fileName, gView);
+    return fileName;
 }

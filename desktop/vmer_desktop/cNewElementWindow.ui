@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>590</width>
-    <height>534</height>
+    <height>688</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>470</y>
+     <y>600</y>
      <width>531</width>
      <height>59</height>
     </rect>
@@ -62,7 +62,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="btn_addTemplate">
+  <widget class="QPushButton" name="btn_stdImage">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -80,11 +80,11 @@
     <string>Add standard template</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btn_editImage">
+  <widget class="QPushButton" name="btn_userImage">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>410</y>
+     <x>310</x>
+     <y>440</y>
      <width>261</width>
      <height>51</height>
     </rect>
@@ -126,11 +126,21 @@
     </rect>
    </property>
   </widget>
-  <widget class="QGraphicsView" name="graphics_user">
+  <widget class="QGraphicsView" name="graphics_standard">
    <property name="geometry">
     <rect>
      <x>20</x>
      <y>80</y>
+     <width>261</width>
+     <height>261</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QGraphicsView" name="graphics_user">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>420</y>
      <width>261</width>
      <height>261</height>
     </rect>

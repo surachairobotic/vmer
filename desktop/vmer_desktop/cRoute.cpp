@@ -24,8 +24,8 @@ bool operator==(const cPoint& l, const cPoint& r) {
     return true;
 }
 
-cElement::cElement(const int _id, const QString _name, const QString _image, const QString _desc)
-    : id(_id), name(_name), image(_image), desc(_desc)
+cElement::cElement(const int _id, const QString _name, const QString _std_image, const QString _image, const QString _desc)
+    : id(_id), name(_name), std_image(_std_image), image(_image), desc(_desc)
 {
     ;
 }

@@ -199,7 +199,8 @@ bool cDB::query_element_table() {
         indx.push_back(i);
     while(query.next()) {
         cElement data(query.value(0).toInt(), query.value(1).toString(),
-                      query.value(2).toString(), query.value(3).toString());
+                      query.value(2).toString(), query.value(3).toString(),
+                      query.value(4).toString());
         bool chk=false;
         for(int i=0; indx.size(); i++) {
             if(elements[indx[i]]==data) {

@@ -48,7 +48,7 @@ private slots:
     void on_actionNew_Element_Window_triggered();
     void on_actionNew_Model_Window_triggered();
 
-    void newElementMain(int x, int y, int z);
+    void newElementMain(QString name, QString stdImg, QString userImg, QList<QString> pntNames);
 
     void on_actionSave_Project_triggered();
 
@@ -61,14 +61,16 @@ private:
     void updateDatabase();
 
     bool newModel();
-    bool newElement();
+    bool newElement(QString name, QString stdImg, QString userImg, QList<QString> pntName);
     bool newPoint(int element_id);
     void delPoint(QTreeWidgetItem *item);
     void delElement(QTreeWidgetItem *item);
 
     void elementGraphics(const cElement *ele, bool del=true);
+    QString getElementImagePath(const cElement *ele);
     bool rmDir(const QString &dirPath);
     bool cpDir(const QString &srcPath, const QString &dstPath);
+    void openProject(const QString &name, const QString &path, bool db=false);
 
 
     Ui::MainWindow *ui;

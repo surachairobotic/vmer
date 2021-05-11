@@ -18,10 +18,11 @@ void cDB::print_db_table() {
 }
 void cDB::print_element_table() {
     qDebug() << "----- element_table -----";
-    qDebug() << "id | name | image | description";
+    qDebug() << "id | name | std_image | image | description";
     for(int i=0; i<elements.size(); i++) {
         qDebug() << elements[i].id
                  << " | " << elements[i].name
+                 << " | " << elements[i].std_image
                  << " | " << elements[i].image
                  << " | " << elements[i].desc;
         qDebug() << "+++  *points  +++";

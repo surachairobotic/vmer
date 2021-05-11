@@ -48,9 +48,9 @@ void cNewProjectDialog::on_buttonBox_clicked(QAbstractButton *button) {
            ui->lineEdit_fpath->text() == "" ||
            !pathDir.exists() ||
            pathDir.exists(ui->lineEdit_fname->text())) {
-            QMessageBox::warning(this, tr("Warning !"),
-                                       tr("The file name or path is incorrect."),
-                                       QMessageBox::Ok);
+           QMessageBox::warning(this, tr("Warning !"),
+                                      tr("The file name or path is incorrect."),
+                                      QMessageBox::Ok);
         }
         else {
             emit accepted(ui->lineEdit_fname->text(), ui->lineEdit_fpath->text()+ui->lineEdit_fname->text()+'/');

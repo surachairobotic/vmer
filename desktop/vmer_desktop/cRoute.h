@@ -40,14 +40,14 @@ public:
 };
 class cElement {
 public:
-    cElement(const int _id, const QString _name, const QString _image, const QString _desc);
+    cElement(const int _id, const QString _name, const QString _std_image, const QString _image, const QString _desc);
     bool pushBackPoint(cPoint* pnt);
     void printInfo();
     //override void clear();
     friend bool operator==(const cElement& l, const cElement& r);
     QTreeWidgetItem* get_widget();
     int id;
-    QString name, image, desc;
+    QString name, std_image, image, desc;
     QList<cPoint*> points;
     QList<cPointInRoute*> point_in_routes;
     QList<cElementInModel*> element_in_models;

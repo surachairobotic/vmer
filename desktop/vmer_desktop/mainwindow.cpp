@@ -37,26 +37,27 @@ MainWindow::MainWindow(QWidget *parent)
     this->setFocus();
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
 }
 
 bool MainWindow::openDB(const QString *fname, const QString *fpath, const bool script) {
+    qDebug("openDB");
     QString *dbFile = new QString(*fpath+*fname+".sqlite3");
     return openDB(dbFile, script);
 }
 bool MainWindow::openDB(const QString *fname, const bool script) {
+    qDebug("openDB2");
     db = new cDB(*fname);
     hasDB = true;
     ui->actionClose_Project->setEnabled(true);
-    if(script) {
+    if(script)
         db->load_script_file(":/db_scripts/vmer_sqlite_script.sql");
-    }
     return true;
 }
 
 void MainWindow::on_actionClose_Project_triggered() {
+    qDebug("on_actionClose_Project_triggered");
     if(hasDB) {
         delete db;
         hasDB = false;
@@ -71,27 +72,41 @@ void MainWindow::on_actionClose_Project_triggered() {
 }
 
 void MainWindow::on_actionOpen_triggered() {
+    qDebug("on_actionOpen_triggered");
     QString hostname = QDir::home().dirName();
     QString path = "C:/Users/"+hostname+"/Documents/VmerProjects/";
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Project"), path,
                                                     tr("Project Files (*.sqlite3)"));
-    qDebug() << fileName;
-    realProjName = fileName.section('/', -2, -2);
-    realProjPath = fileName.section('/', 0, -2) + "/";
-    realProjImage = (realProjPath+"images/");
+    if(fileName != "") {
+        qDebug() << fileName;
+        realProjName = fileName.section('/', -2, -2);
+        realProjPath = fileName.section('/', 0, -2) + "/";
+        realProjImage = (realProjPath+"images/");
+        openProject(realProjName, realProjPath);
+    }
+    else
+        qDebug("cancel");
+}
 
-    currProjName = realProjName;
-    currProjPath = path + "vmer_tmp/" + currProjName + '/';
+void MainWindow::openProject(const QString &name, const QString &path, bool db) {
+    currProjName = name;
+    currProjPath = path.section('/',0,-3) + "/vmer_tmp/" + currProjName + '/';
     currProjImage = (currProjPath+"images/");
 
+    /*
     qDebug() << "currProjName : " << currProjName;
     qDebug() << "currProjPath : " << currProjPath;
     qDebug() << "currProjImage : " << currProjImage;
 
+    qDebug() << "realProjName : " << realProjName;
+    qDebug() << "realProjPath : " << realProjPath;
+    qDebug() << "realProjImage : " << realProjImage;
+    */
+
     cpDir(realProjPath, currProjPath);
 
-    fileName = currProjPath + '/' + currProjName + ".sqlite3";
-    openDB(&fileName, false);
+    QString fileName = currProjPath + '/' + currProjName + ".sqlite3";
+    openDB(&fileName, db);
     updateDatabase();
 
     displayDBTree();
@@ -99,8 +114,8 @@ void MainWindow::on_actionOpen_triggered() {
     displayModelTree();
 }
 
-bool MainWindow::rmDir(const QString &dirPath)
-{
+bool MainWindow::rmDir(const QString &dirPath) {
+    qDebug("rmDir");
     QDir dir(dirPath);
     if (!dir.exists())
         return true;
@@ -117,8 +132,8 @@ bool MainWindow::rmDir(const QString &dirPath)
     return parentDir.rmdir(QFileInfo(dirPath).fileName());
 }
 
-bool MainWindow::cpDir(const QString &srcPath, const QString &dstPath)
-{
+bool MainWindow::cpDir(const QString &srcPath, const QString &dstPath) {
+    qDebug("cpDir");
     rmDir(dstPath);
     QDir parentDstDir(QFileInfo(dstPath).path());
     //QString strDstPath = QFileInfo(dstPath).fileName();
@@ -148,8 +163,8 @@ bool MainWindow::cpDir(const QString &srcPath, const QString &dstPath)
     }
     return true;
 }
-void MainWindow::on_treeWidgetElement_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
-{
+void MainWindow::on_treeWidgetElement_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
+    qDebug("on_treeWidgetElement_currentItemChanged");
     if(hasDB) {
         if(current == nullptr)
             return ;
@@ -170,8 +185,9 @@ void MainWindow::on_treeWidgetElement_currentItemChanged(QTreeWidgetItem *curren
     }
 }
 void MainWindow::elementGraphics(const cElement *ele, bool del) {
-    QString imgName = ele->image;
-    img = new QPixmap(currProjImage+imgName);
+    qDebug("elementGraphics");
+    QString imgName = getElementImagePath(ele);
+    img = new QPixmap(imgName);
     hLayout = new QHBoxLayout();
     gView = new QGraphicsView();
     scene = new QGraphicsScene();
@@ -208,8 +224,8 @@ void MainWindow::elementGraphics(const cElement *ele, bool del) {
     ui->vLayoutElementInfo->addLayout(hLayout);
 }
 
-void MainWindow::elementRightClickMenu(const QPoint &pos)
-{
+void MainWindow::elementRightClickMenu(const QPoint &pos) {
+    qDebug("elementRightClickMenu");
     hasDB = false;
     QTreeWidget *tree = ui->treeWidgetElement;
     QTreeWidgetItem *item = tree->itemAt(pos);
@@ -278,7 +294,7 @@ void MainWindow::elementRightClickMenu(const QPoint &pos)
 
         QPoint pt(pos);
         QAction *selected = menu.exec( tree->mapToGlobal(pt) );
-        if (selected->text() == "Delete Point") {
+        if (selected && selected->text() == "Delete Point") {
             qDebug() << "selected : " << selected->text();
             cPointWidget* pntWdg = static_cast<cPointWidget*>(item);
             int pntId = pntWdg->cParent->id;
@@ -297,7 +313,7 @@ void MainWindow::elementRightClickMenu(const QPoint &pos)
 
         QPoint pt(pos);
         QAction *selected = menu.exec( tree->mapToGlobal(pt) );
-        if (selected->text() == "New Element") {
+        if (selected && selected->text() == "New Element") {
             qDebug() << "selected" << selected->text();
             //newElement();
             //bUpdate=true;
@@ -308,7 +324,8 @@ void MainWindow::elementRightClickMenu(const QPoint &pos)
         displayElementTree();
     hasDB = true;
 }
-bool MainWindow::newElement() {
+bool MainWindow::newElement(QString name, QString stdImg, QString userImg, QList<QString> pntNames) {
+    qDebug("newElement");
     int idE=1;
     for(int i=0; i<db->elements.size(); i++) {
         if(idE<=db->elements[i].id)
@@ -316,31 +333,75 @@ bool MainWindow::newElement() {
     }
     idE+=1;
     qDebug() << currProjImage;
-    QDir *pathDir = new QDir(currProjImage);
-    QStringList img_names = pathDir->entryList(QDir::Files);
-    int value = QRandomGenerator::global()->generate() % img_names.size();
-    cElement *ele = new cElement(idE, "element_"+QString::number(idE), img_names[value], "");
+    //QDir *pathDir = new QDir(currProjImage);
+    //QStringList img_names = pathDir->entryList(QDir::Files);
+    //int value = QRandomGenerator::global()->generate() % img_names.size();
+    //cElement *ele = new cElement(idE, "element_"+QString::number(idE), img_names[value], "");
+    cElement *ele = new cElement(idE, name, stdImg, userImg, "");
     db->insert(ele);
-    value = QRandomGenerator::global()->generate() % 7 + 1;
-    qDebug() << "Value : " << value;
+    //int value = QRandomGenerator::global()->generate() % 7 + 1;
+    //value = 0; // for Debug
+    //qDebug() << "Value : " << value;
     int idP = 1;
     for(int i=0; i<db->points.size(); i++) {
         if(idP<=db->points[i].id)
             idP=db->points[i].id;
     }
-    for(int num=1; num<value; num++) {
+    //for(int num=1; num<value; num++) {
+    for(int i=0; i<pntNames.size(); i++) {
         idP+=1;
-        cPoint *pnt = new cPoint(idP, idE, "point_"+QString::number(num), "{\"V\":1,\"H\":0}", "");
+        //cPoint *pnt = new cPoint(idP, idE, "point_"+QString::number(num), "{\"V\":1,\"H\":0}", "");
+        cPoint *pnt = new cPoint(idP, idE, pntNames[i], "{\"V\":1,\"H\":0}", "");
         db->insert(pnt);
     }
     displayElementTree();
     return false;
 }
-void MainWindow::newElementMain(int x, int y, int z) {
-    qDebug() << "X: " << x << ", Y: " << y << ", Z: " << z;
+void MainWindow::newElementMain(QString name, QString stdImg, QString userImg, QList<QString> pntNames) {
+    //qDebug() << currProjImage;
+    //qDebug() << stdImg.section('/',-2,-1);
+    //qDebug() << userImg.section('/',-2,-1);
+    if(stdImg != "") {
+        QString stdImgName = currProjImage+stdImg.section('/',-2,-1);
+        if( QFile::exists(stdImgName) ) {
+            QString newName;
+            int c=1;
+            do {
+                newName = stdImgName.section('.',0,-2) + '(' + QString::number(c) + ")." + stdImgName.section('.',-1);
+                qDebug() << "In Loop : " << newName;
+            } while( QFile::exists(newName) );
+            qDebug() << "Selected : " << newName;
+            QFile::copy(stdImg, newName);
+        }
+    }
+    if(userImg != "") {
+        QString usrImgName = currProjImage+userImg.section('/',-2,-1);
+        if( QFile::exists(usrImgName) ) {
+            QString newName;
+            int c=1;
+            do {
+                newName = usrImgName.section('.',0,-2) + '(' + QString::number(c) + ")." + usrImgName.section('.',-1);
+                qDebug() << "In Loop : " << newName;
+            } while( QFile::exists(newName) );
+            qDebug() << "Selected : " << newName;
+            QFile::copy(userImg, newName);
+        }
+    }
+    newElement(name, stdImg.section('/',-1), userImg.section('/',-1), pntNames);
+}
+QString MainWindow::getElementImagePath(const cElement *ele) {
+    QString res;
+    if(ele->image != "")
+        res = currProjPath + "images/user_elements/" + ele->image;
+    else
+        res = currProjPath + "images/standard_elements/" + ele->std_image;
+    qDebug() << res;
+    return res;
 }
 
+
 bool MainWindow::newPoint(int element_id) {
+    qDebug("newPoint");
     int idP = 1;
     for(int i=0; i<db->points.size(); i++) {
         if(idP<=db->points[i].id)
@@ -382,7 +443,7 @@ void MainWindow::modelRightClickMenu(const QPoint &pos)
 
         QPoint pt(pos);
         QAction *selected = menu.exec( tree->mapToGlobal(pt) );
-        if (selected->text() == "Delete Model") {
+        if (selected && selected->text() == "Delete Model") {
             qDebug() << "selected : " << selected->text();
             cModelWidget* pntWdg = static_cast<cModelWidget*>(item);
             //int pntId = pntWdg->cParent->id;
@@ -402,7 +463,7 @@ void MainWindow::modelRightClickMenu(const QPoint &pos)
 
         QPoint pt(pos);
         QAction *selected = menu.exec( tree->mapToGlobal(pt) );
-        if (selected->text() == "New Model") {
+        if (selected && selected->text() == "New Model") {
             qDebug() << "selected" << selected->text();
             on_actionNew_Model_Window_triggered();
             //newModel();
@@ -414,6 +475,7 @@ void MainWindow::modelRightClickMenu(const QPoint &pos)
     hasDB = true;
 }
 bool MainWindow::newModel() {
+    qDebug("newModel");
     int idM=1;
     for(int i=0; i<db->models.size(); i++) {
         if(idM <= db->models[i].id)
@@ -502,7 +564,8 @@ void MainWindow::on_treeWidgetModel_currentItemChanged(QTreeWidgetItem *current,
     }
 }
 
-void MainWindow::on_actionSave_Project_triggered()
-{
-    cpDir(currProjPath, realProjPath);
+void MainWindow::on_actionSave_Project_triggered() {
+    qDebug("newModel");
+    if(hasDB)
+        cpDir(currProjPath, realProjPath);
 }
