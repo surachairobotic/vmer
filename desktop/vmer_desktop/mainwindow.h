@@ -80,7 +80,7 @@ private:
     cDB *db;
     QString currProjName, currProjPath, currProjImage, realProjName, realProjPath, realProjImage;
     bool hasDB;
-    QAction *newAct, *delAct;
+    QAction *newAct, *delAct, *jsonAct;
     QList<QTreeWidgetItem*> modelWdgt, dbWdgt, eleWdgt;
     QPixmap *img;
     QHBoxLayout *hLayout;

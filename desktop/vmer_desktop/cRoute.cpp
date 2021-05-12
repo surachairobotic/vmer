@@ -1,4 +1,5 @@
 #include "cRoute.h"
+#include <QObject>
 
 cPoint::cPoint(const int _id, const int _element_id, const QString _name, const QString _config, const QString _desc)
     : id(_id), element_id(_element_id), name(_name), config(_config), desc(_desc)
@@ -16,6 +17,7 @@ QTreeWidgetItem* cPoint::get_widget() {
     this->pntWdgt->setText(0, name);
     this->pntWdgt->setWhatsThis(0, "Point");
     this->pntWdgt->cParent = this;
+    this->pntWdgt->setFlags(this->pntWdgt->flags() | Qt::ItemIsEditable);
     return static_cast<QTreeWidgetItem*>(this->pntWdgt);
 }
 bool operator==(const cPoint& l, const cPoint& r) {

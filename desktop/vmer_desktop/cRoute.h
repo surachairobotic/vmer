@@ -17,7 +17,13 @@ class cMachineInRoute;
 class cPoint;
 class cPointWidget : public QTreeWidgetItem {
 public:
-        cPoint *cParent;
+    cPointWidget() {
+        //QObject::connect(this, SIGNAL(itemChanged(QTreeWidgetItem*, int)),
+        //                 this, SLOT(name_change(QTreeWidgetItem*, int)));
+    }
+    cPoint *cParent;
+private slots:
+    void name_change(QTreeWidgetItem* itm, int col);
 };
 
 class cPoint {

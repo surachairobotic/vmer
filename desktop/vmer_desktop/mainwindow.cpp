@@ -368,6 +368,7 @@ void MainWindow::newElementMain(QString name, QString stdImg, QString userImg, Q
             int c=1;
             do {
                 newName = stdImgName.section('.',0,-2) + '(' + QString::number(c) + ")." + stdImgName.section('.',-1);
+                c++;
                 qDebug() << "In Loop : " << newName;
             } while( QFile::exists(newName) );
             qDebug() << "Selected : " << newName;
@@ -381,6 +382,7 @@ void MainWindow::newElementMain(QString name, QString stdImg, QString userImg, Q
             int c=1;
             do {
                 newName = usrImgName.section('.',0,-2) + '(' + QString::number(c) + ")." + usrImgName.section('.',-1);
+                c++;
                 qDebug() << "In Loop : " << newName;
             } while( QFile::exists(newName) );
             qDebug() << "Selected : " << newName;
@@ -415,7 +417,7 @@ bool MainWindow::newPoint(int element_id) {
 }
 void MainWindow::delPoint(QTreeWidgetItem *item) {
     qDebug() << "delPoint : " << item->text(0);
-
+    //db->delete_point()
 }
 void MainWindow::delElement(QTreeWidgetItem *item) {
     qDebug() << "delElement : " << item->text(0);
@@ -510,6 +512,16 @@ void MainWindow::dbRightClickMenu(const QPoint &pos)
 
     if(item->whatsThis(0).contains("DBTable")) {
         qDebug() << "contains(DBTable) : " << item->whatsThis(0);
+        jsonAct = new QAction("Export JSON file", this);
+        jsonAct->setStatusTip("Export JSON file.");
+        QMenu menu(this);
+        menu.addAction(jsonAct);
+
+        QPoint pt(pos);
+        QAction *selected = menu.exec( tree->mapToGlobal(pt) );
+        if (selected && selected->text() == "Export JSON file") {
+            ;
+        }
     }
     else if(item->whatsThis(0).contains("Company")) {
         qDebug() << "contains(Company) : " << item->whatsThis(0);

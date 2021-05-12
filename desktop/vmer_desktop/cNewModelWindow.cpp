@@ -8,7 +8,23 @@ cNewModelWindow::cNewModelWindow(QWidget *parent) :
     ui->setupUi(this);
 }
 
-cNewModelWindow::~cNewModelWindow()
-{
+cNewModelWindow::~cNewModelWindow() {
     delete ui;
 }
+
+void cNewModelWindow::createElementTable() {
+    int row = db->elements.size();
+    //ui->tableWidget = new QTableWidget(row, 1, this);
+    ui->tableWidget->setRowCount(row);
+    ui->tableWidget->setColumnCount(1);
+    for(int i=0; i<row; i++) {
+        QString txt = db->elements[i].name;
+        ui->tableWidget->setItem(i, 0, new QTableWidgetItem(txt));
+    }
+}
+
+void cNewModelWindow::on_pushButton_clicked()
+{
+
+}
+
