@@ -67,44 +67,6 @@ bool cDB::get_point(QTreeWidgetItem *item, cPoint *pnt) {
     return false;
 }
 
-bool cDB::insert(const cElement *ele) {
-    QSqlQuery query(db);
-    QString desc = "NULL";
-    if(ele->desc != "")
-        desc = ele->desc;
-    QString msg = QString("INSERT INTO `element` VALUES (%1,'%2','%3','%4',%5)").arg(QString::number(ele->id), ele->name, ele->std_image, ele->image, desc);
-    //qDebug() << msg;
-    query.prepare(msg);
-    query.exec();
-    while(query.next()) {
-        //qDebug() << query.value(0);
-    }
-    return false;
-}
-bool cDB::insert(const cPoint *pnt) {
-    QSqlQuery query(db);
-    QString desc = "NULL";
-    if(pnt->desc != "")
-        desc = pnt->desc;
-
-    QString msg = QString("INSERT INTO point (\"element_id\",\"name\",\"config\",\"description\") VALUES (%1,'%2','%3',%4)").arg(
-                                                                               QString::number(pnt->element_id),
-                                                                               pnt->name,
-                                                                               pnt->config,
-                                                                               desc);
-//    QString msg = QString("INSERT INTO `point` VALUES (%1,%2,'%3','%4',%5)").arg(QString::number(pnt->id),
-//                                                                               QString::number(pnt->element_id),
-//                                                                               pnt->name,
-//                                                                               pnt->config,
-//                                                                               desc);
-    qDebug().noquote() << msg;
-    query.prepare(msg);
-    query.exec();
-    while(query.next()) {
-        //qDebug() << query.value(0);
-    }
-    return false;
-}
 
 bool cDB::clear() {
     elements.clear();
@@ -125,18 +87,6 @@ bool cDB::clear() {
     elementsWdgt.clear();
     pointsWdgt.clear();
     return false;
-}
-
-void cDB::deleteDB(QString table, int id) {
-    QSqlQuery query(db);
-
-    QString msg = QString("DELETE FROM %1 WHERE id = %2").arg(table, QString::number(id));
-    qDebug().noquote() << msg;
-    query.prepare(msg);
-    query.exec();
-    while(query.next()) {
-        //qDebug() << query.value(0);
-    }
 }
 
 bool cDB::get_model(QList<QTreeWidgetItem*> *_modelWdgt) {
@@ -238,94 +188,39 @@ bool cDB::get_element(QList<QTreeWidgetItem*> *_eleWdgt) {
     return false;
 }
 
-bool cDB::insert_model(const int _id, const QString _name, const QString _desc) {
-    QSqlQuery query(db);
-    QString desc = "NULL";
-    if(_desc != "")
-        desc = _desc;
-    QString msg = QString("INSERT INTO `model` VALUES (%1,'%2','%3')").arg(QString::number(_id),
-                                                                           _name,
-                                                                           _desc);
-    qDebug().noquote() << msg;
-    query.prepare(msg);
-    query.exec();
-    while(query.next()) {
-        //qDebug() << query.value(0);
-    }
-    return false;
-}
-bool cDB::insert_model(const int _id, const QString _name, const QString _desc, const QList<int> &_element_id) {
-    int chk=0;
-    for(int i=0; i<elements.size(); i++) {
-        for(int j=0; j<_element_id.size(); j++) {
-            if(elements[i].id == _element_id[j])
-                chk+=1;
-        }
-    }
-    if(chk!=_element_id.size())
-        return false;
-    insert_model(_id, _name, _desc);
-    int model_id=_id, idEleInModl=1;
-    for(int i=0; i<element_in_models.size(); i++) {
-        if(idEleInModl < element_in_models[i].id)
-            idEleInModl = element_in_models[i].id;
-    }
-    idEleInModl+=1;
-    for(int i=0; i<_element_id.size(); i++) {
-        QString name = QString::number(model_id) + "_" + QString::number(_element_id[i]);
-        insert_element_in_model(idEleInModl++, model_id, _element_id[i], name, "^_^");
-    }
-    return true;
-}
-bool cDB::insert_element_in_model(const int _id, const int _model_id, const int _element_id, const QString _name, const QString _desc) {
-    QSqlQuery query(db);
-    QString desc = "NULL";
-    if(_desc != "")
-        desc = _desc;
-    QString msg = QString("INSERT INTO `element_in_model` VALUES (%1,%2,%3,'%4','%5')").arg(QString::number(_id),
-                                                                                          QString::number(_model_id),
-                                                                                          QString::number(_element_id),
-                                                                                          _name,
-                                                                                          _desc);
-    qDebug().noquote() << msg;
-    query.prepare(msg);
-    query.exec();
-    while(query.next()) {
-        //qDebug() << query.value(0);
-    }
-    return false;
-}
+bool cDB::get_routes(QList<QTreeWidgetItem*> *routeWdgt) {
+    query_db_table();
+    query_company_table();
+    query_plant_table();
+    query_shop_table();
+    query_route_table();
 
-bool cDB::delete_data(const QString _table, const int _id) {
-    QSqlQuery query(db);
-    QString msg = QString("DELETE FROM '%1' WHERE id=(%2)").arg(_table, QString::number(_id));
-    qDebug().noquote() << msg;
-    query.prepare(msg);
-    query.exec();
-    while(query.next()) {
-        //qDebug() << query.value(0);
+    link_db_table();
+    link_company_table();
+    link_plant_table();
+    link_shop_table();
+    link_route_table();
+
+    routeWdgt->clear();
+    for(int i=0; i<dbTables.size(); i++) {
+        QTreeWidgetItem *dbItm = dbTables[i].get_widget();
+        //dbItm->setExpanded(true);
+        for(int j=0; j<dbTables[i].companies.size(); j++) {
+            QTreeWidgetItem *comWdgt = dbTables[i].companies[j]->get_widget();
+            //comWdgt->setExpanded(true);
+            for(int k=0; k<dbTables[i].companies[j]->plants.size(); k++) {
+                QTreeWidgetItem *plntWdgt = dbTables[i].companies[j]->plants[k]->get_widget();
+                //plntWdgt->setExpanded(true);
+                for(int l=0; l<dbTables[i].companies[j]->plants[k]->routes.size(); l++) {
+                    QTreeWidgetItem *routeWdgt = dbTables[i].companies[j]->plants[k]->routes[l]->get_widget();
+                    //shpWdgt->setExpanded(true);
+                    plntWdgt->addChild(routeWdgt);
+                }
+                comWdgt->addChild(plntWdgt);
+            }
+            dbItm->addChild(comWdgt);
+        }
+        routeWdgt->push_back(dbItm);
     }
-    return false;
-}
-bool cDB::delete_point(const int _id) {
-    this->delete_data("point", _id);
-    return false;
-}
-bool cDB::delete_element(const int _id) {
-    for(int i=0; i<points.size(); i++)
-        if(points[i].element_id == _id)
-            this->delete_point(points[i].id);
-    this->delete_data("element", _id);
-    return false;
-}
-bool cDB::delete_element_in_model(const int _id) {
-    this->delete_data("element_in_model", _id);
-    return false;
-}
-bool cDB::delete_model(const int _id) {
-    for(int i=0; i<element_in_models.size(); i++)
-        if(element_in_models[i].model_id == _id)
-            this->delete_element_in_model(element_in_models[i].id);
-    this->delete_data("model", _id);
     return false;
 }

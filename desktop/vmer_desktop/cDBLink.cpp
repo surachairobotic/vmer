@@ -77,15 +77,23 @@ bool cDB::link_plant_table() {
         int indx_id = shops[i].plant_id;
         plants[indx_id-1].pushBackShop(&shops[i]);
     }
+    if(routes.size()<1)
+        return false;
+    for(int i=0; i<routes.size(); i++) {
+        int indx_id = routes[i].plant_id;
+        plants[indx_id-1].pushBackRoute(&routes[i]);
+    }
     return true;
 }
 bool cDB::link_shop_table() {
+    /*
     if(routes.size()<1)
         return false;
     for(int i=0; i<routes.size(); i++) {
         int indx_id = routes[i].shop_id;
         shops[indx_id-1].routes.push_back(&routes[i]);
     }
+    */
     return true;
 }
 bool cDB::link_route_table() {

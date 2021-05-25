@@ -37,6 +37,9 @@ set(PROJECT_SOURCES
         mainDisplayTree.cpp
         mainNewElementWindow.cpp
         mainNewModelWindow.cpp
+        mainNewShopWindow.cpp
+        mainNewRouteWindow.cpp
+        mainRightClickMenu.cpp
         cRoute.h
         cRoute.cpp
         cDB.h
@@ -44,6 +47,8 @@ set(PROJECT_SOURCES
         cDBQuery.cpp
         cDBLink.cpp
         cDBPrint.cpp
+        cDBInsert.cpp
+        cDBDelete.cpp
         cModel.h
         cModel.cpp
         cNewProjectDialog.h
@@ -58,6 +63,9 @@ set(PROJECT_SOURCES
         cNewShopWindow.h
         cNewShopWindow.cpp
         cNewShopWindow.ui
+        cNewRouteWindow.h
+        cNewRouteWindow.cpp
+        cNewRouteWindow.ui
         #cNewElement.h
         #cNewElement.cpp
         #cNewElement.ui

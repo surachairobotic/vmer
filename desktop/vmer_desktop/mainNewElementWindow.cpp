@@ -18,3 +18,72 @@ void MainWindow::on_actionNew_Element_Window_triggered()
     newEleWin->show();
     qDebug() << "END : on_actionNew_Element_Window_triggered";
 }
+
+void MainWindow::newElementMain(QString name, QString stdImg, QString userImg, QList<QString> pntNames) {
+    //qDebug() << currProjImage;
+    //qDebug() << stdImg.section('/',-2,-1);
+    //qDebug() << userImg.section('/',-2,-1);
+    if(stdImg != "") {
+        QString stdImgName = currProjImage+stdImg.section('/',-2,-1);
+        if( QFile::exists(stdImgName) ) {
+            QString newName;
+            int c=1;
+            do {
+                newName = stdImgName.section('.',0,-2) + '(' + QString::number(c) + ")." + stdImgName.section('.',-1);
+                c++;
+                qDebug() << "In Loop : " << newName;
+            } while( QFile::exists(newName) );
+            qDebug() << "Selected : " << newName;
+            QFile::copy(stdImg, newName);
+        }
+    }
+    if(userImg != "") {
+        QString usrImgName = currProjImage+userImg.section('/',-2,-1);
+        if( QFile::exists(usrImgName) ) {
+            QString newName;
+            int c=1;
+            do {
+                newName = usrImgName.section('.',0,-2) + '(' + QString::number(c) + ")." + usrImgName.section('.',-1);
+                c++;
+                qDebug() << "In Loop : " << newName;
+            } while( QFile::exists(newName) );
+            qDebug() << "Selected : " << newName;
+            QFile::copy(userImg, newName);
+        }
+    }
+    newElement(name, stdImg.section('/',-1), userImg.section('/',-1), pntNames);
+}
+
+bool MainWindow::newElement(QString name, QString stdImg, QString userImg, QList<QString> pntNames) {
+    qDebug("newElement");
+    int idE=1;
+    for(int i=0; i<db->elements.size(); i++) {
+        if(idE<=db->elements[i].id)
+            idE=db->elements[i].id;
+    }
+    idE+=1;
+    qDebug() << currProjImage;
+    //QDir *pathDir = new QDir(currProjImage);
+    //QStringList img_names = pathDir->entryList(QDir::Files);
+    //int value = QRandomGenerator::global()->generate() % img_names.size();
+    //cElement *ele = new cElement(idE, "element_"+QString::number(idE), img_names[value], "");
+    cElement *ele = new cElement(idE, name, stdImg, userImg, "");
+    db->insert(ele);
+    //int value = QRandomGenerator::global()->generate() % 7 + 1;
+    //value = 0; // for Debug
+    //qDebug() << "Value : " << value;
+    int idP = 1;
+    for(int i=0; i<db->points.size(); i++) {
+        if(idP<=db->points[i].id)
+            idP=db->points[i].id;
+    }
+    //for(int num=1; num<value; num++) {
+    for(int i=0; i<pntNames.size(); i++) {
+        idP+=1;
+        //cPoint *pnt = new cPoint(idP, idE, "point_"+QString::number(num), "{\"V\":1,\"H\":0}", "");
+        cPoint *pnt = new cPoint(idP, idE, pntNames[i], "{\"V\":1,\"H\":0}", "");
+        db->insert(pnt);
+    }
+    displayElementTree();
+    return false;
+}

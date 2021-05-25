@@ -166,7 +166,8 @@ bool MainWindow::displayRouteTree() {
     ui->treeWidgetRoute->clear();
     QTreeWidgetItem *root = new QTreeWidgetItem(ui->treeWidgetRoute);
     root->setExpanded(true);
+    db->get_routes(&routeWdgt);
+    ui->treeWidgetRoute->addTopLevelItem(routeWdgt[0]);
     hasDB = true;
-
     return true;
 }

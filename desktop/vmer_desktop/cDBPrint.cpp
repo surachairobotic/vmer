@@ -96,7 +96,7 @@ void cDB::print_route_table() {
     qDebug() << "id | shop_id | name | description";
     for(int i=0; i<routes.size(); i++) {
         qDebug() << routes[i].id
-                 << " | " << routes[i].shop_id
+                 << " | " << routes[i].plant_id
                  << " | " << routes[i].name
                  << " | " << routes[i].desc;
     }

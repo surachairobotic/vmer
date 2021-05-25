@@ -1,2 +1,6 @@
 ทำ rename ไม่ได้ เพราะไม่สามารถ QObject::connect(this, SIGNAL(itemChanged(QTreeWidgetItem*, int)), this, SLOT(name_change(QTreeWidgetItem*, int)));
 error --> qt QObject::connect none of the 3 overloads could convert all the argument types could be ...
+
+กด OK แล้วเชค condition ก่อน ยังไม่ต้อง accepted
+
+ควรจะมี machine_in_shop 

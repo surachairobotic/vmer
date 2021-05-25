@@ -66,12 +66,15 @@ public:
     bool get_point(QTreeWidgetItem *item, cPoint *pnt);
     bool get_model(QList<QTreeWidgetItem*> *modelWdgt);
     bool get_db(QList<QTreeWidgetItem*> *dbWdgt);
+    bool get_routes(QList<QTreeWidgetItem*> *routeWdgt);
 
     bool insert(const cElement *ele);
     bool insert(const cPoint *pnt);
     bool insert_model(const int _id, const QString _name, const QString _desc);
     bool insert_model(const int _id, const QString _name, const QString _desc, const QList<int> &_element_id);
     bool insert_element_in_model(const int _id, const int _model_id, const int _element_id, const QString _name, const QString _desc);
+    bool insert_shop(const int _id, const int _plant_id, const QString _name, const QString _desc);
+    bool insert_shop(const int _id, const int _plant_id, const QString _name, const QString _desc, const QList<int> &_model_id);
 
     bool delete_data(const QString _table, const int _id);
     bool delete_point(const int _id);

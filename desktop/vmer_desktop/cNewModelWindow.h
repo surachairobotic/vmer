@@ -19,11 +19,20 @@ public:
     cDB *db;
     void createElementTable();
 
+Q_SIGNALS:
+    void newModelAccepted(QString name, QList<int> eleIds);
+
 private slots:
-    void on_pushButton_clicked();
+    void on_btn_add_clicked();
+    void on_btn_del_clicked();
+    void on_buttonBox_accepted();
 
 private:
+    void print_element_ids();
+
     Ui::cNewModelWindow *ui;
+    QString mdlName;
+    QList<int> element_ids;
 };
 
 #endif // CNEWMODELWINDOW_H

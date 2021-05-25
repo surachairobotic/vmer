@@ -17,10 +17,11 @@ class cMachineInRoute;
 class cPoint;
 class cPointWidget : public QTreeWidgetItem {
 public:
-    cPointWidget() {
+    //cPointWidget() {
         //QObject::connect(this, SIGNAL(itemChanged(QTreeWidgetItem*, int)),
-        //                 this, SLOT(name_change(QTreeWidgetItem*, int)));
-    }
+        //             SLOT(name_change(QTreeWidgetItem*, int)));
+        //QObject::connect((QTreeWidgetItem*)this, &QTreeWidgetItem::itemChanged, this, [=](int){});//, &cPointWidget::name_change);
+    //}
     cPoint *cParent;
 private slots:
     void name_change(QTreeWidgetItem* itm, int col);
@@ -107,18 +108,20 @@ public:
 class cPlant {
 public:
     cPlant(int _id, int _company_id, QString _name, QString _desc);
-    bool pushBackShop(cShop* shop);
+    bool pushBackShop(cShop* _shop);
+    bool pushBackRoute(cRoute* _route);
     QTreeWidgetItem* get_widget();
     int id, company_id;
     QString name, desc;
     QList<cShop*> shops;
+    QList<cRoute*> routes;
     cPlantWidget *plntWdgt;
 };
 
 class cShop;
 class cShopWidget : public QTreeWidgetItem {
 public:
-        cShop *cParent;
+    cShop *cParent;
 };
 class cShop {
 public:
@@ -126,7 +129,6 @@ public:
     QTreeWidgetItem* get_widget();
     int id, plant_id;
     QString name, desc;
-    QList<cRoute*> routes;
     cShopWidget *shpWdgt;
 };
 
@@ -139,9 +141,15 @@ public:
     QList<cPointInRoute*> point_in_routes;
 };
 
+class cRoute;
+class cRouteWidget : public QTreeWidgetItem {
+public:
+    cRoute *cParent;
+};
+
 class cRoute : public QTreeWidgetItem {
 public:
-    cRoute(const int _id, const int _shop_id, const QString _name, const QString _desc);
+    cRoute(const int _id, const int _plant_id, const QString _name, const QString _desc);
     void print() {
         qDebug() << "Route : " << name;
         /*
@@ -157,10 +165,12 @@ public:
         }
         */
     }
-    int id, shop_id;
+    QTreeWidgetItem* get_widget();
+    int id, plant_id;
     QString name, desc;
     QList<cMachineInRoute*> machine_in_routes;
     QList<cPointInRoute*> point_in_routes;
+    cRouteWidget *routeWdgt;
 };
 
 class cElementInModel {

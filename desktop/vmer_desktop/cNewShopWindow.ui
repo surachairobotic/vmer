@@ -34,7 +34,7 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QTextEdit" name="textEdit_2">
+  <widget class="QTextEdit" name="textEdit_shopName">
    <property name="geometry">
     <rect>
      <x>180</x>
@@ -62,7 +62,7 @@
     <string>Shop Name : </string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="btn_del">
    <property name="geometry">
     <rect>
      <x>290</x>
@@ -75,7 +75,7 @@
     <string>&lt;&lt;</string>
    </property>
   </widget>
-  <widget class="QTableWidget" name="tableWidget">
+  <widget class="QTableWidget" name="tableWidget_left">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -85,7 +85,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="btn_add">
    <property name="geometry">
     <rect>
      <x>290</x>
@@ -98,7 +98,7 @@
     <string>&gt;&gt;</string>
    </property>
   </widget>
-  <widget class="QTableWidget" name="tableWidget_2">
+  <widget class="QTableWidget" name="tableWidget_right">
    <property name="geometry">
     <rect>
      <x>340</x>

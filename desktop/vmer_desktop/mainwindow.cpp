@@ -34,6 +34,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->treeWidgetElement->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->treeWidgetElement, &QTreeWidget::customContextMenuRequested, this, &MainWindow::elementRightClickMenu);
+
+    ui->treeWidgetRoute->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->treeWidgetRoute, &QTreeWidget::customContextMenuRequested, this, &MainWindow::routeRightClickMenu);
     this->setFocus();
 }
 
@@ -67,6 +70,7 @@ void MainWindow::on_actionClose_Project_triggered() {
         ui->treeWidgetDB->clear();
         ui->treeWidgetElement->clear();
         ui->treeWidgetModel->clear();
+        ui->treeWidgetRoute->clear();
         ui->actionClose_Project->setEnabled(false);
     }
 }
@@ -112,6 +116,7 @@ void MainWindow::openProject(const QString &name, const QString &path, bool db) 
     displayDBTree();
     displayElementTree();
     displayModelTree();
+    displayRouteTree();
 }
 
 bool MainWindow::rmDir(const QString &dirPath) {
@@ -224,173 +229,6 @@ void MainWindow::elementGraphics(const cElement *ele, bool del) {
     ui->vLayoutElementInfo->addLayout(hLayout);
 }
 
-void MainWindow::elementRightClickMenu(const QPoint &pos) {
-    qDebug("elementRightClickMenu");
-    hasDB = false;
-    QTreeWidget *tree = ui->treeWidgetElement;
-    QTreeWidgetItem *item = tree->itemAt(pos);
-
-    qDebug()<<pos<<item->text(0);
-    bool bUpdate=false;
-
-    if(item->whatsThis(0).contains("Element")) {
-        newAct = new QAction("New Point", this);
-        newAct->setStatusTip("New Point xxxxxxxxxxxxxxx");
-        delAct = new QAction("Delete Element", this);
-        delAct->setStatusTip("Delete Element xxxxxxxxxxxxxxx");
-
-        QMenu menu(this);
-        menu.addAction(newAct);
-        menu.addAction(delAct);
-
-        QPoint pt(pos);
-        QAction *selected = menu.exec( tree->mapToGlobal(pt) );
-        if (selected && selected->text() == "New Point") {
-            qDebug() << "selected : " << selected->text();
-            cElementWidget* elmWdg = static_cast<cElementWidget*>(item);
-            int elmId = elmWdg->cParent->id;
-            newPoint(elmId);
-            bUpdate=true;
-
-            /*
-            updateDatabase();
-            QTreeWidgetItem *parent = item->parent();
-            int itemIndex = parent->indexOfChild(item);
-            parent->removeChild(item);
-            parent->insertChild(itemIndex, elmWdg->cParent->get_widget());
-            displayElementTree();
-            */
-        }
-        else if(selected && selected->text() == "Delete Element") {
-            qDebug() << "selected : " << selected->text();
-            cElementWidget* elmWdg = static_cast<cElementWidget*>(item);
-            int elmId = elmWdg->cParent->id;
-            /*
-            delElement(elmWdg);
-            for(int i=0; i<elmWdg->cParent->points.size(); i++) {
-                int _id = elmWdg->cParent->points[i]->id;
-                db->deleteDB("point", _id);
-            }
-            db->deleteDB("element", elmId);
-            */
-            db->delete_element(elmId);
-            bUpdate=true;
-
-            /*
-            updateDatabase();
-            QTreeWidgetItem *parent = item->parent();
-            int itemIndex = parent->indexOfChild(item);
-            parent->removeChild(item);
-            parent->insertChild(itemIndex, elm->cParent->get_widget());
-            displayElementTree();
-            */
-        }
-    }
-    else if(item->whatsThis(0).contains("Point")) {
-        delAct = new QAction("Delete Point", this);
-        delAct->setStatusTip("Delete Point xxxxxxxxxxxxxxx");
-        QMenu menu(this);
-        menu.addAction(delAct);
-
-        QPoint pt(pos);
-        QAction *selected = menu.exec( tree->mapToGlobal(pt) );
-        if (selected && selected->text() == "Delete Point") {
-            qDebug() << "selected : " << selected->text();
-            cPointWidget* pntWdg = static_cast<cPointWidget*>(item);
-            int pntId = pntWdg->cParent->id;
-            //db->deleteDB("point", pntId);
-            //delPoint(pntWdg);
-            db->delete_point(pntId);
-            bUpdate=true;
-        }
-    }
-    else {
-        newAct = new QAction("New Element", this);
-        newAct->setStatusTip("New Element xxxxxxxxxxxxxxx");
-
-        QMenu menu(this);
-        menu.addAction(newAct);
-
-        QPoint pt(pos);
-        QAction *selected = menu.exec( tree->mapToGlobal(pt) );
-        if (selected && selected->text() == "New Element") {
-            qDebug() << "selected" << selected->text();
-            //newElement();
-            //bUpdate=true;
-            on_actionNew_Element_Window_triggered();
-        }
-    }
-    if(bUpdate)
-        displayElementTree();
-    hasDB = true;
-}
-bool MainWindow::newElement(QString name, QString stdImg, QString userImg, QList<QString> pntNames) {
-    qDebug("newElement");
-    int idE=1;
-    for(int i=0; i<db->elements.size(); i++) {
-        if(idE<=db->elements[i].id)
-            idE=db->elements[i].id;
-    }
-    idE+=1;
-    qDebug() << currProjImage;
-    //QDir *pathDir = new QDir(currProjImage);
-    //QStringList img_names = pathDir->entryList(QDir::Files);
-    //int value = QRandomGenerator::global()->generate() % img_names.size();
-    //cElement *ele = new cElement(idE, "element_"+QString::number(idE), img_names[value], "");
-    cElement *ele = new cElement(idE, name, stdImg, userImg, "");
-    db->insert(ele);
-    //int value = QRandomGenerator::global()->generate() % 7 + 1;
-    //value = 0; // for Debug
-    //qDebug() << "Value : " << value;
-    int idP = 1;
-    for(int i=0; i<db->points.size(); i++) {
-        if(idP<=db->points[i].id)
-            idP=db->points[i].id;
-    }
-    //for(int num=1; num<value; num++) {
-    for(int i=0; i<pntNames.size(); i++) {
-        idP+=1;
-        //cPoint *pnt = new cPoint(idP, idE, "point_"+QString::number(num), "{\"V\":1,\"H\":0}", "");
-        cPoint *pnt = new cPoint(idP, idE, pntNames[i], "{\"V\":1,\"H\":0}", "");
-        db->insert(pnt);
-    }
-    displayElementTree();
-    return false;
-}
-void MainWindow::newElementMain(QString name, QString stdImg, QString userImg, QList<QString> pntNames) {
-    //qDebug() << currProjImage;
-    //qDebug() << stdImg.section('/',-2,-1);
-    //qDebug() << userImg.section('/',-2,-1);
-    if(stdImg != "") {
-        QString stdImgName = currProjImage+stdImg.section('/',-2,-1);
-        if( QFile::exists(stdImgName) ) {
-            QString newName;
-            int c=1;
-            do {
-                newName = stdImgName.section('.',0,-2) + '(' + QString::number(c) + ")." + stdImgName.section('.',-1);
-                c++;
-                qDebug() << "In Loop : " << newName;
-            } while( QFile::exists(newName) );
-            qDebug() << "Selected : " << newName;
-            QFile::copy(stdImg, newName);
-        }
-    }
-    if(userImg != "") {
-        QString usrImgName = currProjImage+userImg.section('/',-2,-1);
-        if( QFile::exists(usrImgName) ) {
-            QString newName;
-            int c=1;
-            do {
-                newName = usrImgName.section('.',0,-2) + '(' + QString::number(c) + ")." + usrImgName.section('.',-1);
-                c++;
-                qDebug() << "In Loop : " << newName;
-            } while( QFile::exists(newName) );
-            qDebug() << "Selected : " << newName;
-            QFile::copy(userImg, newName);
-        }
-    }
-    newElement(name, stdImg.section('/',-1), userImg.section('/',-1), pntNames);
-}
 QString MainWindow::getElementImagePath(const cElement *ele) {
     QString res;
     if(ele->image != "")
@@ -421,123 +259,6 @@ void MainWindow::delPoint(QTreeWidgetItem *item) {
 }
 void MainWindow::delElement(QTreeWidgetItem *item) {
     qDebug() << "delElement : " << item->text(0);
-}
-
-void MainWindow::modelRightClickMenu(const QPoint &pos)
-{
-    qDebug() << "modelRightClickMenu";
-    hasDB = false;
-    QTreeWidget *tree = ui->treeWidgetModel;
-    QTreeWidgetItem *item = tree->itemAt(pos);
-
-    qDebug()<<pos<<item->text(0);
-    bool bUpdate=false;
-
-    if(item->whatsThis(0).contains("Element") || item->whatsThis(0).contains("Point")) {
-        qDebug() << "contains(...) : " << item->whatsThis(0);
-    }
-    else if(item->whatsThis(0).contains("Model")) {
-        qDebug() << "contains(Model) : " << item->whatsThis(0);
-        delAct = new QAction("Delete Model", this);
-        delAct->setStatusTip("Delete Model xxxxxxxxxxxxxxx");
-        QMenu menu(this);
-        menu.addAction(delAct);
-
-        QPoint pt(pos);
-        QAction *selected = menu.exec( tree->mapToGlobal(pt) );
-        if (selected && selected->text() == "Delete Model") {
-            qDebug() << "selected : " << selected->text();
-            cModelWidget* pntWdg = static_cast<cModelWidget*>(item);
-            //int pntId = pntWdg->cParent->id;
-            //db->deleteDB("model", pntId);
-            //delPoint(pntWdg);
-            db->delete_model(pntWdg->cParent->id);
-            bUpdate=true;
-        }
-    }
-    else {
-        qDebug() << "else : " << item->whatsThis(0);
-        newAct = new QAction("New Model", this);
-        newAct->setStatusTip("New Model xxxxxxxxxxxxxxx");
-
-        QMenu menu(this);
-        menu.addAction(newAct);
-
-        QPoint pt(pos);
-        QAction *selected = menu.exec( tree->mapToGlobal(pt) );
-        if (selected && selected->text() == "New Model") {
-            qDebug() << "selected" << selected->text();
-            on_actionNew_Model_Window_triggered();
-            //newModel();
-            //bUpdate=true;
-        }
-    }
-    if(bUpdate)
-        displayModelTree();
-    hasDB = true;
-}
-bool MainWindow::newModel() {
-    qDebug("newModel");
-    int idM=1;
-    for(int i=0; i<db->models.size(); i++) {
-        if(idM <= db->models[i].id)
-            idM = db->models[i].id;
-    }
-    idM+=1;
-
-    // prob of number 1 is 3/5
-    int numElement = (QRandomGenerator::global()->generate() % 5) + 1;
-    if(numElement > 3)
-        numElement = 1;
-    QList<int> element_id;
-    for(int i=0; i<numElement; i++) {
-        int indx = QRandomGenerator::global()->generate() % db->elements.size();
-        element_id.push_back(db->elements[indx].id);
-    }
-
-    qDebug() << idM << ", " << "model_"+QString::number(idM) << ", " << element_id.size();
-    db->insert_model(idM, "model_"+QString::number(idM), "^_model_^", element_id);
-    return false;
-}
-
-void MainWindow::dbRightClickMenu(const QPoint &pos)
-{
-    qDebug() << "dbRightClickMenu";
-    hasDB = false;
-    QTreeWidget *tree = ui->treeWidgetDB;
-    QTreeWidgetItem *item = tree->itemAt(pos);
-
-    qDebug()<<pos<<item->text(0);
-    bool bUpdate=false;
-
-    if(item->whatsThis(0).contains("DBTable")) {
-        qDebug() << "contains(DBTable) : " << item->whatsThis(0);
-        jsonAct = new QAction("Export JSON file", this);
-        jsonAct->setStatusTip("Export JSON file.");
-        QMenu menu(this);
-        menu.addAction(jsonAct);
-
-        QPoint pt(pos);
-        QAction *selected = menu.exec( tree->mapToGlobal(pt) );
-        if (selected && selected->text() == "Export JSON file") {
-            ;
-        }
-    }
-    else if(item->whatsThis(0).contains("Company")) {
-        qDebug() << "contains(Company) : " << item->whatsThis(0);
-    }
-    else if(item->whatsThis(0).contains("Plant")) {
-        qDebug() << "contains(Plant) : " << item->whatsThis(0);
-    }
-    else if(item->whatsThis(0).contains("Shop")) {
-        qDebug() << "contains(Shop) : " << item->whatsThis(0);
-    }
-    else {
-        qDebug() << "else : " << item->whatsThis(0);
-    }
-    if(bUpdate)
-        displayDBTree();
-    hasDB = true;
 }
 
 void MainWindow::on_treeWidgetModel_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)

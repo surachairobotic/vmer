@@ -145,12 +145,12 @@ INSERT INTO `machine` VALUES (1,1,'Machine 001','M-01',NULL);
 DROP TABLE IF EXISTS `route`;
 CREATE TABLE `route` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-  `shop_id` INTEGER NOT NULL,
+  `plant_id` INTEGER NOT NULL,
   `name` varchar(64) NOT NULL,
   `description` text
 );
 
-CREATE INDEX `shop_id` on route(`shop_id`);
+CREATE INDEX `plant_id` on route(`plant_id`);
 
 INSERT INTO `route` VALUES (1,1,'Route 01',NULL);
 

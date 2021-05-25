@@ -6,6 +6,10 @@ cModel::cModel(const int _id, const QString _name, const QString _desc)
 {
     mdlWdg = nullptr;
 }
+cModel::cModel(const int _id, const QString _name, const QString _desc, QList<cElement*> _elements) {
+    cModel(_id, _name, _desc);
+    this->elements = _elements;
+}
 void cModel::printInfo() {
     qDebug() << id << ", " << name << ", " << desc;
     for(int i=0; i<elements.size(); i++) {

@@ -17,6 +17,7 @@ public:
 class cModel {
 public:
     cModel(const int _id, const QString _name, const QString _desc);
+    cModel(const int _id, const QString _name, const QString _desc, QList<cElement*> _elements);
     void printInfo();
     void printInfo(QString msg);
     QTreeWidgetItem* get_widget();
