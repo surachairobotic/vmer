@@ -83,3 +83,4 @@ desktop/vmer_desktop/build*/
 desktop/build*/
 
 *.zip
+*.user

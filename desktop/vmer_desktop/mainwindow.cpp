@@ -37,6 +37,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->treeWidgetRoute->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->treeWidgetRoute, &QTreeWidget::customContextMenuRequested, this, &MainWindow::routeRightClickMenu);
+
+    connect(ui->treeWidgetElement, &QTreeWidget::itemChanged, this, [=](QTreeWidgetItem *item, int column){
+        cPointWidget *p = (cPointWidget*)item;
+        if(p)
+            qDebug() << "QTreeWidget::itemChanged : col= " << column << ", name: " << p->whatsThis(0);
+        else
+            qDebug() << "QTreeWidget::itemChanged : NULL";
+    });
+
     this->setFocus();
 }
 
