@@ -49,6 +49,7 @@ set(PROJECT_SOURCES
         cDBPrint.cpp
         cDBInsert.cpp
         cDBDelete.cpp
+        cDBUpdate.cpp
         cModel.h
         cModel.cpp
         cNewProjectDialog.h

@@ -82,6 +82,8 @@ public:
     bool delete_element_in_model(const int _id);
     bool delete_model(const int _id);
 
+    bool update(QString tbName, int id, QString data);
+
     bool clear();
 
     QList<cDBTable> dbTables;

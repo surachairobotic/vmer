@@ -34,6 +34,7 @@ public:
     void printInfo();
     friend bool operator==(const cPoint& l, const cPoint& r);
     QTreeWidgetItem* get_widget();
+    //bool updateName(QString _name);
     int id, element_id;
     QString name, config, desc;
     QList<cPointInRoute*> point_in_routes;

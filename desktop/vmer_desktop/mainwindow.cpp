@@ -40,8 +40,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->treeWidgetElement, &QTreeWidget::itemChanged, this, [=](QTreeWidgetItem *item, int column){
         cPointWidget *p = (cPointWidget*)item;
-        if(p)
-            qDebug() << "QTreeWidget::itemChanged : col= " << column << ", name: " << p->whatsThis(0);
+        if(p) {
+            qDebug() << "QTreeWidget::itemChanged : col= " << column << ", name: " << p->text(0);
+            if(p->whatsThis(0) == "Point" && p->text(0) != p->cParent->name) {
+                qDebug() << "p->text(0) :" << p->text(0) << ", p->cParent->name :" << p->cParent->name;
+                p->cParent->name = p->text(0);
+                db->update("point", p->cParent->id, p->text(0));
+            }
+        }
         else
             qDebug() << "QTreeWidget::itemChanged : NULL";
     });
