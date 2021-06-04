@@ -139,6 +139,22 @@ CREATE TABLE `machine` (
 CREATE INDEX `model_id2` on machine(`model_id`);
 
 INSERT INTO `machine` VALUES (1,1,'Machine 001','M-01',NULL);
+INSERT INTO `machine` VALUES (2,2,'Machine 002','M-02',NULL);
+
+-- --------------------------------------------------------
+
+DROP TABLE IF EXISTS `machine_in_shop`;
+CREATE TABLE `machine_in_shop` (
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `shop_id` INTEGER NOT NULL,
+  `machine_id` INTEGER NOT NULL,
+  `description` text
+);
+
+CREATE INDEX `shop_id` on machine_in_shop(`shop_id`);
+
+INSERT INTO `machine_in_shop` VALUES (1,1,1,NULL);
+INSERT INTO `machine_in_shop` VALUES (2,3,2,NULL);
 
 -- --------------------------------------------------------
 
@@ -150,7 +166,7 @@ CREATE TABLE `route` (
   `description` text
 );
 
-CREATE INDEX `plant_id` on route(`plant_id`);
+CREATE INDEX `plant_id2` on route(`plant_id`);
 
 INSERT INTO `route` VALUES (1,1,'Route 01',NULL);
 
