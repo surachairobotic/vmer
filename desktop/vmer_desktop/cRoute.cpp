@@ -116,6 +116,10 @@ cShop::cShop(int _id, int _plant_id, QString _name, QString _desc)
     : id(_id), plant_id(_plant_id), name(_name), desc(_desc)
 {
 }
+bool cShop::pushBackMachine(cMachine* _machine) {
+    machines.push_back(_machine);
+    return true;
+}
 QTreeWidgetItem* cShop::get_widget() {
     this->shpWdgt = new cShopWidget();
     this->shpWdgt->setText(0, name);
@@ -123,21 +127,29 @@ QTreeWidgetItem* cShop::get_widget() {
     this->shpWdgt->cParent = this;
     return static_cast<QTreeWidgetItem*>(this->shpWdgt);
 }
-QTreeWidgetItem* cRoute::get_widget() {
-    this->routeWdgt = new cRouteWidget();
-    this->routeWdgt->setText(0, name);
-    this->routeWdgt->setWhatsThis(0, "Route");
-    this->routeWdgt->cParent = this;
-    return static_cast<QTreeWidgetItem*>(this->routeWdgt);
-}
-cMachine::cMachine(const int _id, const int _model_id, const QString _name, const QString _serial, const QString _desc)
-    : id(_id), model_id(_model_id), name(_name), serial_number(_serial), desc(_desc)
+
+cMachine::cMachine(const int _id, const int _model_id, const int _shop_id, const QString _name, const QString _serial, const QString _desc)
+    : id(_id), model_id(_model_id), shop_id(_shop_id), name(_name), serial_number(_serial), desc(_desc)
 {
     this->setText(0, _name);
+}
+QTreeWidgetItem* cMachine::get_widget() {
+    this->machineWdgt = new cMachineWidget();
+    this->machineWdgt->setText(0, name);
+    this->machineWdgt->setWhatsThis(0, "Machine");
+    this->machineWdgt->cParent = this;
+    return static_cast<QTreeWidgetItem*>(this->machineWdgt);
 }
 
 cRoute::cRoute(const int _id, const int _plant_id, const QString _name, const QString _desc)
     : id(_id), plant_id(_plant_id), name(_name), desc(_desc)
 {
     this->setText(0, _name);
+}
+QTreeWidgetItem* cRoute::get_widget() {
+    this->routeWdgt = new cRouteWidget();
+    this->routeWdgt->setText(0, name);
+    this->routeWdgt->setWhatsThis(0, "Route");
+    this->routeWdgt->cParent = this;
+    return static_cast<QTreeWidgetItem*>(this->routeWdgt);
 }

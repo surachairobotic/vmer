@@ -127,19 +127,28 @@ public:
 class cShop {
 public:
     cShop(int _id, int _plant_id, QString _name, QString _desc);
+    bool pushBackMachine(cMachine* _machine);
     QTreeWidgetItem* get_widget();
     int id, plant_id;
     QString name, desc;
+    QList<cMachine*> machines;
     cShopWidget *shpWdgt;
 };
 
+class cMachine;
+class cMachineWidget : public QTreeWidgetItem {
+public:
+    cMachine *cParent;
+};
 class cMachine : public QTreeWidgetItem {
 public:
-    cMachine(const int _id, const int _model_id, const QString _name, const QString _serial, const QString _desc);
-    int id, model_id;
+    cMachine(const int _id, const int _model_id, const int _shop_id, const QString _name, const QString _serial, const QString _desc);
+    QTreeWidgetItem* get_widget();
+    int id, model_id, shop_id;
     QString name, serial_number, desc;
     QList<cMachineInRoute*> machine_in_routes;
     QList<cPointInRoute*> point_in_routes;
+    cMachineWidget *machineWdgt;
 };
 
 class cRoute;

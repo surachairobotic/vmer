@@ -86,14 +86,12 @@ bool cDB::link_plant_table() {
     return true;
 }
 bool cDB::link_shop_table() {
-    /*
-    if(routes.size()<1)
+    if(machines.size()<1)
         return false;
-    for(int i=0; i<routes.size(); i++) {
-        int indx_id = routes[i].shop_id;
-        shops[indx_id-1].routes.push_back(&routes[i]);
+    for(int i=0; i<machines.size(); i++) {
+        int indx_id = machines[i].shop_id;
+        shops[indx_id-1].pushBackMachine(&machines[i]);
     }
-    */
     return true;
 }
 bool cDB::link_route_table() {

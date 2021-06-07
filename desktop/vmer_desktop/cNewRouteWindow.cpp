@@ -13,3 +13,13 @@ cNewRouteWindow::cNewRouteWindow(QWidget *parent, int _plantId) :
 cNewRouteWindow::~cNewRouteWindow() {
     delete ui;
 }
+
+void cNewRouteWindow::createPlantTable() {
+    ui->treeWidget_left->clear();
+    QTreeWidgetItem *root = new QTreeWidgetItem(ui->treeWidget_left);
+    root->setExpanded(true);
+    db->get_plants(&plntWdgt, true);
+    for(int i=0; i<plntWdgt.size(); i++)
+        root->addChild(plntWdgt[i]);
+    ui->treeWidget_left->addTopLevelItem(root);
+}

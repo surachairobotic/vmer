@@ -67,6 +67,7 @@ public:
     bool get_model(QList<QTreeWidgetItem*> *modelWdgt);
     bool get_db(QList<QTreeWidgetItem*> *dbWdgt);
     bool get_routes(QList<QTreeWidgetItem*> *routeWdgt);
+    bool get_plants(QList<QTreeWidgetItem*> *plntWdgt, bool _checkBox=false);
 
     bool insert(const cElement *ele);
     bool insert(const cPoint *pnt);
@@ -83,6 +84,7 @@ public:
     bool delete_model(const int _id);
 
     bool update(QString tbName, int id, QString data);
+    void checkBox(QTreeWidgetItem *wg, bool _chkBox);
 
     bool clear();
 

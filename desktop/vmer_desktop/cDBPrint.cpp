@@ -112,10 +112,11 @@ void cDB::print_models_table() {
 }
 void cDB::print_machine_table() {
     qDebug() << "----- machine_table -----";
-    qDebug() << "id | model_id | name | serial_number | description";
+    qDebug() << "id | model_id | shop_id | name | serial_number | description";
     for(int i=0; i<machines.size(); i++) {
         qDebug() << machines[i].id
                  << " | " << machines[i].model_id
+                 << " | " << machines[i].shop_id
                  << " | " << machines[i].name
                  << " | " << machines[i].serial_number
                  << " | " << machines[i].desc;

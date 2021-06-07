@@ -5,7 +5,7 @@
 void MainWindow::on_actionNew_Route_Window_triggered(int plantId) {
     newRouteWin = new cNewRouteWindow(this, plantId);
     newRouteWin->db = this->db;
-    //newRouteWin->createModelTable();
+    newRouteWin->createPlantTable();
     //connect(newRouteWin, &cNewRouteWindow::newRouteAccepted, this, &MainWindow::newShopMain);
     newRouteWin->show();
 }

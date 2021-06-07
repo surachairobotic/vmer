@@ -18,8 +18,7 @@ public:
     ~cNewRouteWindow();
 
     cDB *db;
-
-    //void createModelTable();
+    void createPlantTable();
 
 Q_SIGNALS:
     void newRouteAccepted(int _plantId, QString name, QList<int> eleIds);
@@ -34,6 +33,7 @@ private:
     int plantId;
     QString routeName;
     QList<int> model_ids;
+    QList<QTreeWidgetItem*> plntWdgt;
 };
 
 #endif // CNEWROUTEWINDOW_H

@@ -224,3 +224,36 @@ bool cDB::get_routes(QList<QTreeWidgetItem*> *routeWdgt) {
     }
     return false;
 }
+
+bool cDB::get_plants(QList<QTreeWidgetItem*> *plntWdgt, bool _checkBox) {
+    query_plant_table();
+    query_shop_table();
+    query_machine_table();
+    link_plant_table();
+    link_shop_table();
+    link_machine_table();
+    plntWdgt->clear();
+    for(int i=0; i<plants.size(); i++) {
+        QTreeWidgetItem *plntItm = plants[i].get_widget();
+        checkBox(plntItm, _checkBox);
+        for(int j=0; j<plants[i].shops.size(); j++) {
+            QTreeWidgetItem *shpItm = plants[i].shops[j]->get_widget();
+            checkBox(shpItm, _checkBox);
+            for(int k=0; k<plants[i].shops[j]->machines.size(); k++) {
+                QTreeWidgetItem *machineItm = plants[i].shops[j]->machines[k]->get_widget();
+                checkBox(machineItm, _checkBox);
+                shpItm->addChild(machineItm);
+            }
+            plntItm->addChild(shpItm);
+        }
+        plntWdgt->push_back(plntItm);
+    }
+    return true;
+}
+
+void cDB::checkBox(QTreeWidgetItem *item, bool _chkBox) {
+    if(!_chkBox)
+        return;
+    item->setFlags(item->flags() | Qt::ItemIsUserCheckable | Qt::ItemIsSelectable);
+    item->setCheckState(0, Qt::Unchecked);
+}

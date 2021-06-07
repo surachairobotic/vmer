@@ -131,6 +131,7 @@ DROP TABLE IF EXISTS `machine`;
 CREATE TABLE `machine` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `model_id` INTEGER NOT NULL,
+  `shop_id` INTEGER NOT NULL,
   `name` varchar(64) NOT NULL,
   `serial_number` varchar(32) NOT NULL,
   `description` text
@@ -138,8 +139,18 @@ CREATE TABLE `machine` (
 
 CREATE INDEX `model_id2` on machine(`model_id`);
 
-INSERT INTO `machine` VALUES (1,1,'Machine 001','M-01',NULL);
-INSERT INTO `machine` VALUES (2,2,'Machine 002','M-02',NULL);
+INSERT INTO `machine` VALUES (1,1,1,'Machine 001','M-01',NULL);
+INSERT INTO `machine` VALUES (2,2,1,'Machine 002','M-02',NULL);
+INSERT INTO `machine` VALUES (3,1,2,'Machine 003','M-01',NULL);
+INSERT INTO `machine` VALUES (4,2,2,'Machine 004','M-02',NULL);
+INSERT INTO `machine` VALUES (5,1,3,'Machine 005','M-01',NULL);
+INSERT INTO `machine` VALUES (6,2,4,'Machine 006','M-02',NULL);
+INSERT INTO `machine` VALUES (7,1,5,'Machine 007','M-01',NULL);
+INSERT INTO `machine` VALUES (8,2,5,'Machine 008','M-02',NULL);
+INSERT INTO `machine` VALUES (9,1,5,'Machine 009','M-01',NULL);
+INSERT INTO `machine` VALUES (10,2,6,'Machine 010','M-02',NULL);
+INSERT INTO `machine` VALUES (11,1,7,'Machine 011','M-01',NULL);
+INSERT INTO `machine` VALUES (12,2,8,'Machine 012','M-02',NULL);
 
 -- --------------------------------------------------------
 

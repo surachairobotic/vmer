@@ -326,8 +326,8 @@ bool cDB::query_machine_table() {
             machines.clear();
         chk=true;
         machines.push_back(cMachine(query.value(0).toInt(), query.value(1).toInt(),
-                                    query.value(2).toString(), query.value(3).toString(),
-                                    query.value(4).toString()));
+                                    query.value(2).toInt(), query.value(3).toString(),
+                                    query.value(4).toString(), query.value(5).toString()));
     }
     return chk;
 }
