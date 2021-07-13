@@ -88,8 +88,10 @@ bool cDB::link_plant_table() {
 bool cDB::link_shop_table() {
     if(machines.size()<1)
         return false;
+//    qDebug() << "machines.size() : " << machines.size();
     for(int i=0; i<machines.size(); i++) {
         int indx_id = machines[i].shop_id;
+//        qDebug() << "machines[i].shop_id : " << indx_id;
         shops[indx_id-1].pushBackMachine(&machines[i]);
     }
     return true;

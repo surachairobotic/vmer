@@ -145,24 +145,33 @@ bool cDB::get_db(QList<QTreeWidgetItem*> *_dbWdgt) {
     link_machine_table();
 
     _dbWdgt->clear();
-    for(int i=0; i<dbTables.size(); i++) {
+    int db_size = dbTables.size();
+    for(int i=0; i<db_size; i++) {
         QTreeWidgetItem *dbItm = dbTables[i].get_widget();
-        //dbItm->setExpanded(true);
-        for(int j=0; j<dbTables[i].companies.size(); j++) {
+        int com_size = dbTables[i].companies.size();
+        for(int j=0; j<com_size; j++) {
             QTreeWidgetItem *comWdgt = dbTables[i].companies[j]->get_widget();
-            //comWdgt->setExpanded(true);
-            for(int k=0; k<dbTables[i].companies[j]->plants.size(); k++) {
+            int plnt_size = dbTables[i].companies[j]->plants.size();
+            for(int k=0; k<plnt_size; k++) {
                 QTreeWidgetItem *plntWdgt = dbTables[i].companies[j]->plants[k]->get_widget();
                 //plntWdgt->setExpanded(true);
-                for(int l=0; l<dbTables[i].companies[j]->plants[k]->shops.size(); l++) {
+                int shp_size = dbTables[i].companies[j]->plants[k]->shops.size();
+                for(int l=0; l<shp_size; l++) {
                     QTreeWidgetItem *shpWdgt = dbTables[i].companies[j]->plants[k]->shops[l]->get_widget();
                     //shpWdgt->setExpanded(true);
+                    int machine_size = dbTables[i].companies[j]->plants[k]->shops[l]->machines.size();
+                    for(int m=0; m<machine_size; m++) {
+                        QTreeWidgetItem *machine_itm = dbTables[i].companies[j]->plants[k]->shops[l]->machines[m]->get_widget();
+                        shpWdgt->addChild(machine_itm);
+                    }
                     plntWdgt->addChild(shpWdgt);
                 }
                 comWdgt->addChild(plntWdgt);
             }
+            //comWdgt->setExpanded(true);
             dbItm->addChild(comWdgt);
         }
+        //dbItm->setExpanded(true);
         _dbWdgt->push_back(dbItm);
     }
     return false;

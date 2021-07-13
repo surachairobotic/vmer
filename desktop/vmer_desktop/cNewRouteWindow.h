@@ -28,7 +28,16 @@ private slots:
     //void on_btn_del_clicked();
     //void on_buttonBox_accepted();
 
+    void on_treeWidget_left_itemChanged(QTreeWidgetItem *item, int column);
+
+    void on_treeWidget_left_itemClicked(QTreeWidgetItem *item, int column);
+
 private:
+    void checkStateProcess(QTreeWidgetItem *item, int column);
+    void checkAllChild(QTreeWidgetItem *item, Qt::CheckState state);
+    void checkAllParent(QTreeWidgetItem *item, Qt::CheckState state);
+    void checkAllChildNotDiff(QTreeWidgetItem *item);
+
     Ui::cNewRouteWindow *ui;
     int plantId;
     QString routeName;

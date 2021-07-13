@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->treeWidgetRoute->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->treeWidgetRoute, &QTreeWidget::customContextMenuRequested, this, &MainWindow::routeRightClickMenu);
 
-    connect(ui->treeWidgetElement, &QTreeWidget::itemChanged, this, [=](QTreeWidgetItem *item, int column){
+    connect(ui->treeWidgetElement, &QTreeWidget::itemChanged, this, [=](QTreeWidgetItem *item, int column) {
         cPointWidget *p = (cPointWidget*)item;
         if(p) {
             qDebug() << "QTreeWidget::itemChanged : col= " << column << ", name: " << p->text(0);
@@ -53,6 +53,7 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     this->setFocus();
+    openProject("/home/sugar/Documents/VmerProjects/t8/t8.sqlite3");
 }
 
 MainWindow::~MainWindow() {
@@ -96,10 +97,14 @@ void MainWindow::on_actionOpen_triggered() {
     QString path = "C:/Users/"+hostname+"/Documents/VmerProjects/";
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Project"), path,
                                                     tr("Project Files (*.sqlite3)"));
-    if(fileName != "") {
-        qDebug() << fileName;
-        realProjName = fileName.section('/', -2, -2);
-        realProjPath = fileName.section('/', 0, -2) + "/";
+    openProject(fileName);
+}
+
+void MainWindow::openProject(const QString &fname) {
+    if(fname != "") {
+        qDebug() << fname;
+        realProjName = fname.section('/', -2, -2);
+        realProjPath = fname.section('/', 0, -2) + "/";
         realProjImage = (realProjPath+"images/");
         openProject(realProjName, realProjPath);
     }
@@ -197,10 +202,20 @@ void MainWindow::on_treeWidgetElement_currentItemChanged(QTreeWidgetItem *curren
             cElementWidget *elm = static_cast<cElementWidget*>(current);
             //elm->cParent->printInfo();
             elementGraphics(elm->cParent);
+            ui->plainTextEdit_prop->setPlainText(elm->cParent->desc);
         }
         else if(current->whatsThis(0).contains("Point")) {
             cPointWidget *pnt = static_cast<cPointWidget*>(current);
-            //pnt->cParent->printInfo();
+            pnt->cParent->printInfo();
+            int indxEle = -1;
+            for(int i=0; i<db->elements.size(); i++) {
+                if(db->elements[i].id == pnt->cParent->element_id) {
+                    indxEle = i;
+                    break;
+                }
+            }
+            elementGraphics(&db->elements[indxEle]);
+            ui->plainTextEdit_prop->setPlainText(pnt->cParent->config);
         }
     }
 }
@@ -298,16 +313,20 @@ void MainWindow::on_treeWidgetModel_currentItemChanged(QTreeWidgetItem *current,
             cElementWidget *elm = static_cast<cElementWidget*>(current);
             //elm->cParent->printInfo();
             elementGraphics(elm->cParent);
+            ui->plainTextEdit_prop->setPlainText(elm->cParent->desc);
         }
         else if(current->whatsThis(0).contains("Model")) {
             cModelWidget *mdl = static_cast<cModelWidget*>(current);
             qDebug() << "address of mdl->cParent : " << mdl->cParent;
             mdl->cParent->printInfo("on_treeWidgetModel_currentItemChanged");
+            QString msg = QString("Model name : " + mdl->cParent->name);
             bool bStart=true;
             for(int i=0; i<mdl->cParent->elements.size(); i++) {
                 elementGraphics(mdl->cParent->elements[i], bStart);
                 bStart=false;
+                msg += QString("\n--> Element name : " + mdl->cParent->elements[i]->name);
             }
+            ui->plainTextEdit_prop->setPlainText(msg);
         }
     }
 }
@@ -317,3 +336,80 @@ void MainWindow::on_actionSave_Project_triggered() {
     if(hasDB)
         cpDir(currProjPath, realProjPath);
 }
+
+void MainWindow::on_btn_addModel_clicked()
+{
+    on_actionNew_Model_Window_triggered();
+}
+
+
+void MainWindow::on_btn_addElement_clicked()
+{
+    on_actionNew_Element_Window_triggered();
+}
+
+
+void MainWindow::on_treeWidgetRoute_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+{
+    if(current == nullptr)
+        return ;
+    QString msg = QString(current->whatsThis(0) + " : " + current->text(0));
+//    qDebug() << current->whatsThis(0) << " : " << current->text(0);
+    QList<QString> type;
+    if(current->whatsThis(0).contains("DBTable"))
+        type = {"Company", "Plant", "Route"};
+    else if(current->whatsThis(0).contains("Company"))
+        type = {"Plant", "Route"};
+    else if(current->whatsThis(0).contains("Plant"))
+        type = {"Route"};
+    msg += showItemInfo(current, &type);
+    ui->plainTextEdit_prop->setPlainText(msg);
+}
+
+QString MainWindow::showItemInfo(const QTreeWidgetItem *current, const QList<QString> *type) {
+    int s = (*type).size();
+    int *count = new int[s];
+    for(int i=0; i<s; i++)
+        count[i]=0;
+    itemRecusiveCount(current, type, count);
+    QString res = "";
+    for(int i=0; i<(*type).size(); i++)
+        res += QString("\n" + (*type)[i] + " : " + QString::number(count[i]));
+    return res;
+}
+
+void MainWindow::itemRecusiveCount(const QTreeWidgetItem *current, const QList<QString> *type, int *count) {
+//    qDebug() << current->text(0) << " : " << (*type).size();
+//    for(int i=0; i<(*type).size(); i++)
+//        qDebug() << "[" << i << "] : " << count[i];
+    for(int i=0; i<(*type).size(); i++)
+        if(current->whatsThis(0).contains((*type)[i])) {
+            count[i]++;
+            break;
+        }
+//    qDebug() << "----------------";
+//    for(int i=0; i<(*type).size(); i++)
+//        qDebug() << "[" << i << "] : " << count[i];
+    for(int i=0; i<current->childCount(); i++)
+        itemRecusiveCount(current->child(i), type, count);
+}
+
+void MainWindow::on_treeWidgetDB_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+{
+    if(current == nullptr)
+        return ;
+    QString msg = QString(current->whatsThis(0) + " : " + current->text(0));
+//    qDebug() << current->whatsThis(0) << " : " << current->text(0);
+    QList<QString> type;
+    if(current->whatsThis(0).contains("DBTable"))
+        type = {"Company", "Plant", "Shop", "Machine"};
+    else if(current->whatsThis(0).contains("Company"))
+        type = {"Plant", "Shop", "Machine"};
+    else if(current->whatsThis(0).contains("Plant"))
+        type = {"Shop", "Machine"};
+    else if(current->whatsThis(0).contains("Shop"))
+        type = {"Machine"};
+    msg += showItemInfo(current, &type);
+    ui->plainTextEdit_prop->setPlainText(msg);
+}
+

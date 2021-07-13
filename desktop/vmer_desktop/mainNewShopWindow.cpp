@@ -15,7 +15,25 @@ void MainWindow::newShopMain(int _plantId, QString name, QList<int> mdlIds) {
     newShop(_plantId, name, mdlIds);
 }
 
-bool MainWindow::newShop(int _plantId, QString name, QList<int> mdlIds) {
+//QTreeWidgetItem* MainWindow::newShop(int _plantId, QString name, QList<int> mdlIds) {
+QTreeWidgetItem* MainWindow::newShop(int _plantId, QString name) {
+    int idM=1;
+    for(int i=0; i<db->shops.size(); i++) {
+        if(idM <= db->shops[i].id)
+            idM = db->shops[i].id;
+    }
+    idM+=1;
+    qDebug() << "newShop --> _plantId : " << _plantId;
+    //db->insert_shop(idM, _plantId, name, "^_shop_^", mdlIds);
+    db->insert_shop(idM, _plantId, name, "^_shop_^");
+    //displayDBTree();
+
+    int indx = db->shops.size()-1;
+    return db->shops[indx].get_widget();
+    //return true;
+}
+
+QTreeWidgetItem* MainWindow::newShop(int _plantId, QString name, QList<int> mdlIds) {
     int idM=1;
     for(int i=0; i<db->shops.size(); i++) {
         if(idM <= db->shops[i].id)
@@ -24,6 +42,10 @@ bool MainWindow::newShop(int _plantId, QString name, QList<int> mdlIds) {
     idM+=1;
     //qDebug() << idM << ", " << "model_"+QString::number(idM) << ", " << eleIds.size();
     db->insert_shop(idM, _plantId, name, "^_shop_^", mdlIds);
-    displayDBTree();
-    return true;
+    //db->insert_shop(idM, _plantId, name, "^_shop_^");
+    //displayDBTree();
+
+    int indx = db->shops.size()-1;
+    return db->shops[indx].get_widget();
+    //return true;
 }

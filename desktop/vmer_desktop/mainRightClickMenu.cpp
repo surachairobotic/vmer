@@ -25,14 +25,13 @@ void MainWindow::elementRightClickMenu(const QPoint &pos) {
     bool bUpdate=false;
 
     if(item->whatsThis(0).contains("Element")) {
-        newAct = new QAction("New Point", this);
-        newAct->setStatusTip("New Point xxxxxxxxxxxxxxx");
-        delAct = new QAction("Delete Element", this);
-        delAct->setStatusTip("Delete Element xxxxxxxxxxxxxxx");
+        QList<QAction*> listAction;
+        listAction.push_back(new QAction("New Point", this));
+        listAction.push_back(new QAction("Rename", this));
+        listAction.push_back(new QAction("Delete Element", this));
 
         QMenu menu(this);
-        menu.addAction(newAct);
-        menu.addAction(delAct);
+        menu.addActions(listAction);
 
         QPoint pt(pos);
         QAction *selected = menu.exec( tree->mapToGlobal(pt) );
@@ -51,6 +50,11 @@ void MainWindow::elementRightClickMenu(const QPoint &pos) {
             parent->insertChild(itemIndex, elmWdg->cParent->get_widget());
             displayElementTree();
             */
+        }
+        else if(selected && selected->text() == "Rename") {
+            qDebug() << "selected : " << selected->text();
+            //item->setSelected(true);
+
         }
         else if(selected && selected->text() == "Delete Element") {
             qDebug() << "selected : " << selected->text();
@@ -130,19 +134,27 @@ void MainWindow::modelRightClickMenu(const QPoint &pos) {
     }
     else if(item->whatsThis(0).contains("Model")) {
         qDebug() << "contains(Model) : " << item->whatsThis(0);
-        delAct = new QAction("Delete Model", this);
-        delAct->setStatusTip("Delete Model xxxxxxxxxxxxxxx");
+        delAct = new QAction("Delete", this);
+        delAct->setStatusTip("Delete xxxxxxxxxxxxxxx");
+        renmAct = new QAction("Rename");
+        renmAct->setStatusTip("Rename xxxxxxxxxxxxxxx");
         QMenu menu(this);
         menu.addAction(delAct);
 
         QPoint pt(pos);
         QAction *selected = menu.exec( tree->mapToGlobal(pt) );
-        if (selected && selected->text() == "Delete Model") {
+        if (selected && selected->text() == "Delete") {
             qDebug() << "selected : " << selected->text();
             cModelWidget* pntWdg = static_cast<cModelWidget*>(item);
             //int pntId = pntWdg->cParent->id;
             //db->deleteDB("model", pntId);
             //delPoint(pntWdg);
+            db->delete_model(pntWdg->cParent->id);
+            bUpdate=true;
+        }
+        else if (selected && selected->text() == "Rename") {
+            qDebug() << "selected : " << selected->text();
+            cModelWidget* pntWdg = static_cast<cModelWidget*>(item);
             db->delete_model(pntWdg->cParent->id);
             bUpdate=true;
         }
@@ -209,7 +221,11 @@ void MainWindow::dbRightClickMenu(const QPoint &pos)
             qDebug() << "selected" << selected->text();
             cPlantWidget* plntWdg = static_cast<cPlantWidget*>(item);
             int plntId = plntWdg->cParent->id;
-            on_actionNew_Shop_Window_triggered(plntId);
+            //on_actionNew_Shop_Window_triggered(plntId);
+            QString numID = QString::number(plntWdg->cParent->id);
+            QString name = plntWdg->cParent->name;
+            qDebug() << numID << " : " << name;
+            QTreeWidgetItem *itm = newShop(plntId, QString("shop_"+QString::number(newShopCount++)));
             bUpdate = true;
         }
     }

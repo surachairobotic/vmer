@@ -9,8 +9,8 @@ bool cDB::insert(const cElement *ele) {
     QString desc = "NULL";
     if(ele->desc != "")
         desc = ele->desc;
-    QString msg = QString("INSERT INTO `element` VALUES (%1,'%2','%3','%4',%5)").arg(QString::number(ele->id), ele->name, ele->std_image, ele->image, desc);
-    //qDebug() << msg;
+    QString msg = QString("INSERT INTO `element` VALUES (%1,'%2','%3','%4','%5')").arg(QString::number(ele->id), ele->name, ele->std_image, ele->image, desc);
+    qDebug().noquote() << msg;
     query.prepare(msg);
     query.exec();
     while(query.next()) {

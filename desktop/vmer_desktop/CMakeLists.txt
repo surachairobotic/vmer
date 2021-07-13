@@ -67,6 +67,9 @@ set(PROJECT_SOURCES
         cNewRouteWindow.h
         cNewRouteWindow.cpp
         cNewRouteWindow.ui
+        cNewMachineWindow.h
+        cNewMachineWindow.cpp
+        cNewMachineWindow.ui
         #cNewElement.h
         #cNewElement.cpp
         #cNewElement.ui

@@ -19,7 +19,8 @@ public:
     QString currProjName, currProjPath, currProjImage;
 
 Q_SIGNALS:
-    void newElementAccepted(QString name, QString stdImg, QString userImg, QList<QString> pntName);
+    void newElementAccepted(QString name, QString stdImg, QString userImg, QString descElement, QList<QString> pntName, QList<QString> pntDesc);
+    //void newElementAccepted(QString name, QString stdImg, QString userImg, QList<QString> pntName);
     //void setMainwindow(MainWindow *main);
 
 private slots:
@@ -31,10 +32,12 @@ private slots:
 private:
     void add_graphics(QString fname, QGraphicsView *gView);
     QString img_browse(QString path, QGraphicsView *gView);
+    QString file2String(QString f);
+    void initPointTable(void);
 
     Ui::cNewElementWindow *ui;
-    QString eleName, stdImg, userImg;
-    QList<QString> pntName;
+    QString eleName, stdImg, userImg, descElement;
+    QList<QString> pntName, pntDesc;
     //MainWindow *main;
 
 };

@@ -25,7 +25,7 @@
       </property>
       <widget class="QTabWidget" name="tabWidgetLeft">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="widgetPlants">
         <attribute name="title">
@@ -48,9 +48,16 @@
        </widget>
        <widget class="QWidget" name="widgetElements">
         <attribute name="title">
-         <string>Machines</string>
+         <string>Models</string>
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QPushButton" name="btn_addModel">
+           <property name="text">
+            <string>Add Model</string>
+           </property>
+          </widget>
+         </item>
          <item>
           <widget class="QSplitter" name="splitter_2">
            <property name="orientation">
@@ -78,6 +85,13 @@
            </widget>
           </widget>
          </item>
+         <item>
+          <widget class="QPushButton" name="btn_addElement">
+           <property name="text">
+            <string>Add Element</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="widgetRoute">
@@ -102,7 +116,7 @@
       </widget>
       <widget class="QTabWidget" name="tabWidgetRight">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="informations">
         <attribute name="title">
@@ -118,6 +132,11 @@
         <attribute name="title">
          <string>Properties</string>
         </attribute>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QPlainTextEdit" name="plainTextEdit_prop"/>
+         </item>
+        </layout>
        </widget>
       </widget>
      </widget>
@@ -130,7 +149,7 @@
      <x>0</x>
      <y>0</y>
      <width>1006</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">

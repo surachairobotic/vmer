@@ -1,0 +1,25 @@
+-- Company แสดง Machine ด้วย
+-- ui->treeWidgetModel->addTopLevelItem(root); ได้หลายตัว
+-- Tab : Machine เปลี่ยนชื่อเป็น Model
+-- เพิ่มปุ่ม New Model and New Element
+-- ให้ clear ก่อนสร้าง Qtreewidget
+-- แสดง prop ของ model
+-- คลิกที่ point จะ disable info tab and display descp in Prop tab. (ไม่ได้ disable info tab)
+-- หน้า New Route ติ๊กถูกให้ make sense
+-- หน้า New Route เอาปุ่มกับ right tab ออก
+-- คลิกซ้ายที่ Route ให้แสดง machine & shop lists
+-- คลิกซ้ายที่ Route ให้แสดง Information ที่ด้านขวา
+
+
+คลิกขวา rename ทั้ง model and element
+แสดงหน้าต่างใหม่ ไม่ต้องสร้าง tree ใหม่ ให้ add widget เพิ่มเข้าไป
+สร้าง Tab ชื่อ Vmer จะสแกนหา device แล้วแสดง list ที่ tree ด้านซ้าย และแสดง info ด้านขวา + มีปุ่มสำหรับ Upload ด้วย
+*ถามคุณ max ขอข้อมูลที่ส่งมาจาก VMER
+*ถามคุณ max แสดงกราฟยังไง
+ปุ่มสำหรับแสดง PDF จากกราฟ
+คลิกขวาที่ Plant --> New Shop แต่ไปเรียกหน้าต่างผิด
+คลิกขวาที่ Shop ให้ Add Machine ไม่ใช่ Model
+
+
+-- เปลี่ยน Edit image file to Add image file
+generate relation of databases

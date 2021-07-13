@@ -53,11 +53,19 @@ private slots:
     void on_actionNew_Shop_Window_triggered(int plantId);
     void on_actionNew_Route_Window_triggered(int plantId);
 
-    void newElementMain(QString name, QString stdImg, QString userImg, QList<QString> pntNames);
+    void newElementMain(QString name, QString stdImg, QString userImg, QString descElement, QList<QString> pntName, QList<QString> pntDesc);
     void newModelMain(QString name, QList<int> eleIds);
     void newShopMain(int _plantId, QString name, QList<int> mdlIds);
 
     void on_actionSave_Project_triggered();
+
+    void on_btn_addModel_clicked();
+
+    void on_btn_addElement_clicked();
+
+    void on_treeWidgetRoute_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
+    void on_treeWidgetDB_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
 private:
     void cNewProjectDialogTerminate();
@@ -67,10 +75,11 @@ private:
     bool displayRouteTree();
     void updateDatabase();
 
-    bool newShop(int _plantId, QString name, QList<int> mdlIds);
+    QTreeWidgetItem* newShop(int _plantId, QString name, QList<int> mdlIds);
+    QTreeWidgetItem* newShop(int _plantId, QString name);
     bool newModel();
     bool newModel(QString name, QList<int> eleIds);
-    bool newElement(QString name, QString stdImg, QString userImg, QList<QString> pntName);
+    bool newElement(QString name, QString stdImg, QString userImg, QString descElement, QList<QString> pntName, QList<QString> pntDesc);
     bool newPoint(int element_id);
     void delPoint(QTreeWidgetItem *item);
     void delElement(QTreeWidgetItem *item);
@@ -79,8 +88,12 @@ private:
     QString getElementImagePath(const cElement *ele);
     bool rmDir(const QString &dirPath);
     bool cpDir(const QString &srcPath, const QString &dstPath);
+    void openProject(const QString &fname);
     void openProject(const QString &name, const QString &path, bool db=false);
 
+    void itemRecusiveCount(const QTreeWidgetItem *current, const QList<QString> *type, int *count);
+    QString showItemInfo(const QTreeWidgetItem *current, const QList<QString> *type);
+    void setAllChildExpanded(QTreeWidgetItem *itm);
 
     Ui::MainWindow *ui;
     cNewProjectDialog *newprojDialog;
@@ -91,11 +104,12 @@ private:
     cDB *db;
     QString currProjName, currProjPath, currProjImage, realProjName, realProjPath, realProjImage;
     bool hasDB;
-    QAction *newAct, *delAct, *jsonAct;
+    QAction *newAct, *delAct, *jsonAct, *renmAct;
     QList<QTreeWidgetItem*> modelWdgt, dbWdgt, eleWdgt, routeWdgt;
     QPixmap *img;
     QHBoxLayout *hLayout;
     QGraphicsView *gView;
     QGraphicsScene *scene;
+    int newShopCount = 1;
 };
 #endif // MAINWINDOW_H

@@ -18,10 +18,13 @@ bool MainWindow::displayDBTree()
     qDebug() << "displayDBTree()";
     hasDB = false;
     ui->treeWidgetDB->clear();
-    QTreeWidgetItem *root = new QTreeWidgetItem(ui->treeWidgetDB);
-    root->setExpanded(true);
+    //QTreeWidgetItem *root = new QTreeWidgetItem(ui->treeWidgetDB);
+    //root->setExpanded(true);
     db->get_db(&dbWdgt);
     ui->treeWidgetDB->addTopLevelItem(dbWdgt[0]);
+    dbWdgt[0]->setExpanded(true);
+    for(int i=0; i<dbWdgt.size(); i++)
+        setAllChildExpanded(dbWdgt[i]);
     hasDB = true;
 
     /*
@@ -90,17 +93,25 @@ bool MainWindow::displayDBTree()
     return false;
 }
 
+void MainWindow::setAllChildExpanded(QTreeWidgetItem *itm) {
+    itm->setExpanded(true);
+    for(int i=0; i<itm->childCount(); i++)
+        setAllChildExpanded(itm->child(i));
+}
+
 bool MainWindow::displayModelTree()
 {
     qDebug() << "displayModelTree()";
     //delete ui->treeWidgetElement->takeTopLevelItem(0);
     hasDB = false;
     ui->treeWidgetModel->clear();
+    /*
     QTreeWidgetItem *root = new QTreeWidgetItem(ui->treeWidgetModel);
     root->setWhatsThis(0, "Root");
     root->setText(0, "Models");
     root->setExpanded(true);
     ui->treeWidgetModel->addTopLevelItem(root);    
+    */
 
     qDebug() << "before: ";
     for(int i=0; i<db->models.size(); i++)
@@ -121,7 +132,8 @@ bool MainWindow::displayModelTree()
     }
 
     for(int i=0; i<modelWdgt.size(); i++) {
-        root->addChild(modelWdgt[i]);
+        //root->addChild(modelWdgt[i]);
+        ui->treeWidgetModel->addTopLevelItem(modelWdgt[i]);
     }
     hasDB = true;
     qDebug() << "end: displayModelTree()";
@@ -136,26 +148,33 @@ bool MainWindow::displayElementTree() {
     qDebug() << "displayElementTree()";
     hasDB = false;
     ui->treeWidgetElement->clear();
+    /*
     QTreeWidgetItem *root = new QTreeWidgetItem(ui->treeWidgetElement);
     root->setWhatsThis(0, "Root");
     root->setText(0, "Elements");
     root->setExpanded(true);
     ui->treeWidgetElement->addTopLevelItem(root);
+    */
 
     //qDebug() << "before : eleWdgt";
+    /*
     for(int i=0; i<eleWdgt.size(); i++) {
         cElementWidget *elm = static_cast<cElementWidget*>(eleWdgt[i]);
         //elm->cParent->printInfo();
     }
+    */
     db->get_element(&eleWdgt);
     //qDebug() << "after : eleWdgt";
+    /*
     for(int i=0; i<eleWdgt.size(); i++) {
         cElementWidget *elm = static_cast<cElementWidget*>(eleWdgt[i]);
         //elm->cParent->printInfo();
     }
+    */
 
     for(int i=0; i<eleWdgt.size(); i++) {
-        root->addChild(eleWdgt[i]);
+        //root->addChild(eleWdgt[i]);
+        ui->treeWidgetElement->addTopLevelItem(eleWdgt[i]);
     }
     hasDB = true;
     return false;
@@ -164,10 +183,12 @@ bool MainWindow::displayRouteTree() {
     qDebug() << "displayRouteTree()";
     hasDB = false;
     ui->treeWidgetRoute->clear();
-    QTreeWidgetItem *root = new QTreeWidgetItem(ui->treeWidgetRoute);
-    root->setExpanded(true);
+    //QTreeWidgetItem *root = new QTreeWidgetItem(ui->treeWidgetRoute);
+    //root->setExpanded(true);
     db->get_routes(&routeWdgt);
     ui->treeWidgetRoute->addTopLevelItem(routeWdgt[0]);
+    for(int i=0; i<routeWdgt.size(); i++)
+        setAllChildExpanded(routeWdgt[i]);
     hasDB = true;
     return true;
 }
