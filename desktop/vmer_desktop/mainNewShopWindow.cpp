@@ -4,6 +4,7 @@
 
 void MainWindow::on_actionNew_Shop_Window_triggered(int plantId) {
     newShpWin = new cNewShopWindow(this, plantId);
+    newShpWin->setWindowTitle("New Shop");
     newShpWin->db = this->db;
     newShpWin->createModelTable();
     connect(newShpWin, &cNewShopWindow::newShopAccepted, this, &MainWindow::newShopMain);

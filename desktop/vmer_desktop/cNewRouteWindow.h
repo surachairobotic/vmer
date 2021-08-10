@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "cDB.h"
+#include <QAbstractButton>
 
 namespace Ui {
 class cNewRouteWindow;
@@ -19,9 +20,17 @@ public:
 
     cDB *db;
     void createPlantTable();
+    QJsonDocument tree2json(const QTreeWidget *wdgt, const QString routeName, const int routeId);
+    QString recursiveTreeItem(const QTreeWidgetItem *wdgt);
+    QJsonObject* recursiveJsonItem(const QTreeWidgetItem *wdgt);
+    void saveJson(QJsonDocument document, QString fileName);
 
 Q_SIGNALS:
     void newRouteAccepted(int _plantId, QString name, QList<int> eleIds);
+
+public slots:
+    void accept();
+    void reject();
 
 private slots:
     //void on_btn_add_clicked();
@@ -32,7 +41,10 @@ private slots:
 
     void on_treeWidget_left_itemClicked(QTreeWidgetItem *item, int column);
 
+    void on_buttonBox_clicked(QAbstractButton *button);
+
 private:
+
     void checkStateProcess(QTreeWidgetItem *item, int column);
     void checkAllChild(QTreeWidgetItem *item, Qt::CheckState state);
     void checkAllParent(QTreeWidgetItem *item, Qt::CheckState state);

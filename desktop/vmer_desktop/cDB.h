@@ -5,6 +5,9 @@
 #include "cRoute.h"
 #include "cModel.h"
 
+#include<iostream>
+using namespace std;
+
 class cDB {
 public:
 	cDB();
@@ -71,6 +74,8 @@ public:
 
     bool insert(const cElement *ele);
     bool insert(const cPoint *pnt);
+    bool insert(const cMachine *itm);
+    bool insert(const cRoute *itm);
     bool insert_model(const int _id, const QString _name, const QString _desc);
     bool insert_model(const int _id, const QString _name, const QString _desc, const QList<int> &_element_id);
     bool insert_element_in_model(const int _id, const int _model_id, const int _element_id, const QString _name, const QString _desc);
@@ -82,6 +87,7 @@ public:
     bool delete_element(const int _id);
     bool delete_element_in_model(const int _id);
     bool delete_model(const int _id);
+    //bool delete(const cMachine *itm);
 
     bool update(QString tbName, int id, QString data);
     void checkBox(QTreeWidgetItem *wg, bool _chkBox);
@@ -109,6 +115,9 @@ public:
     void testMapper();
 
     void deleteDB(QString table, int id);
+
+    template<typename T>
+    void pushDiffOnly(QList<T> *x, T *y, QList<int> *vIndx);
 
 private:
     QSqlDatabase db;

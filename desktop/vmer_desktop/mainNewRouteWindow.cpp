@@ -4,28 +4,17 @@
 
 void MainWindow::on_actionNew_Route_Window_triggered(int plantId) {
     newRouteWin = new cNewRouteWindow(this, plantId);
+    newRouteWin->setWindowTitle("New Route");
     newRouteWin->db = this->db;
     newRouteWin->createPlantTable();
-    //connect(newRouteWin, &cNewRouteWindow::newRouteAccepted, this, &MainWindow::newShopMain);
+    connect(newRouteWin, &cNewRouteWindow::accepted, this, &MainWindow::newRouteMain);
     newRouteWin->show();
 }
 
-/*
-void MainWindow::newShopMain(int _plantId, QString name, QList<int> mdlIds) {
-    qDebug() << "newShopMain";
-    newShop(_plantId, name, mdlIds);
+void MainWindow::newRouteMain() {
+    qDebug() << "newRouteMain";
+    db->query_route_table();
+    db->link_plant_table();
+    db->link_route_table();
+    displayRouteTree();
 }
-
-bool MainWindow::newShop(int _plantId, QString name, QList<int> mdlIds) {
-    int idM=1;
-    for(int i=0; i<db->shops.size(); i++) {
-        if(idM <= db->shops[i].id)
-            idM = db->shops[i].id;
-    }
-    idM+=1;
-    //qDebug() << idM << ", " << "model_"+QString::number(idM) << ", " << eleIds.size();
-    db->insert_shop(idM, _plantId, name, "^_shop_^", mdlIds);
-    displayDBTree();
-    return true;
-}
-*/

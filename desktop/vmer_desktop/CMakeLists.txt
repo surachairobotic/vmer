@@ -39,6 +39,7 @@ set(PROJECT_SOURCES
         mainNewModelWindow.cpp
         mainNewShopWindow.cpp
         mainNewRouteWindow.cpp
+        mainNewMachineWindow.cpp
         mainRightClickMenu.cpp
         cRoute.h
         cRoute.cpp
@@ -74,6 +75,10 @@ set(PROJECT_SOURCES
         #cNewElement.cpp
         #cNewElement.ui
         cDirHandle.h
+        commonFunction.h
+        commonFunction.cpp
+        cElementProperties.h
+        cElementProperties.cpp
 )
 
 qt5_add_resources(PROJECT_SOURCES resources/resourcesFile.qrc)

@@ -9,17 +9,68 @@
 -- หน้า New Route เอาปุ่มกับ right tab ออก
 -- คลิกซ้ายที่ Route ให้แสดง machine & shop lists
 -- คลิกซ้ายที่ Route ให้แสดง Information ที่ด้านขวา
+-- คลิกขวาที่ Plant --> New Shop แต่ไปเรียกหน้าต่างผิด
+-- คลิกขวาที่ Shop ให้ Add Machine ไม่ใช่ Model
+-- ใส่ header :name
+-- ใส่ "p"+point_name
+-- insert column v,h,a
+-- route แสดงเป็นตาราง
+-- เปลี่ยน Edit image file to Add image file
 
+generate relation of databases
+info tab มีอะไรแปลกๆด้านหลัง
 
 คลิกขวา rename ทั้ง model and element
-แสดงหน้าต่างใหม่ ไม่ต้องสร้าง tree ใหม่ ให้ add widget เพิ่มเข้าไป
+? แสดงหน้าต่างใหม่ ไม่ต้องสร้าง tree ใหม่ ให้ add widget เพิ่มเข้าไป
 สร้าง Tab ชื่อ Vmer จะสแกนหา device แล้วแสดง list ที่ tree ด้านซ้าย และแสดง info ด้านขวา + มีปุ่มสำหรับ Upload ด้วย
-*ถามคุณ max ขอข้อมูลที่ส่งมาจาก VMER
-*ถามคุณ max แสดงกราฟยังไง
 ปุ่มสำหรับแสดง PDF จากกราฟ
-คลิกขวาที่ Plant --> New Shop แต่ไปเรียกหน้าต่างผิด
-คลิกขวาที่ Shop ให้ Add Machine ไม่ใช่ Model
 
 
--- เปลี่ยน Edit image file to Add image file
-generate relation of databases
+
+-- plant -> "New Route"
+-- shop -> "Add machine"
+-- plant -> "New Shop"
+
+db -> "New Company", "Rename", "Delete"
+company -> "New Plant", "Rename", "Delete"
+plant -> "Rename", "Delete"
+shop -> "Rename", "Delete"
+machine -> "Rename", "Delete"
+
+route -> "Rename", "Delete"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

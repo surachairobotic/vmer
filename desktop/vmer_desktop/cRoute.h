@@ -71,6 +71,7 @@ class cDBTable {
 public:
     cDBTable(int _id, QString _name, QString _desc);
     bool pushBackCompany(cCompany* comp);
+    friend bool operator==(const cDBTable& l, const cDBTable& r);
     QTreeWidgetItem* get_widget();
     int id;
     QString name, desc;
@@ -87,6 +88,7 @@ class cCompany {
 public:
     cCompany(int _id, int _db_id, QString _name, QString _desc);
     bool pushBackPlant(cPlant* plnt);
+    friend bool operator==(const cCompany& l, const cCompany& r);
     QTreeWidgetItem* get_widget();
     int id, db_id;
     QString name, desc;
@@ -111,6 +113,7 @@ public:
     cPlant(int _id, int _company_id, QString _name, QString _desc);
     bool pushBackShop(cShop* _shop);
     bool pushBackRoute(cRoute* _route);
+    friend bool operator==(const cPlant& l, const cPlant& r);
     QTreeWidgetItem* get_widget();
     int id, company_id;
     QString name, desc;
@@ -128,6 +131,7 @@ class cShop {
 public:
     cShop(int _id, int _plant_id, QString _name, QString _desc);
     bool pushBackMachine(cMachine* _machine);
+    friend bool operator==(const cShop& l, const cShop& r);
     QTreeWidgetItem* get_widget();
     int id, plant_id;
     QString name, desc;
@@ -143,6 +147,7 @@ public:
 class cMachine : public QTreeWidgetItem {
 public:
     cMachine(const int _id, const int _model_id, const int _shop_id, const QString _name, const QString _serial, const QString _desc);
+    friend bool operator==(const cMachine& l, const cMachine& r);
     QTreeWidgetItem* get_widget();
     int id, model_id, shop_id;
     QString name, serial_number, desc;
@@ -175,6 +180,7 @@ public:
         }
         */
     }
+    friend bool operator==(const cRoute& l, const cRoute& r);
     QTreeWidgetItem* get_widget();
     int id, plant_id;
     QString name, desc;
@@ -187,6 +193,7 @@ class cElementInModel {
 public:
     cElementInModel(const int _id, const int _model_id, const int _element_id, const QString _name, const QString _desc)
         : id(_id), model_id(_model_id), element_id(_element_id), name(_name), desc(_desc) {}
+    friend bool operator==(const cElementInModel& l, const cElementInModel& r);
     int id, model_id, element_id;
     QString name, desc;
 };
@@ -195,6 +202,7 @@ class cMachineInRoute {
 public:
     cMachineInRoute(const int _id, const int _route_id, const int _machine_id, const QString _desc)
         : id(_id), route_id(_route_id), machine_id(_machine_id), desc(_desc) {}
+    friend bool operator==(const cMachineInRoute& l, const cMachineInRoute& r);
     int id, route_id, machine_id;
     QString desc;
 };
@@ -203,6 +211,7 @@ class cPointInRoute {
 public:
     cPointInRoute(const int _id, const int _route_id, const int _machine_id, const int _element_id, const int _point_id, const QString _desc)
         : id(_id), route_id(_route_id), machine_id(_machine_id), element_id(_element_id), point_id(_point_id), desc(_desc) {}
+    friend bool operator==(const cPointInRoute& l, const cPointInRoute& r);
     int id, route_id, machine_id, element_id, point_id;
     QString desc;
 };

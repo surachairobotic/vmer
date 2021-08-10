@@ -1,0 +1,40 @@
+{
+  "name":"Electric motor",
+  "properties":[
+    {
+      "name":"Installation",
+      "type":"select",
+      "values":[
+        {
+          "name":"Horizontal",
+          "value":"1"
+        },
+        {
+          "name":"Vertical",
+          "value":"2"
+        }
+      ],
+      "current_value":"2"
+    },
+    {
+      "name":"Power (KW)",
+      "type":"integer",
+      "min_value":0,
+      "max_value":950,
+      "current_value":1
+    },
+    {
+      "name":"Natural frequency (Hz)",
+      "type":"float",
+      "min_value":0,
+      "max_value":1000,
+      "current_value":8.2
+    },
+    {
+      "name":"Description",
+      "type":"string",
+      "max_length":100,
+      "current_value":"ฟหกดฟหกด"
+    }
+  ]
+}

@@ -14,6 +14,9 @@
 #include <QPixmap>
 #include <QGraphicsView>
 #include <QTableWidget>
+#include <QPlainTextEdit>
+#include "commonFunction.h"
+#include "cElementProperties.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -52,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
             qDebug() << "QTreeWidget::itemChanged : NULL";
     });
 
+    this->setWindowTitle("V-Soft");
     this->setFocus();
     openProject("/home/sugar/Documents/VmerProjects/t8/t8.sqlite3");
 }
@@ -199,12 +203,53 @@ void MainWindow::on_treeWidgetElement_currentItemChanged(QTreeWidgetItem *curren
             prev = previous->whatsThis(0);
         qDebug() << prev << ", " << msg;
         if(current->whatsThis(0).contains("Element")) {
+            ui->tabWidgetRight->setCurrentIndex(0);
             cElementWidget *elm = static_cast<cElementWidget*>(current);
             //elm->cParent->printInfo();
             elementGraphics(elm->cParent);
-            ui->plainTextEdit_prop->setPlainText(elm->cParent->desc);
+//            ui->plainTextEdit_prop->setPlainText(elm->cParent->desc);
+//            QWidget *tabWdgt = ui->properties;
+
+//            QTableWidget *qDrvTab = new QTableWidget();
+//            qDrvTab->setRowCount(5);
+//            qDrvTab->setColumnCount(2);
+            commonFunction::clearLayout(ui->vLayoutPropTab);
+//            QPlainTextEdit *plainTxt = new QPlainTextEdit();
+//            plainTxt->setPlainText(elm->cParent->desc);
+//            ui->vLayoutPropTab->addWidget(plainTxt);
+            QWidget *wdg = new QWidget(this);
+            cElementProperties *element_prop = new cElementProperties(wdg);
+            if(!element_prop->init() || !element_prop->load_json_file("/home/sugar/vmer/element_prop/templates/elements/Electric motor/properties.txt")){
+                QTimer::singleShot(0, this, SLOT(close()));
+            }
+            ui->vLayoutPropTab->addWidget(wdg);
+//            connect(ui->pushButtonSaveElementProperties, &QPushButton::clicked, this, [=]() {
+//                QString json_str;
+
+//                // create JSON string
+//                if( !element_prop->create_json(json_str)){
+//                    return;
+//                }
+
+//                // save the string to file
+//                QFile file( "properties_save.txt" );
+//                if ( !file.open(QIODevice::WriteOnly | QIODevice::Text) )
+//                {
+//                    QMessageBox::warning(this, tr("Alert")
+//                        , QString("Cannot create json file"));
+//                    return;
+//                }
+//                QTextStream stream( &file );
+//                stream.setCodec("UTF-8");
+//                stream.setGenerateByteOrderMark(true);
+//                stream << json_str;
+//                file.close();
+//                QMessageBox::warning(this, tr("Alert")
+//                    , QString("OK"));
+//            });
         }
         else if(current->whatsThis(0).contains("Point")) {
+            ui->tabWidgetRight->setCurrentIndex(1);
             cPointWidget *pnt = static_cast<cPointWidget*>(current);
             pnt->cParent->printInfo();
             int indxEle = -1;
@@ -215,10 +260,35 @@ void MainWindow::on_treeWidgetElement_currentItemChanged(QTreeWidgetItem *curren
                 }
             }
             elementGraphics(&db->elements[indxEle]);
-            ui->plainTextEdit_prop->setPlainText(pnt->cParent->config);
+            commonFunction::clearLayout(ui->vLayoutPropTab);
+            QTableWidget *tableWdgt = new QTableWidget();
+            tableWdgt->setColumnCount(4);
+            QStringList labels;
+            labels << tr("Point Name") << tr("V") << tr("H") << tr("A");
+            tableWdgt->setHorizontalHeaderLabels(labels);
+            tableWdgt->horizontalHeader()->setStretchLastSection(true);
+            QHeaderView *vh=new QHeaderView(Qt::Vertical);
+            vh->hide();
+            tableWdgt->setVerticalHeader(vh);
+            int row = db->elements[indxEle].points.size();
+            tableWdgt->setRowCount(row);
+            for(int i=0; i<row; i++) {
+                QList<QString> lStr = {"p"+db->elements[indxEle].points[i]->name};
+                QList<QString> sConfg = commonFunction::pointJson( db->elements[indxEle].points[i]->config );
+                lStr += sConfg;
+                tableWdgt->insertRow(i);
+                for(int j=0; j<lStr.size(); j++) {
+                    QTableWidgetItem *itm = new QTableWidgetItem(lStr[j]);
+                    itm->setTextAlignment(Qt::AlignCenter);
+                    tableWdgt->setItem(i, j, itm);
+                }
+            }
+            ui->vLayoutPropTab->addWidget(tableWdgt);
         }
     }
 }
+
+
 void MainWindow::elementGraphics(const cElement *ele, bool del) {
     qDebug("elementGraphics");
     QString imgName = getElementImagePath(ele);
@@ -237,26 +307,24 @@ void MainWindow::elementGraphics(const cElement *ele, bool del) {
     gView->show();
     hLayout->addWidget(gView);
 
-    int row=ele->points.size();
-    QTableWidget *pntTable = new QTableWidget(row+1, 1);
-    pntTable->setHorizontalHeaderLabels({"Point ID"});
-    for(int i=0; i<row; i++) {
-        QTableWidgetItem *newItem = new QTableWidgetItem(tr("%1").arg(ele->points[i]->name));
-        pntTable->setItem(i, 1, newItem);
-    }
-    hLayout->addWidget(pntTable);
-
+//    int row=ele->points.size();
+//    QTableWidget *pntTable = new QTableWidget(row+1, 1);
+//    pntTable->setHorizontalHeaderLabels({"Point ID"});
+//    for(int i=0; i<row; i++) {
+//        QTableWidgetItem *newItem = new QTableWidgetItem(tr("%1").arg(ele->points[i]->name));
+//        pntTable->setItem(i, 1, newItem);
+//    }
+//    hLayout->addWidget(pntTable);
 
     if(del) {
         QLayoutItem* item;
-        while ( del && ( item = ui->vLayoutElementInfo->layout()->takeAt( 0 ) ) != NULL )
-        {
+        while ( del && ( item = ui->vLayoutInfoTab->layout()->takeAt( 0 ) ) != NULL ) {
             delete item->widget();
             delete item;
         }
     }
 
-    ui->vLayoutElementInfo->addLayout(hLayout);
+    ui->vLayoutInfoTab->addLayout(hLayout);
 }
 
 QString MainWindow::getElementImagePath(const cElement *ele) {
@@ -310,12 +378,18 @@ void MainWindow::on_treeWidgetModel_currentItemChanged(QTreeWidgetItem *current,
             prev = previous->whatsThis(0);
         qDebug() << prev << ", " << msg;
         if(current->whatsThis(0).contains("Element")) {
+            ui->tabWidgetRight->setCurrentIndex(0);
             cElementWidget *elm = static_cast<cElementWidget*>(current);
             //elm->cParent->printInfo();
             elementGraphics(elm->cParent);
-            ui->plainTextEdit_prop->setPlainText(elm->cParent->desc);
+            commonFunction::clearLayout(ui->vLayoutPropTab);
+            QPlainTextEdit *plainTxt = new QPlainTextEdit();
+            plainTxt->setPlainText(elm->cParent->desc);
+            ui->vLayoutPropTab->addWidget(plainTxt);
+//            ui->plainTextEdit_prop->setPlainText(elm->cParent->desc);
         }
         else if(current->whatsThis(0).contains("Model")) {
+            ui->tabWidgetRight->setCurrentIndex(0);
             cModelWidget *mdl = static_cast<cModelWidget*>(current);
             qDebug() << "address of mdl->cParent : " << mdl->cParent;
             mdl->cParent->printInfo("on_treeWidgetModel_currentItemChanged");
@@ -326,7 +400,26 @@ void MainWindow::on_treeWidgetModel_currentItemChanged(QTreeWidgetItem *current,
                 bStart=false;
                 msg += QString("\n--> Element name : " + mdl->cParent->elements[i]->name);
             }
-            ui->plainTextEdit_prop->setPlainText(msg);
+//            ui->plainTextEdit_prop->setPlainText(msg);
+            commonFunction::clearLayout(ui->vLayoutPropTab);
+            QTableWidget *tableWdgt = new QTableWidget();
+            tableWdgt->setColumnCount(1);
+            QStringList labels;
+            labels << tr("Element Name");
+            tableWdgt->setHorizontalHeaderLabels(labels);
+            tableWdgt->horizontalHeader()->setStretchLastSection(true);
+            QHeaderView *vh=new QHeaderView(Qt::Vertical);
+            vh->hide();
+            tableWdgt->setVerticalHeader(vh);
+            int row = mdl->cParent->elements.size();
+            tableWdgt->setRowCount(row);
+            for(int i=0; i<row; i++) {
+                tableWdgt->insertRow(i);
+                QTableWidgetItem *itm = new QTableWidgetItem(mdl->cParent->elements[i]->name);
+                itm->setTextAlignment(Qt::AlignCenter);
+                tableWdgt->setItem(i, 0, itm);
+            }
+            ui->vLayoutPropTab->addWidget(tableWdgt);
         }
     }
 }
@@ -362,34 +455,46 @@ void MainWindow::on_treeWidgetRoute_currentItemChanged(QTreeWidgetItem *current,
         type = {"Plant", "Route"};
     else if(current->whatsThis(0).contains("Plant"))
         type = {"Route"};
-    msg += showItemInfo(current, &type);
-    ui->plainTextEdit_prop->setPlainText(msg);
+    else if(current->whatsThis(0).contains("Route")) {
+        ui->tabWidgetRight->setCurrentIndex(0);
+        commonFunction::clearLayout(ui->vLayoutInfoTab);
+        QPlainTextEdit *plainTxt = new QPlainTextEdit();
+        QString desc = ((cRouteWidget*)current)->cParent->desc;
+        msg += QString("\nJson : \n"+desc);
+        plainTxt->setPlainText(msg);
+        ui->vLayoutInfoTab->addWidget(plainTxt);
+    }
+    QList<int> count;
+    for(int i=0; i<type.size(); i++)
+        count.append(0);
+    msg += showItemInfo(current, &type, &count);
+    //ui->plainTextEdit_prop->setPlainText(msg);
+    commonFunction::clearLayout(ui->vLayoutPropTab);
+    QPlainTextEdit *plainTxt = new QPlainTextEdit();
+    plainTxt->setPlainText(msg);
+    ui->vLayoutPropTab->addWidget(plainTxt);
 }
 
-QString MainWindow::showItemInfo(const QTreeWidgetItem *current, const QList<QString> *type) {
+QString MainWindow::showItemInfo(const QTreeWidgetItem *current, const QList<QString> *type, QList<int> *counts) {
     int s = (*type).size();
     int *count = new int[s];
     for(int i=0; i<s; i++)
         count[i]=0;
     itemRecusiveCount(current, type, count);
     QString res = "";
-    for(int i=0; i<(*type).size(); i++)
+    for(int i=0; i<(*type).size(); i++) {
         res += QString("\n" + (*type)[i] + " : " + QString::number(count[i]));
+        (*counts)[i] = count[i];
+    }
     return res;
 }
 
 void MainWindow::itemRecusiveCount(const QTreeWidgetItem *current, const QList<QString> *type, int *count) {
-//    qDebug() << current->text(0) << " : " << (*type).size();
-//    for(int i=0; i<(*type).size(); i++)
-//        qDebug() << "[" << i << "] : " << count[i];
     for(int i=0; i<(*type).size(); i++)
         if(current->whatsThis(0).contains((*type)[i])) {
             count[i]++;
             break;
         }
-//    qDebug() << "----------------";
-//    for(int i=0; i<(*type).size(); i++)
-//        qDebug() << "[" << i << "] : " << count[i];
     for(int i=0; i<current->childCount(); i++)
         itemRecusiveCount(current->child(i), type, count);
 }
@@ -401,6 +506,7 @@ void MainWindow::on_treeWidgetDB_currentItemChanged(QTreeWidgetItem *current, QT
     QString msg = QString(current->whatsThis(0) + " : " + current->text(0));
 //    qDebug() << current->whatsThis(0) << " : " << current->text(0);
     QList<QString> type;
+    bool isMachine=false;
     if(current->whatsThis(0).contains("DBTable"))
         type = {"Company", "Plant", "Shop", "Machine"};
     else if(current->whatsThis(0).contains("Company"))
@@ -409,7 +515,65 @@ void MainWindow::on_treeWidgetDB_currentItemChanged(QTreeWidgetItem *current, QT
         type = {"Shop", "Machine"};
     else if(current->whatsThis(0).contains("Shop"))
         type = {"Machine"};
-    msg += showItemInfo(current, &type);
-    ui->plainTextEdit_prop->setPlainText(msg);
+    else if(current->whatsThis(0).contains("Machine"))
+        isMachine=true;
+    QList<int> count;
+    for(int i=0; i<type.size(); i++)
+        count.append(0);
+    msg += showItemInfo(current, &type, &count);
+//    ui->plainTextEdit_prop->setPlainText(msg);
+    if(isMachine) {
+        cMachineWidget *itm = (cMachineWidget*)(current);
+        int indx=-1;
+        for(int i=0; i<db->models.size(); i++)
+            if(db->models[i].id == itm->cParent->model_id) {
+                indx=i;
+                break;
+            }
+        if(indx != -1)
+            msg += QString("\nModel : "+db->models[indx].name);
+        msg += QString("\nSerial number : "+itm->cParent->serial_number);
+        ui->tabWidgetRight->setCurrentIndex(1);
+    }
+    else
+        ui->tabWidgetRight->setCurrentIndex(0);
+
+    commonFunction::clearLayout(ui->vLayoutPropTab);
+    QPlainTextEdit *plainTxt = new QPlainTextEdit();
+    plainTxt->setPlainText(msg);
+    ui->vLayoutPropTab->addWidget(plainTxt);
+
+    QList<QList<QString>> data;
+    data.append( { "Type name", "Quantity", "Last Data Date" } );
+    for(int i=0; i<type.size(); i++)
+        data.append( { type[i], QString::number(count[i]), "" } );
+    commonFunction::createTable(&data, ui->vLayoutInfoTab);
 }
 
+bool MainWindow::checkAddressExist(QTreeWidgetItem *itm) {
+    if(itm->whatsThis(0).contains("DBTable")) {
+        cDBTableWidget* wdg = static_cast<cDBTableWidget*>(itm);
+        qDebug() << "DBTable address : " << wdg->cParent;
+        for(int i=0; i<db->dbTables.size(); i++)
+            qDebug() << "db->dbTables[" << i << "] : " << &db->dbTables[i];
+    }
+    else if(itm->whatsThis(0).contains("Company")) {
+        cCompanyWidget* wdg = static_cast<cCompanyWidget*>(itm);
+        qDebug() << "Company address : " << wdg->cParent;
+        for(int i=0; i<db->companies.size(); i++)
+            qDebug() << "db->companies[" << i << "] : " << &db->companies[i];
+    }
+    else if(itm->whatsThis(0).contains("Plant")) {
+        cPlantWidget* wdg = static_cast<cPlantWidget*>(itm);
+        qDebug() << "Plant address : " << wdg->cParent;
+        for(int i=0; i<db->plants.size(); i++)
+            qDebug() << "db->plants[" << i << "] : " << &db->plants[i];
+    }
+    return false;
+}
+
+void MainWindow::on_tabWidgetLeft_currentChanged(int index)
+{
+    commonFunction::clearLayout(ui->vLayoutInfoTab);
+    commonFunction::clearLayout(ui->vLayoutPropTab);
+}

@@ -16,7 +16,17 @@ cNewModelWindow::~cNewModelWindow() {
 
 void cNewModelWindow::createElementTable() {
     int row = db->elements.size();
-    //ui->tableWidget = new QTableWidget(row, 1, this);
+
+    ui->tableWidget_left->setColumnCount(1);
+    QStringList labels;
+    labels << tr("Element Name");
+    ui->tableWidget_left->setHorizontalHeaderLabels(labels);
+    ui->tableWidget_left->horizontalHeader()->setStretchLastSection(true);
+
+    QHeaderView *vh=new QHeaderView(Qt::Vertical);
+    vh->hide();
+    ui->tableWidget_left->setVerticalHeader(vh);
+
     ui->tableWidget_left->setRowCount(row);
     ui->tableWidget_left->setColumnCount(1);
     for(int i=0; i<row; i++) {
@@ -24,6 +34,11 @@ void cNewModelWindow::createElementTable() {
         ui->tableWidget_left->setItem(i, 0, new QTableWidgetItem(txt));
     }
     ui->tableWidget_right->setColumnCount(1);
+    ui->tableWidget_right->setHorizontalHeaderLabels(labels);
+    ui->tableWidget_right->horizontalHeader()->setStretchLastSection(true);
+    vh=new QHeaderView(Qt::Vertical);
+    vh->hide();
+    ui->tableWidget_right->setVerticalHeader(vh);
 }
 
 void cNewModelWindow::on_btn_add_clicked() {

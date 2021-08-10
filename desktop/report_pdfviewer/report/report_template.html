@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+      * {
+        font-family:Angsana New;
+      }
+      body{
+        width: 100%;
+      }
+      table{
+        width: 100%;
+      }
+
+      #title{
+        width: 100%;
+        border: 1px solid;
+        padding: 2px;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      #title > h1{
+        margin: 0;
+      }
+
+      #signature{
+        margin-top: 30px;
+      }
+      .signature_line{
+        border-top: 1px solid;
+      }
+      .signature_line:nth-child(1){
+        padding-left: 10%;
+        padding-right: 10%;
+      }
+      .signature_line:nth-child(3){
+        padding-left: 20%;
+        padding-right: 20%;
+      }
+      .signature_slash{
+        position: relative;
+        top: -16px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="title">
+      <h1>%title%</h1>
+    </div>
+    <table>
+      <tr><td>
+        <h2>Report on machinery condition</h2>
+        <p>According to the latest inspection of the machine</p>
+        <p>All machine points are included</p>
+      </td><td>
+        <p>Report created %datetime%</p>
+        <p>Took notice of the machinery condition</p>
+        <p id="signature">
+          <span class="signature_line">Signature</span>
+          <span class="signature_slash">/</span>
+          <span class="signature_line">Name</span>
+        <p>
+      </td></tr>
+    </table>
+  </body>
+</html>

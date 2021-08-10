@@ -5,6 +5,7 @@
 void MainWindow::on_actionNew_Element_Window_triggered()
 {
     newEleWin = new cNewElementWindow(this);
+    newEleWin->setWindowTitle("New Element");
     newEleWin->currProjName = currProjName;
     newEleWin->currProjPath = currProjPath;
     newEleWin->currProjImage = currProjImage;

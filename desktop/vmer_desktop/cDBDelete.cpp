@@ -49,3 +49,7 @@ bool cDB::delete_model(const int _id) {
     this->delete_data("model", _id);
     return false;
 }
+
+//bool cDB::delete(const cMachine *itm) {
+
+//}

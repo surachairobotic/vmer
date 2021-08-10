@@ -20,6 +20,7 @@ public:
     cModel(const int _id, const QString _name, const QString _desc, QList<cElement*> _elements);
     void printInfo();
     void printInfo(QString msg);
+    friend bool operator==(const cModel& l, const cModel& r);
     QTreeWidgetItem* get_widget();
     int id;
     QString name, desc;

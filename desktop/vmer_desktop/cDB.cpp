@@ -128,6 +128,15 @@ bool cDB::get_model(QList<QTreeWidgetItem*> *_modelWdgt) {
 }
 
 bool cDB::get_db(QList<QTreeWidgetItem*> *_dbWdgt) {
+    qDebug() << "cDB::get_db";
+    print_db_table();
+    print_company_table();
+    print_plant_table();
+    print_shop_table();
+    print_route_table();
+    print_machine_in_route_table();
+    print_machine_table();
+
     query_db_table();
     query_company_table();
     query_plant_table();
@@ -135,6 +144,15 @@ bool cDB::get_db(QList<QTreeWidgetItem*> *_dbWdgt) {
     query_route_table();
     query_machine_in_route_table();
     query_machine_table();
+
+    qDebug() << "after query";
+    print_db_table();
+    print_company_table();
+    print_plant_table();
+    print_shop_table();
+    print_route_table();
+    print_machine_in_route_table();
+    print_machine_table();
 
     link_db_table();
     link_company_table();
@@ -144,7 +162,18 @@ bool cDB::get_db(QList<QTreeWidgetItem*> *_dbWdgt) {
     link_machine_in_route_table();
     link_machine_table();
 
+    qDebug() << "after link";
+    print_db_table();
+    print_company_table();
+    print_plant_table();
+    print_shop_table();
+    print_route_table();
+    print_machine_in_route_table();
+    print_machine_table();
+
+    qDebug() << "before clear : _dbWdgt->size() : " << _dbWdgt->size();
     _dbWdgt->clear();
+    qDebug() << "after clear : _dbWdgt->size() : " << _dbWdgt->size();
     int db_size = dbTables.size();
     for(int i=0; i<db_size; i++) {
         QTreeWidgetItem *dbItm = dbTables[i].get_widget();
@@ -174,6 +203,15 @@ bool cDB::get_db(QList<QTreeWidgetItem*> *_dbWdgt) {
         //dbItm->setExpanded(true);
         _dbWdgt->push_back(dbItm);
     }
+    qDebug() << "after get widget";
+    print_db_table();
+    print_company_table();
+    print_plant_table();
+    print_shop_table();
+    print_route_table();
+    print_machine_in_route_table();
+    print_machine_table();
+
     return false;
 }
 

@@ -43,6 +43,44 @@ bool cDB::insert(const cPoint *pnt) {
     return false;
 }
 
+bool cDB::insert(const cMachine *itm) {
+    QSqlQuery query(db);
+    QString desc = "NULL";
+    if(itm->desc != "")
+        desc = itm->desc;
+    QString msg = QString("INSERT INTO `machine` VALUES (%1,%2,%3,'%4','%5','%6')").arg(QString::number(itm->id),
+                                                                                        QString::number(itm->model_id),
+                                                                                        QString::number(itm->shop_id),
+                                                                                        itm->name,
+                                                                                        itm->serial_number,
+                                                                                        desc);
+    qDebug().noquote() << msg;
+    query.prepare(msg);
+    query.exec();
+    while(query.next()) {
+        //qDebug() << query.value(0);
+    }
+    return false;
+}
+
+bool cDB::insert(const cRoute *itm) {
+    QSqlQuery query(db);
+    QString desc = "NULL";
+    if(itm->desc != "")
+        desc = itm->desc;
+    QString msg = QString("INSERT INTO `route` VALUES (%1,%2,'%3','%4')").arg(QString::number(itm->id),
+                                                                            QString::number(itm->plant_id),
+                                                                            itm->name,
+                                                                            desc);
+    qDebug().noquote() << msg;
+    query.prepare(msg);
+    query.exec();
+    while(query.next()) {
+        //qDebug() << query.value(0);
+    }
+    return false;
+}
+
 bool cDB::insert_model(const int _id, const QString _name, const QString _desc) {
     QSqlQuery query(db);
     QString desc = "NULL";

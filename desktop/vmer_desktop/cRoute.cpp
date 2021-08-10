@@ -1,5 +1,67 @@
 #include "cRoute.h"
+#include "cModel.h"
 #include <QObject>
+
+bool operator==(const cPoint& l, const cPoint& r) {
+    if((l.id!=r.id) || (l.element_id!=r.element_id) || (l.name!=r.name) || (l.config!=r.config) || (l.desc!=r.desc))
+        return false;
+    return true;
+}
+bool operator==(const cElement& l, const cElement& r) {
+    if((l.id!=r.id) || (l.name!=r.name) || (l.image!=r.image) || (l.desc!=r.desc))
+        return false;
+    return true;
+}
+bool operator==(const cDBTable& l, const cDBTable& r) {
+    if((l.id!=r.id) || (l.name!=r.name) || (l.desc!=r.desc))
+        return false;
+    return true;
+}
+bool operator==(const cCompany& l, const cCompany& r) {
+    if((l.id!=r.id) || (l.name!=r.name) || (l.db_id!=r.db_id) || (l.desc!=r.desc))
+        return false;
+    return true;
+}
+bool operator==(const cPlant& l, const cPlant& r) {
+    if((l.id!=r.id) || (l.name!=r.name) || (l.company_id!=r.company_id) || (l.desc!=r.desc))
+        return false;
+    return true;
+}
+bool operator==(const cShop& l, const cShop& r) {
+    if((l.id!=r.id) || (l.name!=r.name) || (l.plant_id!=r.plant_id) || (l.desc!=r.desc))
+        return false;
+    return true;
+}
+bool operator==(const cMachine& l, const cMachine& r) {
+    if((l.id!=r.id) || (l.name!=r.name) || (l.model_id!=r.model_id) || (l.shop_id!=r.shop_id) || (l.serial_number!=r.serial_number) || (l.desc!=r.desc))
+        return false;
+    return true;
+}
+bool operator==(const cRoute& l, const cRoute& r) {
+    if((l.id!=r.id) || (l.name!=r.name) || (l.plant_id!=r.plant_id) || (l.desc!=r.desc))
+        return false;
+    return true;
+}
+bool operator==(const cModel& l, const cModel& r) {
+    if((l.id!=r.id) || (l.name!=r.name) || (l.desc!=r.desc))
+        return false;
+    return true;
+}
+bool operator==(const cElementInModel& l, const cElementInModel& r) {
+    if((l.id!=r.id) || (l.name!=r.name) || (l.model_id!=r.model_id) || (l.element_id!=r.element_id) || (l.desc!=r.desc))
+        return false;
+    return true;
+}
+bool operator==(const cMachineInRoute& l, const cMachineInRoute& r) {
+    if((l.id!=r.id) || (l.route_id!=r.route_id) || (l.machine_id!=r.machine_id) || (l.desc!=r.desc))
+        return false;
+    return true;
+}
+bool operator==(const cPointInRoute& l, const cPointInRoute& r) {
+    if((l.id!=r.id) || (l.route_id!=r.route_id) || (l.machine_id!=r.machine_id) || (l.element_id!=r.element_id) || (l.point_id!=r.point_id) || (l.desc!=r.desc))
+        return false;
+    return true;
+}
 
 cPoint::cPoint(const int _id, const int _element_id, const QString _name, const QString _config, const QString _desc)
     : id(_id), element_id(_element_id), name(_name), config(_config), desc(_desc)
@@ -19,11 +81,6 @@ QTreeWidgetItem* cPoint::get_widget() {
     this->pntWdgt->cParent = this;
     this->pntWdgt->setFlags(this->pntWdgt->flags() | Qt::ItemIsEditable);
     return static_cast<QTreeWidgetItem*>(this->pntWdgt);
-}
-bool operator==(const cPoint& l, const cPoint& r) {
-    if((l.id!=r.id) || (l.element_id!=r.element_id) || (l.name!=r.name) || (l.config!=r.config) || (l.desc!=r.desc))
-        return false;
-    return true;
 }
 
 cElement::cElement(const int _id, const QString _name, const QString _std_image, const QString _image, const QString _desc)
@@ -47,11 +104,6 @@ QTreeWidgetItem* cElement::get_widget() {
     //for(int i=0; i<points.size(); i++)
     //    this->elmWdgt->addChild(points[i]->get_widget());
     return static_cast<QTreeWidgetItem*>(this->elmWdgt);
-}
-bool operator==(const cElement& l, const cElement& r) {
-    if((l.id!=r.id) || (l.name!=r.name) || (l.image!=r.image) || (l.desc!=r.desc))
-        return false;
-    return true;
 }
 
 cDBTable::cDBTable(int _id, QString _name, QString _desc)

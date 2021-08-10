@@ -25,7 +25,7 @@
       </property>
       <widget class="QTabWidget" name="tabWidgetLeft">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="widgetPlants">
         <attribute name="title">
@@ -116,7 +116,7 @@
       </widget>
       <widget class="QTabWidget" name="tabWidgetRight">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="informations">
         <attribute name="title">
@@ -124,7 +124,7 @@
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
-          <layout class="QVBoxLayout" name="vLayoutElementInfo"/>
+          <layout class="QVBoxLayout" name="vLayoutInfoTab"/>
          </item>
         </layout>
        </widget>
@@ -134,7 +134,7 @@
         </attribute>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QPlainTextEdit" name="plainTextEdit_prop"/>
+          <layout class="QVBoxLayout" name="vLayoutPropTab"/>
          </item>
         </layout>
        </widget>

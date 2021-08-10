@@ -7,6 +7,7 @@
 #include "cNewModelWindow.h"
 #include "cNewShopWindow.h"
 #include "cNewRouteWindow.h"
+#include "cNewMachineWindow.h"
 #include <cDB.h>
 #include <QPixmap>
 #include <QGraphicsView>
@@ -16,6 +17,9 @@
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
+
+#include<iostream>
+using namespace std;
 
 class MainWindow : public QMainWindow
 {
@@ -52,10 +56,13 @@ private slots:
     void on_actionNew_Model_Window_triggered();
     void on_actionNew_Shop_Window_triggered(int plantId);
     void on_actionNew_Route_Window_triggered(int plantId);
+    void on_actionNew_Machine_Window_triggered(int shpId);
 
     void newElementMain(QString name, QString stdImg, QString userImg, QString descElement, QList<QString> pntName, QList<QString> pntDesc);
     void newModelMain(QString name, QList<int> eleIds);
     void newShopMain(int _plantId, QString name, QList<int> mdlIds);
+    void newMachineMain(QString name, int mdlId, int shpId, QString serial, QString desc);
+    void newRouteMain();
 
     void on_actionSave_Project_triggered();
 
@@ -66,6 +73,8 @@ private slots:
     void on_treeWidgetRoute_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
     void on_treeWidgetDB_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
+    void on_tabWidgetLeft_currentChanged(int index);
 
 private:
     void cNewProjectDialogTerminate();
@@ -92,8 +101,8 @@ private:
     void openProject(const QString &name, const QString &path, bool db=false);
 
     void itemRecusiveCount(const QTreeWidgetItem *current, const QList<QString> *type, int *count);
-    QString showItemInfo(const QTreeWidgetItem *current, const QList<QString> *type);
-    void setAllChildExpanded(QTreeWidgetItem *itm);
+    QString showItemInfo(const QTreeWidgetItem *current, const QList<QString> *type, QList<int> *counts);
+    bool checkAddressExist(QTreeWidgetItem *itm);
 
     Ui::MainWindow *ui;
     cNewProjectDialog *newprojDialog;
@@ -101,6 +110,7 @@ private:
     cNewModelWindow *newMdlWin;
     cNewShopWindow *newShpWin;
     cNewRouteWindow *newRouteWin;
+    cNewMachineWindow* newMachineWin;
     cDB *db;
     QString currProjName, currProjPath, currProjImage, realProjName, realProjPath, realProjImage;
     bool hasDB;
@@ -112,4 +122,5 @@ private:
     QGraphicsScene *scene;
     int newShopCount = 1;
 };
+
 #endif // MAINWINDOW_H

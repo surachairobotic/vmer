@@ -180,15 +180,18 @@ bool cDB::query_db_table() {
     QSqlQuery query(db);
     query.prepare("SELECT * FROM db");
     query.exec();
-    bool chk=false;
+    QList<int> indx;
+    for(int i=0; i<dbTables.size(); i++)
+        indx.push_back(i);
     while(query.next()) {
-        if(!chk)
-            dbTables.clear();
-        chk=true;
-        dbTables.push_back(cDBTable(query.value(0).toInt(), query.value(1).toString(),
-                                    query.value(2).toString()));
+        cDBTable data(cDBTable(query.value(0).toInt(), query.value(1).toString(),
+                               query.value(2).toString()));
+        pushDiffOnly(&dbTables, &data, &indx);
     }
-    return chk;
+    for(int i=indx.size()-1; i>=0; i--) {
+        dbTables.removeAt(indx[i]);
+    }
+    return false;
 }
 bool cDB::query_element_table() {
     QSqlQuery query(db);
@@ -201,23 +204,40 @@ bool cDB::query_element_table() {
         cElement data(query.value(0).toInt(), query.value(1).toString(),
                       query.value(2).toString(), query.value(3).toString(),
                       query.value(4).toString());
-        bool chk=false;
-        for(int i=0; indx.size(); i++) {
-            if(elements[indx[i]]==data) {
-                indx.removeAt(i);
-                chk=true;
-                break;
-            }
-        }
-        if(!chk) {
-            elements.push_back(data);
-        }
+        pushDiffOnly(&elements, &data, &indx);
+//        bool chk=false;
+//        for(int i=0; indx.size(); i++) {
+//            if(elements[indx[i]]==data) {
+//                indx.removeAt(i);
+//                chk=true;
+//                break;
+//            }
+//        }
+//        if(!chk) {
+//            elements.push_back(data);
+//        }
     }
     for(int i=indx.size()-1; i>=0; i--) {
         elements.removeAt(indx[i]);
     }
     return false;
 }
+
+template<typename T>
+void cDB::pushDiffOnly(QList<T> *x, T *y, QList<int> *vIndx) {
+    bool chk=false;
+    for(int i=0; (*vIndx).size(); i++) {
+        if((*x)[(*vIndx)[i]]==(*y)) {
+            (*vIndx).removeAt(i);
+            chk=true;
+            break;
+        }
+    }
+    if(!chk) {
+        x->push_back(*y);
+    }
+}
+
 bool cDB::query_point_table() {
     QSqlQuery query(db);
     query.prepare("SELECT * FROM point");
@@ -250,128 +270,155 @@ bool cDB::query_company_table() {
     QSqlQuery query(db);
     query.prepare("SELECT * FROM company");
     query.exec();
-    bool chk=false;
+    QList<int> indx;
+    for(int i=0; i<companies.size(); i++)
+        indx.push_back(i);
     while(query.next()) {
-        if(!chk)
-            companies.clear();
-        chk=true;
-        companies.push_back(cCompany(query.value(0).toInt(), query.value(1).toInt(),
-                                     query.value(2).toString(), query.value(3).toString()));
+        cCompany data(cCompany(query.value(0).toInt(), query.value(1).toInt(),
+                               query.value(2).toString(), query.value(3).toString()));
+        pushDiffOnly(&companies, &data, &indx);
     }
-    return chk;
+    for(int i=indx.size()-1; i>=0; i--) {
+        companies.removeAt(indx[i]);
+    }
+    return false;
 }
 bool cDB::query_plant_table() {
     QSqlQuery query(db);
     query.prepare("SELECT * FROM plant");
     query.exec();
-    bool chk=false;
+    QList<int> indx;
+    for(int i=0; i<plants.size(); i++)
+        indx.push_back(i);
     while(query.next()) {
-        if(!chk)
-            plants.clear();
-        chk=true;
-        plants.push_back(cPlant(query.value(0).toInt(), query.value(1).toInt(),
-                                query.value(2).toString(), query.value(3).toString()));
+        cPlant data(cPlant(query.value(0).toInt(), query.value(1).toInt(),
+                             query.value(2).toString(), query.value(3).toString()));
+        pushDiffOnly(&plants, &data, &indx);
     }
-    return chk;
+    for(int i=indx.size()-1; i>=0; i--) {
+        plants.removeAt(indx[i]);
+    }
+    return false;
 }
 bool cDB::query_shop_table() {
     QSqlQuery query(db);
     query.prepare("SELECT * FROM machine_shop");
     query.exec();
-    bool chk=false;
+    QList<int> indx;
+    for(int i=0; i<shops.size(); i++)
+        indx.push_back(i);
     while(query.next()) {
-        if(!chk)
-            shops.clear();
-        chk=true;
-        shops.push_back(cShop(query.value(0).toInt(), query.value(1).toInt(),
-                              query.value(2).toString(), query.value(3).toString()));
+        cShop data(cShop(query.value(0).toInt(), query.value(1).toInt(),
+                          query.value(2).toString(), query.value(3).toString()));
+        pushDiffOnly(&shops, &data, &indx);
     }
-    return chk;
+    for(int i=indx.size()-1; i>=0; i--) {
+        shops.removeAt(indx[i]);
+    }
+    return false;
 }
 bool cDB::query_route_table() {
     QSqlQuery query(db);
     query.prepare("SELECT * FROM route");
     query.exec();
-    bool chk=false;
+    QList<int> indx;
+    for(int i=0; i<routes.size(); i++)
+        indx.push_back(i);
     while(query.next()) {
-        if(!chk)
-            routes.clear();
-        chk=true;
-        routes.push_back(cRoute(query.value(0).toInt(), query.value(1).toInt(),
-                                query.value(2).toString(), query.value(3).toString()));
+        cRoute data(cRoute(query.value(0).toInt(), query.value(1).toInt(),
+                          query.value(2).toString(), query.value(3).toString()));
+        pushDiffOnly(&routes, &data, &indx);
     }
-    return chk;
+    for(int i=indx.size()-1; i>=0; i--) {
+        routes.removeAt(indx[i]);
+    }
+    return false;
 }
 bool cDB::query_models_table() {
     QSqlQuery query(db);
     query.prepare("SELECT * FROM model");
     query.exec();
-    bool chk=false;
+    QList<int> indx;
+    for(int i=0; i<models.size(); i++)
+        indx.push_back(i);
     while(query.next()) {
-        if(!chk)
-            models.clear();
-        chk=true;
-        models.push_back(cModel(query.value(0).toInt(), query.value(1).toString(),
-                                query.value(2).toString()));
+        cModel data(cModel(query.value(0).toInt(), query.value(1).toString(),
+                           query.value(2).toString()));
+        pushDiffOnly(&models, &data, &indx);
     }
-    return chk;
+    for(int i=indx.size()-1; i>=0; i--) {
+        models.removeAt(indx[i]);
+    }
+    return false;
 }
 bool cDB::query_machine_table() {
     QSqlQuery query(db);
     query.prepare("SELECT * FROM machine");
     query.exec();
-    bool chk=false;
+    QList<int> indx;
+    for(int i=0; i<machines.size(); i++)
+        indx.push_back(i);
     while(query.next()) {
-        if(!chk)
-            machines.clear();
-        chk=true;
-        machines.push_back(cMachine(query.value(0).toInt(), query.value(1).toInt(),
-                                    query.value(2).toInt(), query.value(3).toString(),
-                                    query.value(4).toString(), query.value(5).toString()));
+        cMachine data(cMachine(query.value(0).toInt(), query.value(1).toInt(),
+                             query.value(2).toInt(), query.value(3).toString(),
+                             query.value(4).toString(), query.value(5).toString()));
+        pushDiffOnly(&machines, &data, &indx);
     }
-    return chk;
+    for(int i=indx.size()-1; i>=0; i--) {
+        machines.removeAt(indx[i]);
+    }
+    return false;
 }
 bool cDB::query_element_in_model_table() {
     QSqlQuery query(db);
     query.prepare("SELECT * FROM element_in_model");
     query.exec();
-    bool chk=false;
+    QList<int> indx;
+    for(int i=0; i<element_in_models.size(); i++)
+        indx.push_back(i);
     while(query.next()) {
-        if(!chk)
-            element_in_models.clear();
-        chk=true;
-        element_in_models.push_back(cElementInModel(query.value(0).toInt(), query.value(1).toInt(),
-                                                    query.value(2).toInt(), query.value(3).toString(),
-                                                    query.value(4).toString()));
+        cElementInModel data(cElementInModel(query.value(0).toInt(), query.value(1).toInt(),
+                                      query.value(2).toInt(), query.value(3).toString(),
+                                      query.value(4).toString()));
+        pushDiffOnly(&element_in_models, &data, &indx);
     }
-    return chk;
+    for(int i=indx.size()-1; i>=0; i--) {
+        element_in_models.removeAt(indx[i]);
+    }
+    return false;
 }
 bool cDB::query_machine_in_route_table() {
     QSqlQuery query(db);
     query.prepare("SELECT * FROM machine_in_route");
     query.exec();
-    bool chk=false;
+    QList<int> indx;
+    for(int i=0; i<machine_in_routes.size(); i++)
+        indx.push_back(i);
     while(query.next()) {
-        if(!chk)
-            machine_in_routes.clear();
-        chk=true;
-        machine_in_routes.push_back(cMachineInRoute(query.value(0).toInt(), query.value(1).toInt(),
-                                                    query.value(2).toInt(), query.value(3).toString()));
+        cMachineInRoute data(cMachineInRoute(query.value(0).toInt(), query.value(1).toInt(),
+                                             query.value(2).toInt(), query.value(3).toString()));
+        pushDiffOnly(&machine_in_routes, &data, &indx);
     }
-    return chk;
+    for(int i=indx.size()-1; i>=0; i--) {
+        machine_in_routes.removeAt(indx[i]);
+    }
+    return false;
 }
 bool cDB::query_point_in_route_table() {
     QSqlQuery query(db);
     query.prepare("SELECT * FROM point_in_route");
     query.exec();
-    bool chk=false;
+    QList<int> indx;
+    for(int i=0; i<point_in_routes.size(); i++)
+        indx.push_back(i);
     while(query.next()) {
-        if(!chk)
-            point_in_routes.clear();
-        chk=true;
-        point_in_routes.push_back(cPointInRoute(query.value(0).toInt(), query.value(1).toInt(),
-                                                query.value(2).toInt(), query.value(3).toInt(),
-                                                query.value(4).toInt(), query.value(5).toString()));
+        cPointInRoute data(cPointInRoute(query.value(0).toInt(), query.value(1).toInt(),
+                                           query.value(2).toInt(), query.value(3).toInt(),
+                                           query.value(4).toInt(), query.value(5).toString()));
+        pushDiffOnly(&point_in_routes, &data, &indx);
     }
-    return chk;
+    for(int i=indx.size()-1; i>=0; i--) {
+        point_in_routes.removeAt(indx[i]);
+    }
+    return false;
 }

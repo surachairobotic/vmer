@@ -40,18 +40,18 @@ void MainWindow::updateDatabase()
         qDebug() << "No Database.";
     else {
         /*
-        qDebug() << "query_db_table : " << db->query_db_table();
-        qDebug() << "query_element_table : " << db->query_element_table();
-        qDebug() << "query_point_table : " << db->query_point_table();
-        qDebug() << "query_company_table : " << db->query_company_table();
-        qDebug() << "query_plant_table : " << db->query_plant_table();
-        qDebug() << "query_shop_table : " << db->query_shop_table();
-        qDebug() << "query_route_table : " << db->query_route_table();
-        qDebug() << "query_models_table : " << db->query_models_table();
-        qDebug() << "query_machine_table : " << db->query_machine_table();
-        qDebug() << "query_element_in_model_table : " << db->query_element_in_model_table();
-        qDebug() << "query_machine_in_route_table : " << db->query_machine_in_route_table();
-        qDebug() << "query_point_in_route_table : " << db->query_point_in_route_table();
+        qDebug() << "print_db_table : " << db->print_db_table();
+        qDebug() << "print_element_table : " << db->print_element_table();
+        qDebug() << "print_point_table : " << db->print_point_table();
+        qDebug() << "print_company_table : " << db->print_company_table();
+        qDebug() << "print_plant_table : " << db->print_plant_table();
+        qDebug() << "print_shop_table : " << db->print_shop_table();
+        qDebug() << "print_route_table : " << db->print_route_table();
+        qDebug() << "print_models_table : " << db->print_models_table();
+        qDebug() << "print_machine_table : " << db->print_machine_table();
+        qDebug() << "print_element_in_model_table : " << db->print_element_in_model_table();
+        qDebug() << "print_machine_in_route_table : " << db->print_machine_in_route_table();
+        qDebug() << "print_point_in_route_table : " << db->print_point_in_route_table();
 
         db->link_db_table();
         db->link_company_table();

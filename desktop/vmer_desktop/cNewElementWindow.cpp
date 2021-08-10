@@ -10,6 +10,8 @@
 #include <QPixmap>
 #include <QMessageBox>
 #include <QFile>
+#include <QHeaderView>
+#include "commonFunction.h"
 
 cNewElementWindow::cNewElementWindow(QWidget *parent) :
     QDialog(parent),
@@ -17,9 +19,16 @@ cNewElementWindow::cNewElementWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->textEdit->setText("Element_01");
-    ui->tableWidget->setColumnCount(1);
-    ui->tableWidget->horizontalHeader()->hide();
+    ui->tableWidget->setColumnCount(4);
+    //ui->tableWidget->horizontalHeader()->hide();
+    QStringList labels;
+    labels << tr("Point Name") << tr("V") << tr("H") << tr("A");
+    ui->tableWidget->setHorizontalHeaderLabels(labels);
     ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
+
+    QHeaderView *vh=new QHeaderView(Qt::Vertical);
+    vh->hide();
+    ui->tableWidget->setVerticalHeader(vh);
 
     eleName = stdImg = userImg = "";
 
@@ -40,11 +49,24 @@ void cNewElementWindow::on_btn_addPoint_clicked() {
 
 void cNewElementWindow::initPointTable() {
     ui->tableWidget->clear();
+    ui->tableWidget->setColumnCount(4);
+    QStringList labels;
+    labels << tr("Point Name") << tr("V") << tr("H") << tr("A");
+    ui->tableWidget->setHorizontalHeaderLabels(labels);
+
     ui->tableWidget->setRowCount(0);
     for(int i=0; i<pntName.size(); i++) {
         ui->tableWidget->insertRow(i);
-        QTableWidgetItem *itm = new QTableWidgetItem(pntName[i]);
-        ui->tableWidget->setItem(i, 0, itm);
+
+        QList<QString> lStr = {"p"+pntName[i]};
+        QList<QString> sConfg = commonFunction::pointJson( pntDesc[i] );
+        lStr += sConfg;
+
+        for(int j=0; j<lStr.size(); j++) {
+            QTableWidgetItem *itm = new QTableWidgetItem(lStr[j]);
+            itm->setTextAlignment(Qt::AlignCenter);
+            ui->tableWidget->setItem(i, j, itm);
+        }
     }
 }
 

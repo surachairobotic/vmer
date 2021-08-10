@@ -11,7 +11,7 @@
 #include "QHBoxLayout"
 #include "QIcon"
 #include <QRandomGenerator>
-
+#include "commonFunction.h"
 
 bool MainWindow::displayDBTree()
 {
@@ -21,10 +21,11 @@ bool MainWindow::displayDBTree()
     //QTreeWidgetItem *root = new QTreeWidgetItem(ui->treeWidgetDB);
     //root->setExpanded(true);
     db->get_db(&dbWdgt);
+    db->get_db(&dbWdgt);
     ui->treeWidgetDB->addTopLevelItem(dbWdgt[0]);
     dbWdgt[0]->setExpanded(true);
     for(int i=0; i<dbWdgt.size(); i++)
-        setAllChildExpanded(dbWdgt[i]);
+        commonFunction::setAllChildExpanded(dbWdgt[i]);
     hasDB = true;
 
     /*
@@ -91,12 +92,6 @@ bool MainWindow::displayDBTree()
     }
     */
     return false;
-}
-
-void MainWindow::setAllChildExpanded(QTreeWidgetItem *itm) {
-    itm->setExpanded(true);
-    for(int i=0; i<itm->childCount(); i++)
-        setAllChildExpanded(itm->child(i));
 }
 
 bool MainWindow::displayModelTree()
@@ -188,7 +183,7 @@ bool MainWindow::displayRouteTree() {
     db->get_routes(&routeWdgt);
     ui->treeWidgetRoute->addTopLevelItem(routeWdgt[0]);
     for(int i=0; i<routeWdgt.size(); i++)
-        setAllChildExpanded(routeWdgt[i]);
+        commonFunction::setAllChildExpanded(routeWdgt[i]);
     hasDB = true;
     return true;
 }
