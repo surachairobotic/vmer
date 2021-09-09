@@ -133,7 +133,7 @@ void MainWindow::openProject(const QString &name, const QString &path, bool db) 
 
     cpDir(realProjPath, currProjPath);
 
-    QString fileName = currProjPath + '/' + currProjName + ".sqlite3";
+    QString fileName = currProjPath + currProjName + ".sqlite3";
     openDB(&fileName, db);
     updateDatabase();
 
