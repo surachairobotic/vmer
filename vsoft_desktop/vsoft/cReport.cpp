@@ -13,11 +13,12 @@
 #include <QFileInfo>
 #include "QPdfWidget"
 
-#include "mainwindow.h"
+#include "cReportWindow.h"
+#include "ui_cReportWindow.h"
 #include "wkhtmltox/pdf.h"
 #include "wkhtmltox/image.h"
 
-cReport::cReport(MainWindow *_mainwindow) : mainwindow(_mainwindow),pdf(NULL){
+cReport::cReport(QWidget *_parent) : parent(_parent),pdf(NULL){
 
 }
 
@@ -35,21 +36,20 @@ bool cReport::init(){
     tmp_dir.setPath(path);
     if (!tmp_dir.exists()) {
         if (!tmp_dir.mkpath(path)) {
-            QMessageBox::warning(mainwindow, tr("Alert")
+            QMessageBox::warning(parent, tr("Alert")
                 , QString("Cannot create tmp directory : ") + tmp_dir.absolutePath());
             return false;
         }
     }
     pdf = new QPdfWidget();
-    mainwindow->ui->verticalLayoutReport->addWidget(pdf);
+    reportWin = new cReportWindow(this->parent);
+    reportWin->ui->verticalLayoutReport->addWidget(pdf);
 
     connect( pdf, &QPdfWidget::pdfDocumentLoaded, this, [=](){
         qDebug() << "pdf load fin";
     });
 
-
-
-    connect(mainwindow->ui->pushButtonRefreshReport, &QPushButton::clicked, this, &cReport::slot_show_pdf);
+    connect(reportWin->ui->pushButtonRefreshReport, &QPushButton::clicked, this, &cReport::slot_show_pdf);
     return true;
 }
 
@@ -60,7 +60,7 @@ bool cReport::set_template_file(const QString& path) {
         return true;
     }
     else {
-        QMessageBox::warning(mainwindow, tr("Alert")
+        QMessageBox::warning(parent, tr("Alert")
             , QString("Report template file does not exist : ") + path);
         qWarning() << "File not exist : " << path;
         return false;
@@ -75,7 +75,7 @@ bool cReport::get_html(QString& html) {
     QFile file(template_path);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        QMessageBox::warning(mainwindow, tr("Alert")
+        QMessageBox::warning(parent, tr("Alert")
             , QString("Cannot open report template file: ") + template_path);
         return false;
     }
@@ -113,7 +113,7 @@ bool cReport::create_pdf(const QString &path) {
     if (get_html(html)){
         wkhtmltopdf_add_object(c, os, html.toStdString().c_str());
         if (!wkhtmltopdf_convert(c)) {
-            QMessageBox::warning(mainwindow, tr("Alert")
+            QMessageBox::warning(parent, tr("Alert")
                 , QString("Cannot create report pdf : err=") + QString::number(wkhtmltopdf_http_error_code(c)));
         }
         else {
@@ -133,11 +133,18 @@ void cReport::slot_show_pdf() {
         return;
     }
     if (!pdf->loadFile(tmp_pdf)) {
-        QMessageBox::warning(mainwindow, tr("Alert")
+        QMessageBox::warning(parent, tr("Alert")
             , QString("Cannot load pdf file : ") + tmp_pdf);
         return;
     }
     // Update window title with the file name
     //QFileInfo fi(tmp_pdf);
     //setWindowTitle(fi.fileName());
+}
+
+bool cReport::my_show() {
+    //slot_show_pdf();
+    reportWin->show();
+    reportWin->setFocus();
+    return true;
 }

@@ -13,6 +13,7 @@
 #include <QGraphicsView>
 #include <QTableWidget>
 #include <QHBoxLayout>
+#include "cReportWindow.h"
 
 class cReport;
 
@@ -78,6 +79,8 @@ private slots:
 
     void on_tabWidgetLeft_currentChanged(int index);
 
+    void on_actionReport_triggered();
+
 private:
     void cNewProjectDialogTerminate();
     bool displayDBTree();
@@ -106,6 +109,8 @@ private:
     QString showItemInfo(const QTreeWidgetItem *current, const QList<QString> *type, QList<int> *counts);
     bool checkAddressExist(QTreeWidgetItem *itm);
 
+    void showReportWin(void);
+
     Ui::MainWindow *ui;
     cNewProjectDialog *newprojDialog;
     cNewElementWindow *newEleWin;
@@ -126,6 +131,7 @@ private:
 
     cReport *report;
     friend class cReport;
+    //cReportWindow *reportWin;
 };
 
 #endif // MAINWINDOW_H

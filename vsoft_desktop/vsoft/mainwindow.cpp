@@ -58,7 +58,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->setWindowTitle("V-Soft");
     this->setFocus();
-    openProject("C:/Users/surachai_probook/Downloads/VmerProjects/t8/t8.sqlite3");
+
+    //openProject("C:/Users/surachai_probook/Downloads/VmerProjects/t8/t8.sqlite3");
 }
 
 MainWindow::~MainWindow() {
@@ -577,4 +578,39 @@ void MainWindow::on_tabWidgetLeft_currentChanged(int index)
 {
     commonFunction::clearLayout(ui->vLayoutInfoTab);
     commonFunction::clearLayout(ui->vLayoutPropTab);
+}
+
+void MainWindow::on_actionReport_triggered()
+{
+    showReportWin();
+    //report->reportWin->setWindowState(Qt::WindowActive);
+    //report->reportWin->activateWindow();
+    //report->reportWin->setFocus();
+    report->reportWin->setWindowModality(Qt::WindowModal);
+    report->reportWin->setModal(true);
+}
+
+void MainWindow::showReportWin() {
+    //reportWin = new cReportWindow(this);
+    //reportWin->show();
+
+    qDebug() << "new cReport(this)";
+    report = new cReport(this);
+    QString freport = "C:/vmer/desktop/report_pdfviewer/report/report_template.html";
+    qDebug() << "report->set_template_file";
+    if( report->set_template_file(freport) ){
+        qDebug() << "if report->set_template_file";
+        //QApplication::exit(0);
+    }
+    qDebug() << "report->init";
+    if(!report->init()){
+        qDebug() << "if report->init";
+        //QMessageBox::warning(this, tr("Alert"), tr("Cannot initilize Report"));
+        //QApplication::exit(0);
+    }
+    else {
+        qDebug() << "else report->init";
+        //reportWin->show();
+        report->my_show();
+    }
 }
