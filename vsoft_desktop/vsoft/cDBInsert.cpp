@@ -69,7 +69,7 @@ bool cDB::insert(const cRoute *itm) {
     if(itm->desc != "")
         desc = itm->desc;
     QString msg = QString("INSERT INTO `route` VALUES (%1,%2,'%3','%4')").arg(QString::number(itm->id),
-                                                                            QString::number(itm->plant_id),
+                                                                            QString::number(itm->company_id),
                                                                             itm->name,
                                                                             desc);
     qDebug().noquote() << msg;

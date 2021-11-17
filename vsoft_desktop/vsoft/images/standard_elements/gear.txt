@@ -1,0 +1,33 @@
+Gear 
+Type/class : 3 stages 
+Ratio : 6: 1
+Stage-1 
+gear-1 teeth Z : 61
+speed-1 : 1500 rpm
+bearing 1 No. 
+Bearing 2 N0.
+gear-2 teeth driven z : 92
+speed-2 : 1000 rpm 
+bearing-3 No. 
+bearing-4 No.
+
+Stage-2
+gear-2 teeth driver Z : 42
+gear-3 teeth driver z : 98
+bearing-5 No. 
+bearing-6 No.
+speed-3 : 420 rpm
+
+Stage-3
+gear-3 teeth driver z : 31
+gear-4 teeth driver z : 91
+bearing-7 No. 
+bearing-8 No.
+speed-4 : 30 rpm 
+
+Power  400 kW
+
+Power transmittion  : 
+input coupling/ pulley
+output coupling /direct drive
+

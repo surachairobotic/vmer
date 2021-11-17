@@ -1,0 +1,55 @@
+211104-145206,info,port = 8085
+211104-145206,info,log = C:\vmer\web\production2\log211104.log
+211104-145206,info,UDP Client listening on 0.0.0.0:8086
+211104-145209,info,Message from: 10.225.101.158:64302 - discover_devices
+211104-145209,info,Message from: 10.225.101.158:58277 - discover_devices
+211104-145209,info,discover_devices sent back
+211104-145209,info,discover_devices sent back
+211104-145211,info,Message from: 10.225.101.158:64302 - discover_devices
+211104-145211,info,Message from: 10.225.101.158:58277 - discover_devices
+211104-145211,info,discover_devices sent back
+211104-145211,info,discover_devices sent back
+211104-145212,info,Message from: 10.225.101.158:64302 - discover_devices
+211104-145212,info,Message from: 10.225.101.158:58277 - discover_devices
+211104-145212,info,discover_devices sent back
+211104-145212,info,discover_devices sent back
+211104-145215,info,Message from: 10.225.101.158:64302 - discover_devices
+211104-145215,info,Message from: 10.225.101.158:58277 - discover_devices
+211104-145215,info,discover_devices sent back
+211104-145215,info,discover_devices sent back
+211104-145216,info,Message from: 10.225.101.158:64302 - discover_devices
+211104-145216,info,Message from: 10.225.101.158:58277 - discover_devices
+211104-145216,info,discover_devices sent back
+211104-145216,info,discover_devices sent back
+211104-145220,info,Message from: 10.225.101.158:64302 - discover_devices
+211104-145220,info,Message from: 10.225.101.158:58277 - discover_devices
+211104-145220,info,discover_devices sent back
+211104-145220,info,discover_devices sent back
+211104-145348,info,Message from: 10.225.101.158:53336 - discover_devices
+211104-145348,info,discover_devices sent back
+211104-145400,info,Message from: 10.225.101.158:53337 - discover_devices
+211104-145400,info,discover_devices sent back
+211104-145404,info,Message from: 10.225.101.158:53336 - discover_devices
+211104-145404,info,Message from: 10.225.101.158:53337 - discover_devices
+211104-145404,info,discover_devices sent back
+211104-145404,info,discover_devices sent back
+211104-145546,info,Message from: 10.225.101.158:65532 - discover_devices
+211104-145546,info,discover_devices sent back
+211104-145551,info,Message from: 10.225.101.158:65532 - discover_devices
+211104-145551,info,discover_devices sent back
+211104-145551,info,Message from: 10.225.101.158:65532 - discover_devices
+211104-145551,info,discover_devices sent back
+211104-145552,info,Message from: 10.225.101.158:65532 - discover_devices
+211104-145552,info,discover_devices sent back
+211104-145552,info,Message from: 10.225.101.158:65532 - discover_devices
+211104-145552,info,discover_devices sent back
+211104-145600,info,Message from: 10.225.101.158:65533 - discover_devices
+211104-145600,info,discover_devices sent back
+211104-145610,info,Message from: 10.225.101.158:51299 - discover_devices
+211104-145610,info,discover_devices sent back
+211104-151418,info,Message from: 169.254.0.157:51170 - discover_devices
+211104-151418,info,discover_devices sent back
+211104-151438,info,Message from: 169.254.0.157:51170 - discover_devices
+211104-151438,info,discover_devices sent back
+211104-152136,info,Message from: 169.254.0.157:50302 - discover_devices
+211104-152136,info,discover_devices sent back

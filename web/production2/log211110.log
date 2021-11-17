@@ -1,0 +1,48 @@
+211110-172916,info,port = 8085
+211110-172916,info,log = C:\vmer\web\production2\log211110.log
+211110-172916,info,UDP Client listening on 0.0.0.0:8086
+211110-172956,info,Message from: 10.225.101.158:50838 - discover_devices
+211110-172956,info,discover_devices sent back
+211110-172958,info,Message from: 10.225.101.158:50838 - discover_devices
+211110-172958,info,discover_devices sent back
+211110-173354,info,Message from: 10.225.101.158:65145 - discover_devices
+211110-173354,info,discover_devices sent back
+211110-173433,info,Message from: 10.225.101.158:50658 - discover_devices
+211110-173434,info,discover_devices sent back
+211110-173544,info,Message from: 10.225.101.158:52054 - discover_devices
+211110-173544,info,discover_devices sent back
+211110-173612,info,Message from: 10.225.101.158:61875 - discover_devices
+211110-173612,info,discover_devices sent back
+211110-173904,info,Message from: 10.225.101.158:60677 - discover_devices
+211110-173904,info,discover_devices sent back
+211110-173908,info,post : upload_routes
+211110-173908,info,upload_route completed
+211110-175024,info,Message from: 10.225.101.158:64708 - discover_devices
+211110-175024,info,discover_devices sent back
+211110-175029,info,post : upload_routes
+211110-175029,info,upload_route completed
+211110-175105,info,remove_route : Route 01
+211110-175234,info,port = 8085
+211110-175234,info,log = C:\vmer\web\production2\log211110.log
+211110-175234,info,UDP Client listening on 0.0.0.0:8086
+211110-175238,info,Message from: 10.225.101.158:64708 - discover_devices
+211110-175238,info,discover_devices sent back
+211110-175243,info,remove_route : Route 01
+211110-175252,info,post : upload_routes
+211110-175253,info,dir created : C:\vmer\route\Route 01
+211110-175253,info,upload_route completed
+211110-175350,info,Message from: 10.225.101.158:54183 - discover_devices
+211110-175350,info,discover_devices sent back
+211110-175357,info,remove_route : Route 01
+211110-175401,info,post : upload_routes
+211110-175401,info,dir created : C:\vmer\route\Route 01
+211110-175401,info,upload_route completed
+211110-175457,info,Message from: 10.225.101.158:64298 - discover_devices
+211110-175457,info,discover_devices sent back
+211110-175527,info,Message from: 10.225.101.158:64298 - discover_devices
+211110-175527,info,discover_devices sent back
+211110-180256,info,Message from: 10.225.101.158:55291 - discover_devices
+211110-180256,info,discover_devices sent back
+211110-180320,info,post : upload_routes
+211110-180320,info,dir created : C:\vmer\route\route_7
+211110-180320,info,upload_route completed

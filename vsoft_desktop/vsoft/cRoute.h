@@ -88,11 +88,13 @@ class cCompany {
 public:
     cCompany(int _id, int _db_id, QString _name, QString _desc);
     bool pushBackPlant(cPlant* plnt);
+    bool pushBackRoute(cRoute* _route);
     friend bool operator==(const cCompany& l, const cCompany& r);
     QTreeWidgetItem* get_widget();
     int id, db_id;
     QString name, desc;
     QList<cPlant*> plants;
+    QList<cRoute*> routes;
     cCompanyWidget *comWdgt;
 };
 
@@ -112,13 +114,13 @@ class cPlant {
 public:
     cPlant(int _id, int _company_id, QString _name, QString _desc);
     bool pushBackShop(cShop* _shop);
-    bool pushBackRoute(cRoute* _route);
+//    bool pushBackRoute(cRoute* _route);
     friend bool operator==(const cPlant& l, const cPlant& r);
     QTreeWidgetItem* get_widget();
     int id, company_id;
     QString name, desc;
     QList<cShop*> shops;
-    QList<cRoute*> routes;
+//    QList<cRoute*> routes;
     cPlantWidget *plntWdgt;
 };
 
@@ -164,7 +166,7 @@ public:
 
 class cRoute : public QTreeWidgetItem {
 public:
-    cRoute(const int _id, const int _plant_id, const QString _name, const QString _desc);
+    cRoute(const int _id, const int _company_id, const QString _name, const QString _desc);
     void print() {
         qDebug() << "Route : " << name;
         /*
@@ -182,7 +184,7 @@ public:
     }
     friend bool operator==(const cRoute& l, const cRoute& r);
     QTreeWidgetItem* get_widget();
-    int id, plant_id;
+    int id, company_id;
     QString name, desc;
     QList<cMachineInRoute*> machine_in_routes;
     QList<cPointInRoute*> point_in_routes;

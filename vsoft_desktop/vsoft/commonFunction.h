@@ -25,7 +25,14 @@ template<typename T> int findMaxId(QList<T> *itm);
 template<typename T> QString findNameById(QList<T> *itm, int id);
 template<typename T> int findIndexById(QList<T> *itm, int id);
 
+void setWidgetCheckState(QTreeWidgetItem *itm, QString msg);
+bool rmDir(const QString &dirPath);
+bool cpDir(const QString &srcPath, const QString &dstPath);
+
+bool isFile(QString name);
+void mkpath(const QString path);
 }
+
 
 template<typename  T>
 int commonFunction::findMaxId(QList<T> *itm) {

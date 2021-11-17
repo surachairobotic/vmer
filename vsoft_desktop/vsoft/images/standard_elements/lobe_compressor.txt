@@ -1,0 +1,19 @@
+
+Blower
+Type/class :  Lobe
+Medium : air
+Outlet Pressure 0,68 mbar 
+Inlet pressure -0,32 mbar
+
+Driver lobe
+bearing DE no. xxx
+bearing NDE No. xxx
+
+Driven lobe
+bearing DE no. xxx
+bearing NDE No. xxx
+
+Timing gear 41 teeths
+
+Power transmittion  : belt drive
+speed or pulley diamater : 960 rpm

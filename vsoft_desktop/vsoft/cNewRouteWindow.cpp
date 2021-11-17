@@ -185,7 +185,7 @@ QJsonDocument cNewRouteWindow::tree2json(const QTreeWidget *wdgt, const QString 
         if(obj)
             arr.push_back(*obj);
     }
-    root.insert("machineList", arr);
+    root.insert("plantList", arr);
     QJsonDocument jsonDoc(root);
     return jsonDoc;
 }
@@ -219,12 +219,13 @@ QJsonObject* cNewRouteWindow::recursiveJsonItem(const QTreeWidgetItem *wdgt) {
         }
         if(res == nullptr)
             return res;
+        /*
         if(wdgt->childCount() == 1) {
             QJsonObject *child = recursiveJsonItem(wdgt->child(0));
             if(child != nullptr)
                 res->insert(typeChild[typeIndx], *child);
         }
-        else if(wdgt->childCount() > 1) {
+        else */if(wdgt->childCount() >= 1) {
             QJsonArray arr;
             for(int i=0; i<wdgt->childCount(); i++) {
                 QTreeWidgetItem *itm = wdgt->child(i);

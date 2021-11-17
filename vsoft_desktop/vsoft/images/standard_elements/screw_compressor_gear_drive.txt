@@ -1,0 +1,27 @@
+
+Compressor
+Type/class : screw
+Number of driver screw : x
+Number of driven screw : x
+
+Medium : air
+Outlet Pressure xx mbar 
+Inlet pressure -0,32 mbar
+
+Driver screw
+bearing DE no. xxx
+bearing NDE No. xxx
+
+Driven screw
+bearing DE no. xxx
+bearing NDE No. xxx
+
+Timing gear : x teeths
+
+Power transmittion  : gear drive
+
+speed increasing gear teeth
+LS shaft number of gear teeth : 
+LS shaft speed 
+HS shaft number of gear teeth : 
+HS shaft speed

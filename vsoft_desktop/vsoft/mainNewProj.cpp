@@ -3,6 +3,7 @@
 #include "QFileDialog"
 #include "QDebug"
 #include "cDB.h"
+#include "commonFunction.h"
 
 void MainWindow::on_actionNew_Project_triggered()
 {
@@ -21,12 +22,22 @@ void MainWindow::newprojDialog_accepted(const QString fname, const QString fpath
     realProjName = fname;
     realProjPath = fpath;
     realProjImage = (fpath+"images/");
-    QDir *pathDir = new QDir(realProjPath);
-    if(!pathDir->exists())
-        pathDir->mkpath(realProjPath);
-    pathDir = new QDir(realProjImage);
-    if(!pathDir->exists())
-        pathDir->mkpath(realProjImage);
+//    QDir *pathDir = new QDir(realProjPath);
+//    if(!pathDir->exists())
+//        pathDir->mkpath(realProjPath);
+//    pathDir = new QDir(realProjImage);
+//    if(!pathDir->exists())
+//        pathDir->mkpath(realProjImage);
+
+    commonFunction::cpDir("C:/vmer/vsoft_desktop/vsoft/images", realProjImage);
+
+    QList<QString> paths = {realProjPath,
+                            realProjImage,
+                            realProjImage + "user_elements/",
+                            realProjImage + "standard_elements/"};
+    for(int i=0; i<paths.size(); i++) {
+        commonFunction::mkpath(paths[i]);
+    }
 
     //qDebug() << realProjName;
     //qDebug() << realProjPath.section('/', 0, -3)+'/';
@@ -49,6 +60,7 @@ void MainWindow::cNewProjectDialogTerminate() {
     if(newprojDialog != NULL) {
         newprojDialog->close();
     }
+
     delete newprojDialog;
 }
 

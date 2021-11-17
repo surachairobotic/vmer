@@ -4,6 +4,8 @@
 #include <QTableWidget>
 #include <QHeaderView>
 #include <QMenu>
+#include <QDir>
+
 
 QList<QString> commonFunction::pointJson(QString msg) {
     QJsonDocument jsonResponse = QJsonDocument::fromJson(msg.toUtf8());
@@ -80,3 +82,98 @@ void commonFunction::setAllChildExpanded(QTreeWidgetItem *itm) {
         setAllChildExpanded(itm->child(i));
 }
 
+void commonFunction::setWidgetCheckState(QTreeWidgetItem *itm, QString msg) {
+    if(itm->whatsThis(0).contains(msg))
+        itm->setCheckState(0, Qt::Unchecked);
+    for(int i=0; i<itm->childCount(); i++)
+        setWidgetCheckState(itm->child(i), msg);
+}
+
+bool commonFunction::rmDir(const QString &dirPath) {
+    qDebug("rmDir");
+    QDir dir(dirPath);
+    if (!dir.exists())
+        return true;
+    foreach(const QFileInfo &info, dir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot)) {
+        if (info.isDir()) {
+            if (!rmDir(info.filePath()))
+                return false;
+        } else {
+            if (!dir.remove(info.fileName()))
+                return false;
+        }
+    }
+    QDir parentDir(QFileInfo(dirPath).path());
+    return parentDir.rmdir(QFileInfo(dirPath).fileName());
+}
+
+bool commonFunction::cpDir(const QString &srcPath, const QString &dstPath) {
+    qDebug("cpDir");
+    rmDir(dstPath);
+    QDir parentDstDir(QFileInfo(dstPath).path());
+    //QString strDstPath = QFileInfo(dstPath).fileName();
+    if (!parentDstDir.mkpath(dstPath))
+        return false;
+
+    QDir srcDir(srcPath);
+    foreach(const QFileInfo &info, srcDir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot)) {
+        QString srcItemPath = srcPath + "/" + info.fileName();
+        QString dstItemPath = dstPath + "/" + info.fileName();
+        int chk=0;
+        if (info.isDir()) {
+            if (!cpDir(srcItemPath, dstItemPath)) {
+                return false;
+            }
+            chk=1;
+        } else if (info.isFile()) {
+            if (!QFile::copy(srcItemPath, dstItemPath)) {
+                return false;
+            }
+            chk=2;
+        } else {
+            qDebug() << "Unhandled item" << info.filePath() << "in cpDir";
+            chk=3;
+        }
+        qDebug() << "chk = " << chk;
+    }
+    return true;
+}
+
+bool commonFunction::isFile(QString name) {
+    return name.contains('.');
+}
+
+void commonFunction::mkpath(const QString path) {
+    QDir *pathDir = new QDir(path);
+    if(!pathDir->exists())
+        pathDir->mkpath(path);
+}
+
+/*
+    for(int i=0;i<2;i++){
+        QTreeWidgetItem *treeItem_shop = new QTreeWidgetItem();
+        treeItem_shop->setText(0, QString("Machine shop ") + QString::number(i+1));
+        treeItem_db->addChild(treeItem_shop);
+        for(int j=0;j<2;j++){
+            QTreeWidgetItem *treeItem_route = new QTreeWidgetItem();
+            treeItem_route->setText(0, QString("Route ") + QString::number(i*2+j+1));
+            treeItem_route->setCheckState(0, Qt::Unchecked);
+            treeItem_shop->addChild(treeItem_route);
+
+    QList<QTreeWidgetItem*> *routeWdgt = new QList<QTreeWidgetItem*>();
+    db->get_routes(routeWdgt);
+
+    mainwindow->ui->treeWidgetRoute_2->addTopLevelItem((*routeWdgt)[0]);
+    //(*routeWdgt)[0]->parent() = mainwindow->ui->treeWidgetRoute_2;
+
+    qDebug() << "create_route_tree";
+    for(int i=0; i<routeWdgt->size(); i++) {
+        qDebug() << (*routeWdgt)[i]->text(0);
+        for(int j=0; j<(*routeWdgt)[i]->childCount(); j++) {
+            QTreeWidgetItem *jj = (*routeWdgt)[i]->child(j);
+            qDebug() << jj->text(0);
+        }
+    }
+}
+
+*/

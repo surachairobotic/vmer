@@ -86,14 +86,27 @@ bool cDB::link_company_table() {
 
     for(int j=0; j<companies.size(); j++) {
         companies[j].plants.clear();
+        companies[j].routes.clear();
     }
     if(plants.size()<1)
+        return false;
+    if(routes.size()<1)
         return false;
     for(int i=0; i<plants.size(); i++) {
         int indx_id = plants[i].company_id;
         for(int j=0; j<companies.size(); j++) {
             if(companies[j].id == indx_id) {
                 companies[j].plants.push_back(&plants[i]);
+                break;
+            }
+        }
+    }
+
+    for(int i=0; i<routes.size(); i++) {
+        int indx_id = routes[i].company_id;
+        for(int j=0; j<plants.size(); j++) {
+            if(companies[j].id == indx_id) {
+                companies[j].routes.push_back(&routes[i]);
                 break;
             }
         }
@@ -110,12 +123,12 @@ bool cDB::link_plant_table() {
 
     for(int j=0; j<plants.size(); j++) {
         plants[j].shops.clear();
-        plants[j].routes.clear();
+//        plants[j].routes.clear();
     }
     if(shops.size()<1)
         return false;
-    if(routes.size()<1)
-        return false;
+//    if(routes.size()<1)
+//        return false;
 
     for(int i=0; i<shops.size(); i++) {
         int indx_id = shops[i].plant_id;
@@ -135,15 +148,15 @@ bool cDB::link_plant_table() {
 //        plants[indx_id-1].pushBackRoute(&routes[i]);
 //    }
 
-    for(int i=0; i<routes.size(); i++) {
-        int indx_id = routes[i].plant_id;
-        for(int j=0; j<plants.size(); j++) {
-            if(plants[j].id == indx_id) {
-                plants[j].routes.push_back(&routes[i]);
-                break;
-            }
-        }
-    }
+//    for(int i=0; i<routes.size(); i++) {
+//        int indx_id = routes[i].plant_id;
+//        for(int j=0; j<plants.size(); j++) {
+//            if(plants[j].id == indx_id) {
+//                plants[j].routes.push_back(&routes[i]);
+//                break;
+//            }
+//        }
+//    }
 
     return true;
 }

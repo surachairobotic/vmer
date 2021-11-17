@@ -1,0 +1,12 @@
+
+Pump
+Type/class :  ANSI
+Medium : water
+Outlet Pressure 12 barg 
+Inlet pressure 1,2 barg
+bearing DE no. xxx
+Bearing NDE No. xxx
+
+
+Power transmittion  : Direct drive thru coupling
+Coupling type : pin 

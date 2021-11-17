@@ -18,6 +18,8 @@
 #include "commonFunction.h"
 #include "cElementProperties.h"
 #include "cReport.h"
+#include <QtWidgets/QMessageBox>
+#include "cHTTPRequestGUI.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -59,6 +61,13 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowTitle("V-Soft");
     this->setFocus();
 
+//    request = new cHTTPRequestGUI(this);
+//    if( !request->init() ){
+//        QMessageBox::warning(this, tr("Alert"), tr("Cannot initilize Request"));
+//        QTimer::singleShot(0, this, SLOT(close()));
+//    }
+
+
     //openProject("C:/Users/surachai_probook/Downloads/VmerProjects/t8/t8.sqlite3");
 }
 
@@ -78,6 +87,8 @@ bool MainWindow::openDB(const QString *fname, const bool script) {
     ui->actionClose_Project->setEnabled(true);
     if(script)
         db->load_script_file(":/db_scripts/vmer_sqlite_script.sql");
+
+    qDebug("openDB2 - true");
     return true;
 }
 
@@ -107,18 +118,27 @@ void MainWindow::on_actionOpen_triggered() {
 }
 
 void MainWindow::openProject(const QString &fname) {
+    qDebug() << "openProject(const QString &fname)";
     if(fname != "") {
         qDebug() << fname;
         realProjName = fname.section('/', -2, -2);
         realProjPath = fname.section('/', 0, -2) + "/";
         realProjImage = (realProjPath+"images/");
         openProject(realProjName, realProjPath);
+
+        request = new cHTTPRequestGUI(this, realProjPath, db);
+        if( !request->init() ){
+            QMessageBox::warning(this, tr("Alert"), tr("Cannot initilize Request"));
+            QTimer::singleShot(0, this, SLOT(close()));
+        }
     }
     else
         qDebug("cancel");
+    qDebug() << "openProject(const QString &fname) - end";
 }
 
 void MainWindow::openProject(const QString &name, const QString &path, bool db) {
+    qDebug() << "openProject(const QString &fname, const QString &path, bool db)";
     currProjName = name;
     currProjPath = path.section('/',0,-3) + "/vmer_tmp/" + currProjName + '/';
     currProjImage = (currProjPath+"images/");
@@ -133,7 +153,7 @@ void MainWindow::openProject(const QString &name, const QString &path, bool db) 
     qDebug() << "realProjImage : " << realProjImage;
     */
 
-    cpDir(realProjPath, currProjPath);
+    commonFunction::cpDir(realProjPath, currProjPath);
 
     QString fileName = currProjPath + currProjName + ".sqlite3";
     openDB(&fileName, db);
@@ -143,57 +163,58 @@ void MainWindow::openProject(const QString &name, const QString &path, bool db) 
     displayElementTree();
     displayModelTree();
     displayRouteTree();
+    qDebug() << "openProject(const QString &fname, const QString &path, bool db) - end";
 }
 
-bool MainWindow::rmDir(const QString &dirPath) {
-    qDebug("rmDir");
-    QDir dir(dirPath);
-    if (!dir.exists())
-        return true;
-    foreach(const QFileInfo &info, dir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot)) {
-        if (info.isDir()) {
-            if (!rmDir(info.filePath()))
-                return false;
-        } else {
-            if (!dir.remove(info.fileName()))
-                return false;
-        }
-    }
-    QDir parentDir(QFileInfo(dirPath).path());
-    return parentDir.rmdir(QFileInfo(dirPath).fileName());
-}
+//bool MainWindow::rmDir(const QString &dirPath) {
+//    qDebug("rmDir");
+//    QDir dir(dirPath);
+//    if (!dir.exists())
+//        return true;
+//    foreach(const QFileInfo &info, dir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot)) {
+//        if (info.isDir()) {
+//            if (!rmDir(info.filePath()))
+//                return false;
+//        } else {
+//            if (!dir.remove(info.fileName()))
+//                return false;
+//        }
+//    }
+//    QDir parentDir(QFileInfo(dirPath).path());
+//    return parentDir.rmdir(QFileInfo(dirPath).fileName());
+//}
 
-bool MainWindow::cpDir(const QString &srcPath, const QString &dstPath) {
-    qDebug("cpDir");
-    rmDir(dstPath);
-    QDir parentDstDir(QFileInfo(dstPath).path());
-    //QString strDstPath = QFileInfo(dstPath).fileName();
-    if (!parentDstDir.mkpath(dstPath))
-        return false;
+//bool MainWindow::cpDir(const QString &srcPath, const QString &dstPath) {
+//    qDebug("cpDir");
+//    rmDir(dstPath);
+//    QDir parentDstDir(QFileInfo(dstPath).path());
+//    //QString strDstPath = QFileInfo(dstPath).fileName();
+//    if (!parentDstDir.mkpath(dstPath))
+//        return false;
 
-    QDir srcDir(srcPath);
-    foreach(const QFileInfo &info, srcDir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot)) {
-        QString srcItemPath = srcPath + "/" + info.fileName();
-        QString dstItemPath = dstPath + "/" + info.fileName();
-        int chk=0;
-        if (info.isDir()) {
-            if (!cpDir(srcItemPath, dstItemPath)) {
-                return false;
-            }
-            chk=1;
-        } else if (info.isFile()) {
-            if (!QFile::copy(srcItemPath, dstItemPath)) {
-                return false;
-            }
-            chk=2;
-        } else {
-            qDebug() << "Unhandled item" << info.filePath() << "in cpDir";
-            chk=3;
-        }
-        qDebug() << "chk = " << chk;
-    }
-    return true;
-}
+//    QDir srcDir(srcPath);
+//    foreach(const QFileInfo &info, srcDir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot)) {
+//        QString srcItemPath = srcPath + "/" + info.fileName();
+//        QString dstItemPath = dstPath + "/" + info.fileName();
+//        int chk=0;
+//        if (info.isDir()) {
+//            if (!cpDir(srcItemPath, dstItemPath)) {
+//                return false;
+//            }
+//            chk=1;
+//        } else if (info.isFile()) {
+//            if (!QFile::copy(srcItemPath, dstItemPath)) {
+//                return false;
+//            }
+//            chk=2;
+//        } else {
+//            qDebug() << "Unhandled item" << info.filePath() << "in cpDir";
+//            chk=3;
+//        }
+//        qDebug() << "chk = " << chk;
+//    }
+//    return true;
+//}
 void MainWindow::on_treeWidgetElement_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
     qDebug("on_treeWidgetElement_currentItemChanged");
     if(hasDB) {
@@ -306,7 +327,7 @@ void MainWindow::elementGraphics(const cElement *ele, bool del) {
 
     gView->setScene(scene);
     gView->fitInView(rect, Qt::KeepAspectRatio);
-    gView->show();
+    //gView->show();
     hLayout->addWidget(gView);
 
 //    int row=ele->points.size();
@@ -429,7 +450,7 @@ void MainWindow::on_treeWidgetModel_currentItemChanged(QTreeWidgetItem *current,
 void MainWindow::on_actionSave_Project_triggered() {
     qDebug("newModel");
     if(hasDB)
-        cpDir(currProjPath, realProjPath);
+        commonFunction::cpDir(currProjPath, realProjPath);
 }
 
 void MainWindow::on_btn_addModel_clicked()
@@ -578,6 +599,9 @@ void MainWindow::on_tabWidgetLeft_currentChanged(int index)
 {
     commonFunction::clearLayout(ui->vLayoutInfoTab);
     commonFunction::clearLayout(ui->vLayoutPropTab);
+    if(index == 3) {
+        request->create_route_tree();
+    }
 }
 
 void MainWindow::on_actionReport_triggered()

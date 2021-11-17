@@ -5,6 +5,7 @@
 #include "cDB.h"
 
 bool cDB::load_script_file(const char *script_file) {
+    qDebug() << "cDB::load_script_file : " << script_file;
     QFile file(script_file);
     if (!file.open(QIODevice::ReadOnly)) {
         qWarning() << file.errorString();
@@ -21,11 +22,13 @@ bool cDB::load_script_file(const char *script_file) {
         //qDebug() << txt;
         if (!query.exec(txt))
         {
+            qDebug() << "if (!query.exec(txt)) : " << txt;
             qWarning() << query.lastError();
             return false;
         }
         query.finish();
     }
+    qDebug() << "cDB::load_script_file : true";
     return true;
 }
 

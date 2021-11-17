@@ -16,6 +16,7 @@
 #include "cReportWindow.h"
 
 class cReport;
+class cHTTPRequestGUI;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -34,6 +35,8 @@ public:
 
     bool openDB(const QString *file, const QString *path, const bool script);
     bool openDB(const QString *fname, const bool script);
+
+    Ui::MainWindow *ui;
 
 private slots:
     void on_actionNew_Project_triggered();
@@ -100,8 +103,8 @@ private:
 
     void elementGraphics(const cElement *ele, bool del=true);
     QString getElementImagePath(const cElement *ele);
-    bool rmDir(const QString &dirPath);
-    bool cpDir(const QString &srcPath, const QString &dstPath);
+//    bool rmDir(const QString &dirPath);
+//    bool cpDir(const QString &srcPath, const QString &dstPath);
     void openProject(const QString &fname);
     void openProject(const QString &name, const QString &path, bool db=false);
 
@@ -111,7 +114,6 @@ private:
 
     void showReportWin(void);
 
-    Ui::MainWindow *ui;
     cNewProjectDialog *newprojDialog;
     cNewElementWindow *newEleWin;
     cNewModelWindow *newMdlWin;
@@ -132,6 +134,9 @@ private:
     cReport *report;
     friend class cReport;
     //cReportWindow *reportWin;
+
+    cHTTPRequestGUI *request;
+
 };
 
 #endif // MAINWINDOW_H

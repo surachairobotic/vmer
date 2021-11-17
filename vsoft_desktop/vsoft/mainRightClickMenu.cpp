@@ -327,9 +327,6 @@ void MainWindow::routeRightClickMenu(const QPoint &pos) {
     }
     else if(item->whatsThis(0).contains("Company")) {
         qDebug() << "contains(Company) : " << item->whatsThis(0);
-    }
-    else if(item->whatsThis(0).contains("Plant")) {
-        qDebug() << "contains(Plant) : " << item->whatsThis(0);
 //        newAct = new QAction("New Route", this);
 //        newAct->setStatusTip("New Route xxxxxxxxxxxxxxx");
 

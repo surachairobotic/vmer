@@ -38,7 +38,7 @@ bool operator==(const cMachine& l, const cMachine& r) {
     return true;
 }
 bool operator==(const cRoute& l, const cRoute& r) {
-    if((l.id!=r.id) || (l.name!=r.name) || (l.plant_id!=r.plant_id) || (l.desc!=r.desc))
+    if((l.id!=r.id) || (l.name!=r.name) || (l.company_id!=r.company_id) || (l.desc!=r.desc))
         return false;
     return true;
 }
@@ -135,6 +135,10 @@ bool cCompany::pushBackPlant(cPlant* plnt) {
     //this->addChild(plnt);
     return true;
 }
+bool cCompany::pushBackRoute(cRoute* _route) {
+    routes.push_back(_route);
+    return true;
+}
 QTreeWidgetItem* cCompany::get_widget() {
     this->comWdgt = new cCompanyWidget();
     this->comWdgt->setText(0, name);
@@ -152,10 +156,10 @@ bool cPlant::pushBackShop(cShop* _shop) {
     //this->addChild(shop);
     return true;
 }
-bool cPlant::pushBackRoute(cRoute* _route) {
-    routes.push_back(_route);
-    return true;
-}
+//bool cPlant::pushBackRoute(cRoute* _route) {
+//    routes.push_back(_route);
+//    return true;
+//}
 QTreeWidgetItem* cPlant::get_widget() {
     this->plntWdgt = new cPlantWidget();
     this->plntWdgt->setText(0, name);
@@ -193,8 +197,8 @@ QTreeWidgetItem* cMachine::get_widget() {
     return static_cast<QTreeWidgetItem*>(this->machineWdgt);
 }
 
-cRoute::cRoute(const int _id, const int _plant_id, const QString _name, const QString _desc)
-    : id(_id), plant_id(_plant_id), name(_name), desc(_desc)
+cRoute::cRoute(const int _id, const int _company_id, const QString _name, const QString _desc)
+    : id(_id), company_id(_company_id), name(_name), desc(_desc)
 {
     this->setText(0, _name);
 }

@@ -6,13 +6,17 @@
 
 
 cDB::cDB() {
+    qDebug() << "cDB::cDB()";
     db = QSqlDatabase::addDatabase("QSQLITE");
+    qDebug() << "cDB::cDB() - end";
 }
 
 cDB::cDB(QString db_file) {
+    qDebug() << "cDB::cDB(QString db_file) : " << db_file;
     db = QSqlDatabase::addDatabase("QSQLITE");
     //qDebug() << db_file;
     this->init(db_file.toStdString().c_str());
+    qDebug() << "cDB::cDB(QString db_file) : " << db_file << " - end";
 }
 
 cDB::~cDB() {
@@ -20,12 +24,16 @@ cDB::~cDB() {
 }
 
 bool cDB::init(const char *db_file) {
+    QString x = db_file ? db_file : "db/db.sqlite3";
+    qDebug() << "cDB::init : " << x;
 	db.setDatabaseName(db_file ? db_file : "db/db.sqlite3");
 	if (!db.open()) {
 		qWarning() << db.lastError();
-		return false;
+        qDebug() << "cDB::init : false";
+        return false;
 	}
-	return true;
+    qDebug() << "cDB::init : true";
+    return true;
 }
 
 bool cDB::get_element(QTreeWidgetItem *item, cElement *elm) {
@@ -255,16 +263,16 @@ bool cDB::get_routes(QList<QTreeWidgetItem*> *routeWdgt) {
         for(int j=0; j<dbTables[i].companies.size(); j++) {
             QTreeWidgetItem *comWdgt = dbTables[i].companies[j]->get_widget();
             //comWdgt->setExpanded(true);
-            for(int k=0; k<dbTables[i].companies[j]->plants.size(); k++) {
-                QTreeWidgetItem *plntWdgt = dbTables[i].companies[j]->plants[k]->get_widget();
+            //for(int k=0; k<dbTables[i].companies[j]->plants.size(); k++) {
+                //QTreeWidgetItem *plntWdgt = dbTables[i].companies[j]->plants[k]->get_widget();
                 //plntWdgt->setExpanded(true);
-                for(int l=0; l<dbTables[i].companies[j]->plants[k]->routes.size(); l++) {
-                    QTreeWidgetItem *routeWdgt = dbTables[i].companies[j]->plants[k]->routes[l]->get_widget();
+                for(int l=0; l<dbTables[i].companies[j]->routes.size(); l++) {
+                    QTreeWidgetItem *routeWdgt = dbTables[i].companies[j]->routes[l]->get_widget();
                     //shpWdgt->setExpanded(true);
-                    plntWdgt->addChild(routeWdgt);
+                    //plntWdgt->addChild(routeWdgt);
+                    comWdgt->addChild(routeWdgt);
                 }
-                comWdgt->addChild(plntWdgt);
-            }
+            //}
             dbItm->addChild(comWdgt);
         }
         routeWdgt->push_back(dbItm);
