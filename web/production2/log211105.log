@@ -1,0 +1,9 @@
+211105-154329,info,port = 8085
+211105-154329,info,log = C:\vmer\web\production2\log211105.log
+211105-154329,info,UDP Client listening on 0.0.0.0:8086
+211105-154345,info,Message from: 10.225.101.158:65194 - discover_devices
+211105-154345,info,discover_devices sent back
+211105-154359,info,Message from: 10.225.101.158:65194 - discover_devices
+211105-154359,info,discover_devices sent back
+211105-161411,info,Message from: 10.225.101.158:54110 - discover_devices
+211105-161411,info,discover_devices sent back

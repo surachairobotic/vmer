@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>icons/cow.png</file>
+        <file>icons/folder16.png</file>
+        <file>icons/folder24.png</file>
+        <file>icons/folder32.png</file>
+        <file>icons/folder64.png</file>
+        <file>icons/plus512.png</file>
+    </qresource>
+    <qresource prefix="/db_scripts">
+        <file>vmer_sqlite_script.sql</file>
+    </qresource>
+</RCC>

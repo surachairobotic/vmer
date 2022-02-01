@@ -1,0 +1,8 @@
+{
+  "port":8085,
+  "port_udp":8086,
+  "tmp_dir":"tmp",
+  "log_dir":"log",
+  "result_dir":"result",
+  "route_dir":"route"
+}

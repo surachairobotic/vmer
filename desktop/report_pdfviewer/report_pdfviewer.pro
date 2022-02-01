@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 
 SUBDIRS = qpdflib\
-          report
+          report\
 
 report.depends = qpdflib

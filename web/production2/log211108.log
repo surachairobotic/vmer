@@ -1,0 +1,94 @@
+211108-111430,info,port = 8085
+211108-111430,info,log = C:\vmer\web\production2\log211108.log
+211108-111430,info,UDP Client listening on 0.0.0.0:8086
+211108-111443,info,Message from: 10.225.101.158:51747 - discover_devices
+211108-111443,info,discover_devices sent back
+211108-113543,info,Message from: 10.225.101.158:49708 - discover_devices
+211108-113543,info,discover_devices sent back
+211108-113729,info,Message from: 10.225.101.158:56515 - discover_devices
+211108-113729,info,discover_devices sent back
+211108-114127,info,Message from: 10.225.101.158:62948 - discover_devices
+211108-114127,info,discover_devices sent back
+211108-114733,info,Message from: 10.225.101.158:64405 - discover_devices
+211108-114733,info,discover_devices sent back
+211108-114739,info,post : upload_routes
+211108-114739,info,dir created : C:\vmer\web\production2\route\Route 01
+211108-114739,info,upload_route completed
+211108-120713,info,Message from: 10.225.101.158:58732 - discover_devices
+211108-120713,info,discover_devices sent back
+211108-120747,info,Message from: 10.225.101.158:53653 - discover_devices
+211108-120747,info,discover_devices sent back
+211108-120758,info,remove_route : Route 01
+211108-120823,info,post : upload_routes
+211108-120823,info,dir created : C:\vmer\web\production2\route\Route 01
+211108-120823,info,upload_route completed
+211108-121006,info,Message from: 10.225.101.158:52223 - discover_devices
+211108-121006,info,discover_devices sent back
+211108-133326,info,port = 8085
+211108-133326,info,log = C:\vmer\web\production2\log211108.log
+211108-133326,info,UDP Client listening on 0.0.0.0:8086
+211108-133326,info,dir created : C:\vmer\data
+211108-133326,info,dir created : C:\vmer\route
+211108-133431,info,Message from: 10.225.101.158:61681 - discover_devices
+211108-133431,info,discover_devices sent back
+211108-133553,info,download_data : file sent
+211108-143740,info,port = 8085
+211108-143740,info,log = C:\vmer\web\production2\log211108.log
+211108-143740,info,UDP Client listening on 0.0.0.0:8086
+211108-143748,info,Message from: 172.18.18.208:49990 - discover_devices
+211108-143748,info,discover_devices sent back
+211108-143914,info,port = 8085
+211108-143914,info,log = C:\vmer\web\production2\log211108.log
+211108-143914,info,UDP Client listening on 0.0.0.0:8086
+211108-143954,info,download_data : file sent
+211108-144029,info,post : upload_routes
+211108-144029,info,dir created : C:\vmer\route\Route 01
+211108-144029,info,upload_route completed
+211108-144404,info,Message from: 172.18.18.208:63951 - discover_devices
+211108-144404,info,discover_devices sent back
+211108-144412,info,download_data : file sent
+211108-145449,info,Message from: 172.18.18.208:60819 - discover_devices
+211108-145449,info,discover_devices sent back
+211108-145456,info,download_data : file sent
+211108-145640,info,Message from: 172.18.18.208:64635 - discover_devices
+211108-145640,info,discover_devices sent back
+211108-145646,info,download_data : file sent
+211108-150630,info,port = 8085
+211108-150630,info,log = C:\vmer\web\production2\log211108.log
+211108-150630,info,UDP Client listening on 0.0.0.0:8086
+211108-150635,info,Message from: 172.18.18.208:51585 - discover_devices
+211108-150635,info,discover_devices sent back
+211108-150644,info,download_data : file sent
+211108-150904,info,port = 8085
+211108-150904,info,log = C:\vmer\web\production2\log211108.log
+211108-150904,info,UDP Client listening on 0.0.0.0:8086
+211108-150910,info,Message from: 172.18.18.208:54566 - discover_devices
+211108-150911,info,discover_devices sent back
+211108-150918,info,download_data : file sent
+211108-155030,info,port = 8085
+211108-155030,info,log = C:\vmer\web\production2\log211108.log
+211108-155030,info,UDP Client listening on 0.0.0.0:8086
+211108-155055,info,Message from: 10.225.101.158:58542 - discover_devices
+211108-155055,info,discover_devices sent back
+211108-155155,info,download_data : file sent
+211108-155616,info,download_data : file sent
+211108-155650,info,download_data : file sent
+211108-160316,info,Message from: 10.225.101.158:51071 - discover_devices
+211108-160316,info,discover_devices sent back
+211108-160324,info,download_data : file sent
+211108-160447,info,download_data : file sent
+211108-162018,info,Message from: 10.225.101.158:63685 - discover_devices
+211108-162018,info,discover_devices sent back
+211108-162028,info,download_data : file sent
+211108-162147,info,Message from: 10.225.101.158:60119 - discover_devices
+211108-162148,info,discover_devices sent back
+211108-162153,info,download_data : file sent
+211108-162242,info,Message from: 10.225.101.158:55489 - discover_devices
+211108-162242,info,discover_devices sent back
+211108-162248,info,download_data : file sent
+211108-162336,info,Message from: 10.225.101.158:59964 - discover_devices
+211108-162336,info,discover_devices sent back
+211108-162347,info,download_data : file sent
+211108-162804,info,Message from: 10.225.101.158:63216 - discover_devices
+211108-162805,info,discover_devices sent back
+211108-162812,info,download_data : file sent

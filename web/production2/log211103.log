@@ -1,0 +1,194 @@
+211103-105602,info,port = 8085
+211103-105602,info,log = C:\vmer\web\production2\log211103.log
+211103-105602,info,UDP Client listening on 0.0.0.0:8086
+211103-105602,info,dir created : C:\vmer\web\production2\log
+211103-105602,info,dir created : C:\vmer\web\production2\data
+211103-105602,info,dir created : C:\vmer\web\production2\route
+211103-105612,info,Message from: 10.225.101.158:60202 - discover_devices
+211103-105612,info,discover_devices sent back
+211103-105621,info,Message from: 10.225.101.158:60202 - discover_devices
+211103-105621,info,discover_devices sent back
+211103-105709,info,Message from: 10.225.101.158:60202 - discover_devices
+211103-105709,info,discover_devices sent back
+211103-124341,info,port = 8085
+211103-124341,info,log = C:\vmer\web\production2\log211103.log
+211103-124341,info,UDP Client listening on 0.0.0.0:8086
+211103-125437,info,Message from: 10.225.101.158:54468 - discover_devices
+211103-125437,info,discover_devices sent back
+211103-125454,info,port = 8085
+211103-125454,info,log = C:\vmer\web\production2\log211103.log
+211103-125454,info,UDP Client listening on 0.0.0.0:8086
+211103-125456,info,Message from: 10.225.101.158:54468 - discover_devices
+211103-125456,info,discover_devices sent back
+211103-125458,info,Message from: 10.225.101.158:54468 - discover_devices
+211103-125458,info,discover_devices sent back
+211103-125559,info,port = 8085
+211103-125559,info,log = C:\vmer\web\production2\log211103.log
+211103-125559,info,UDP Client listening on 0.0.0.0:8086
+211103-125601,info,Message from: 10.225.101.158:54468 - discover_devices
+211103-125601,info,discover_devices sent back
+211103-130501,info,port = 8085
+211103-130501,info,log = C:\vmer\web\production2\log211103.log
+211103-130501,info,UDP Client listening on 0.0.0.0:8086
+211103-130503,info,Message from: 10.225.101.158:59703 - discover_devices
+211103-130503,info,discover_devices sent back
+211103-153015,info,port = 8085
+211103-153015,info,log = C:\vmer\web\production2\log211103.log
+211103-153015,info,UDP Client listening on 0.0.0.0:8086
+211103-153029,info,Message from: 10.225.101.158:57217 - discover_devices
+211103-153029,error,get_username : Error: Command failed: wmic.exe useraccount where disable=true get name
+Node - DESKTOP-FH4KCF7
+ERROR:
+Description = Invalid query
+
+Error: Command failed: wmic.exe useraccount where disable=true get name
+Node - DESKTOP-FH4KCF7
+ERROR:
+Description = Invalid query
+
+    at ChildProcess.exithandler (node:child_process:397:12)
+    at ChildProcess.emit (node:events:390:28)
+    at maybeClose (node:internal/child_process:1064:16)
+    at Process.ChildProcess._handle.onexit (node:internal/child_process:301:5)
+211103-153029,info,discover_devices sent back
+211103-153033,info,Message from: 10.225.101.158:57217 - discover_devices
+211103-153033,error,get_username : Error: Command failed: wmic.exe useraccount where disable=true get name
+Node - DESKTOP-FH4KCF7
+ERROR:
+Description = Invalid query
+
+Error: Command failed: wmic.exe useraccount where disable=true get name
+Node - DESKTOP-FH4KCF7
+ERROR:
+Description = Invalid query
+
+    at ChildProcess.exithandler (node:child_process:397:12)
+    at ChildProcess.emit (node:events:390:28)
+    at maybeClose (node:internal/child_process:1064:16)
+    at Process.ChildProcess._handle.onexit (node:internal/child_process:301:5)
+211103-153033,info,discover_devices sent back
+211103-153033,info,Message from: 10.225.101.158:57217 - discover_devices
+211103-153033,error,get_username : Error: Command failed: wmic.exe useraccount where disable=true get name
+Node - DESKTOP-FH4KCF7
+ERROR:
+Description = Invalid query
+
+Error: Command failed: wmic.exe useraccount where disable=true get name
+Node - DESKTOP-FH4KCF7
+ERROR:
+Description = Invalid query
+
+    at ChildProcess.exithandler (node:child_process:397:12)
+    at ChildProcess.emit (node:events:390:28)
+    at maybeClose (node:internal/child_process:1064:16)
+    at Process.ChildProcess._handle.onexit (node:internal/child_process:301:5)
+211103-153033,info,discover_devices sent back
+211103-153034,info,Message from: 10.225.101.158:57217 - discover_devices
+211103-153034,error,get_username : Error: Command failed: wmic.exe useraccount where disable=true get name
+Node - DESKTOP-FH4KCF7
+ERROR:
+Description = Invalid query
+
+Error: Command failed: wmic.exe useraccount where disable=true get name
+Node - DESKTOP-FH4KCF7
+ERROR:
+Description = Invalid query
+
+    at ChildProcess.exithandler (node:child_process:397:12)
+    at ChildProcess.emit (node:events:390:28)
+    at maybeClose (node:internal/child_process:1064:16)
+    at Process.ChildProcess._handle.onexit (node:internal/child_process:301:5)
+211103-153034,info,discover_devices sent back
+211103-153135,info,port = 8085
+211103-153135,info,log = C:\vmer\web\production2\log211103.log
+211103-153135,info,UDP Client listening on 0.0.0.0:8086
+211103-153139,info,Message from: 10.225.101.158:57217 - discover_devices
+211103-153139,error,get_username : Error: Command failed: wmic.exe useraccount where disable=true get name
+Node - DESKTOP-FH4KCF7
+ERROR:
+Description = Invalid query
+
+Error: Command failed: wmic.exe useraccount where disable=true get name
+Node - DESKTOP-FH4KCF7
+ERROR:
+Description = Invalid query
+
+    at ChildProcess.exithandler (node:child_process:397:12)
+    at ChildProcess.emit (node:events:390:28)
+    at maybeClose (node:internal/child_process:1064:16)
+    at Process.ChildProcess._handle.onexit (node:internal/child_process:301:5)
+211103-153139,info,discover_devices sent back
+211103-153140,info,Message from: 10.225.101.158:57217 - discover_devices
+211103-153140,error,get_username : Error: Command failed: wmic.exe useraccount where disable=true get name
+Node - DESKTOP-FH4KCF7
+ERROR:
+Description = Invalid query
+
+Error: Command failed: wmic.exe useraccount where disable=true get name
+Node - DESKTOP-FH4KCF7
+ERROR:
+Description = Invalid query
+
+    at ChildProcess.exithandler (node:child_process:397:12)
+    at ChildProcess.emit (node:events:390:28)
+    at maybeClose (node:internal/child_process:1064:16)
+    at Process.ChildProcess._handle.onexit (node:internal/child_process:301:5)
+211103-153140,info,discover_devices sent back
+211103-153141,info,Message from: 10.225.101.158:57217 - discover_devices
+211103-153141,error,get_username : Error: Command failed: wmic.exe useraccount where disable=true get name
+Node - DESKTOP-FH4KCF7
+ERROR:
+Description = Invalid query
+
+Error: Command failed: wmic.exe useraccount where disable=true get name
+Node - DESKTOP-FH4KCF7
+ERROR:
+Description = Invalid query
+
+    at ChildProcess.exithandler (node:child_process:397:12)
+    at ChildProcess.emit (node:events:390:28)
+    at maybeClose (node:internal/child_process:1064:16)
+    at Process.ChildProcess._handle.onexit (node:internal/child_process:301:5)
+211103-153141,info,discover_devices sent back
+211103-153423,info,port = 8085
+211103-153423,info,log = C:\vmer\web\production2\log211103.log
+211103-153423,info,UDP Client listening on 0.0.0.0:8086
+211103-153429,info,Message from: 10.225.101.158:62374 - discover_devices
+211103-153429,info,discover_devices sent back
+211103-153432,info,Message from: 10.225.101.158:62374 - discover_devices
+211103-153432,info,discover_devices sent back
+211103-153501,info,Message from: 10.225.101.158:62374 - discover_devices
+211103-153501,info,discover_devices sent back
+211103-153501,info,Message from: 10.225.101.158:62374 - discover_devices
+211103-153502,info,discover_devices sent back
+211103-153502,info,Message from: 10.225.101.158:62374 - discover_devices
+211103-153502,info,discover_devices sent back
+211103-153600,info,port = 8085
+211103-153600,info,log = C:\vmer\web\production2\log211103.log
+211103-153600,info,UDP Client listening on 0.0.0.0:8086
+211103-153603,info,Message from: 10.225.101.158:62374 - discover_devices
+211103-153603,info,discover_devices sent back
+211103-153604,info,Message from: 10.225.101.158:62374 - discover_devices
+211103-153604,info,discover_devices sent back
+211103-154306,info,port = 8085
+211103-154306,info,log = C:\vmer\web\production2\log211103.log
+211103-154306,info,UDP Client listening on 0.0.0.0:8086
+211103-154308,info,Message from: 10.225.101.158:62374 - discover_devices
+211103-154308,Name              
+surachai_probook  
+
+,
+211103-154308,Name,
+211103-154308,surachai_probook,
+211103-154308,info,discover_devices sent back
+211103-154410,info,port = 8085
+211103-154410,info,log = C:\vmer\web\production2\log211103.log
+211103-154410,info,UDP Client listening on 0.0.0.0:8086
+211103-154412,info,Message from: 10.225.101.158:62374 - discover_devices
+211103-154412,info,discover_devices sent back
+211103-154413,info,Message from: 10.225.101.158:62374 - discover_devices
+211103-154414,info,discover_devices sent back
+211103-154440,info,Message from: 10.225.101.158:62374 - discover_devices
+211103-154441,info,discover_devices sent back
+211103-154442,info,Message from: 10.225.101.158:62374 - discover_devices
+211103-154442,info,discover_devices sent back

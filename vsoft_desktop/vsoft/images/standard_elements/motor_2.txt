@@ -1,0 +1,16 @@
+This is Pump-Motor train
+
+
+Motor
+Type/class: IEC
+Motor :  Induction
+Frame: 90
+Power : 110 kW
+Volage : 380 / 3 phase
+Pole / RPM : 4/ 1500
+FLA : xxx A
+Bearing DE : xxx
+Bearing NDE : xxx
+
+Power transmittion  : Direct drive thru coupling
+Coupling type : pin 
