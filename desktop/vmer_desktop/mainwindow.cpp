@@ -57,7 +57,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->setWindowTitle("V-Soft");
     this->setFocus();
-    openProject("/home/sugar/Documents/VmerProjects/t8/t8.sqlite3");
+    //openProject("/home/sugar/Documents/VmerProjects/t8/t8.sqlite3");
+    openProject("C:/Users/AcerPC/Documents/VmerProjects/t8/t8.sqlite3");
 }
 
 MainWindow::~MainWindow() {
@@ -219,7 +220,7 @@ void MainWindow::on_treeWidgetElement_currentItemChanged(QTreeWidgetItem *curren
 //            ui->vLayoutPropTab->addWidget(plainTxt);
             QWidget *wdg = new QWidget(this);
             cElementProperties *element_prop = new cElementProperties(wdg);
-            if(!element_prop->init() || !element_prop->load_json_file("/home/sugar/vmer/element_prop/templates/elements/Electric motor/properties.txt")){
+            if(!element_prop->init() || !element_prop->load_json_file("C:/vmer/element_prop/templates/elements/Electric motor/properties.txt")){
                 QTimer::singleShot(0, this, SLOT(close()));
             }
             ui->vLayoutPropTab->addWidget(wdg);
