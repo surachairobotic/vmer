@@ -1,0 +1,5 @@
+211124-154921,info,port = 8085
+211124-154921,info,log = C:\vmer\web\production2\log211124.log
+211124-154921,info,UDP Client listening on 0.0.0.0:8086
+211124-154925,info,Message from: 192.168.1.102:54443 - discover_devices
+211124-154925,info,discover_devices sent back

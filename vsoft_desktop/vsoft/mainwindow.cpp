@@ -597,8 +597,8 @@ bool MainWindow::checkAddressExist(QTreeWidgetItem *itm) {
 
 void MainWindow::on_tabWidgetLeft_currentChanged(int index)
 {
-    commonFunction::clearLayout(ui->vLayoutInfoTab);
-    commonFunction::clearLayout(ui->vLayoutPropTab);
+    commonFunction::clearLayout(ui->vLayoutInfoTab, true);
+    commonFunction::clearLayout(ui->vLayoutPropTab, true);
     if(index == 3) {
         request->create_route_tree();
     }

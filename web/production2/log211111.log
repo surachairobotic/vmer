@@ -1,0 +1,5 @@
+211111-142911,info,port = 8085
+211111-142911,info,log = C:\vmer\web\production2\log211111.log
+211111-142911,info,UDP Client listening on 0.0.0.0:8086
+211111-142917,info,Message from: 127.0.0.1:49669 - discover_devices
+211111-142917,info,discover_devices sent back

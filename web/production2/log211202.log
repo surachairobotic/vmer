@@ -1,0 +1,13 @@
+211202-125650,info,port = 8085
+211202-125650,info,log = C:\vmer\web\production2\log211202.log
+211202-125650,info,UDP Client listening on 0.0.0.0:8086
+211202-125848,info,Message from: 192.168.50.18:53605 - discover_devices
+211202-125848,info,Message from: 192.168.50.18:53605 - discover_devices
+211202-125848,info,discover_devices sent back
+211202-125848,info,discover_devices sent back
+211202-145124,info,Message from: 192.168.50.18:49751 - discover_devices
+211202-145124,info,discover_devices sent back
+211202-151419,info,Message from: 192.168.50.18:63092 - discover_devices
+211202-151419,info,discover_devices sent back
+211202-151927,info,Message from: 192.168.50.18:53665 - discover_devices
+211202-151927,info,discover_devices sent back

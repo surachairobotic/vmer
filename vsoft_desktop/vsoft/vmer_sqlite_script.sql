@@ -8,6 +8,7 @@ CREATE TABLE `element` (
   `name` varchar(64) NOT NULL,
   `std_image` varchar(64) NOT NULL,
   `image` varchar(64) NOT NULL,
+  `config` text
   `description` text
 );
 

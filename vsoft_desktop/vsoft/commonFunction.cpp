@@ -47,6 +47,7 @@ void commonFunction::createTable(const QList<QList<QString>> *data, QLayout *lay
 
 void commonFunction::clearLayout(QLayout* layout, bool deleteWidgets) {
     while (QLayoutItem* item = layout->takeAt(0)) {
+        //qDebug() << "50 : " << item->
         if (deleteWidgets) {
             if (QWidget* widget = item->widget())
                 widget->deleteLater();
