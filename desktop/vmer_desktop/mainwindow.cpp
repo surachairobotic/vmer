@@ -57,7 +57,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->setWindowTitle("V-Soft");
     this->setFocus();
+<<<<<<< HEAD
+    //openProject("/home/sugar/Documents/VmerProjects/t8/t8.sqlite3");
+    openProject("C:/Users/AcerPC/Documents/VmerProjects/t8/t8.sqlite3");
+=======
     openProject("C:/Users/surachai_probook/Downloads/VmerProjects/t8/t8.sqlite3");
+>>>>>>> d4bcf6dc9c028b4908d950a1f0dd5d70b8c27d0d
 }
 
 MainWindow::~MainWindow() {
