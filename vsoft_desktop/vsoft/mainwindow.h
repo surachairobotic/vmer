@@ -84,6 +84,8 @@ private slots:
 
     void on_actionReport_triggered();
 
+    void on_actionGraph_triggered();
+
 private:
     void cNewProjectDialogTerminate();
     bool displayDBTree();
@@ -98,6 +100,7 @@ private:
     bool newModel(QString name, QList<int> eleIds);
     bool newElement(QString name, QString stdImg, QString userImg, QString descElement, QList<QString> pntName, QList<QString> pntDesc);
     bool newPoint(int element_id);
+    bool newPoint2(int element_id);
     void delPoint(QTreeWidgetItem *item);
     void delElement(QTreeWidgetItem *item);
 
@@ -137,6 +140,7 @@ private:
 
     cHTTPRequestGUI *request;
 
+    void testPointer(int *k);
 };
 
 #endif // MAINWINDOW_H

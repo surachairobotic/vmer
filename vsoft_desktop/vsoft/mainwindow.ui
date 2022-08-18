@@ -379,6 +379,7 @@
     <addaction name="actionECHO_DATABASE"/>
     <addaction name="actionQUERY_ALL_TABLES"/>
     <addaction name="actionReport"/>
+    <addaction name="actionGraph"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menuTEST"/>
@@ -422,6 +423,11 @@
   <action name="actionReport">
    <property name="text">
     <string>Report</string>
+   </property>
+  </action>
+  <action name="actionGraph">
+   <property name="text">
+    <string>Graph</string>
    </property>
   </action>
  </widget>

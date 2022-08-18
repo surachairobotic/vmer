@@ -26,6 +26,7 @@ void MainWindow::elementRightClickMenu(const QPoint &pos) {
     bool bUpdate=false;
 
     if(item->whatsThis(0).contains("Element")) {
+        qDebug() << "Element";
         QList<QString> txt = {"New Point", "Rename", "Delete Element"};
         QList<QString> status = commonFunction::menu2status(&txt, item->text(0));
         QAction *selected = commonFunction::actionHandle(&txt, this, &status, tree->mapToGlobal(pos));
@@ -33,7 +34,9 @@ void MainWindow::elementRightClickMenu(const QPoint &pos) {
             qDebug() << "selected : " << selected->text();
             cElementWidget* elmWdg = static_cast<cElementWidget*>(item);
             int elmId = elmWdg->cParent->id;
-            newPoint(elmId);
+            bool bSuccess = newPoint(elmId);
+
+            qDebug() << "Element->newPoint : " << bSuccess;
             bUpdate=true;
 
             /*
@@ -76,6 +79,7 @@ void MainWindow::elementRightClickMenu(const QPoint &pos) {
         }
     }
     else if(item->whatsThis(0).contains("Point")) {
+        qDebug() << "Point";
 //        delAct = new QAction("Delete Point", this);
 //        delAct->setStatusTip("Delete Point xxxxxxxxxxxxxxx");
 //        QMenu menu(this);
@@ -99,6 +103,7 @@ void MainWindow::elementRightClickMenu(const QPoint &pos) {
         }
     }
     else {
+        qDebug() << "else";
 //        newAct = new QAction("New Element", this);
 //        newAct->setStatusTip("New Element xxxxxxxxxxxxxxx");
 
@@ -164,7 +169,7 @@ void MainWindow::modelRightClickMenu(const QPoint &pos) {
         else if (selected && selected->text() == txt[1]) {
             qDebug() << "selected : " << selected->text();
             cModelWidget* pntWdg = static_cast<cModelWidget*>(item);
-            db->delete_model(pntWdg->cParent->id);
+            //db->delete_model(pntWdg->cParent->id);
             bUpdate=true;
         }
     }

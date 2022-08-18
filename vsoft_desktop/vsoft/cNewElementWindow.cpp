@@ -12,6 +12,7 @@
 #include <QFile>
 #include <QHeaderView>
 #include "commonFunction.h"
+#include "cElementProperties.h"
 
 cNewElementWindow::cNewElementWindow(QWidget *parent) :
     QDialog(parent),
@@ -79,9 +80,26 @@ void cNewElementWindow::on_btn_stdImage_clicked() {
     QString imgFName = fileName;
     QString pntFName = fileName.split('.')[0]+".point";
     QString descFName = fileName.split('.')[0]+".txt";
+    QString propFName = fileName.split('.')[0]+".json";
     qDebug() << pntFName;
     qDebug() << descFName;
+    qDebug() << propFName;
     if( QFile::exists(imgFName) && QFile::exists(pntFName) && QFile::exists(descFName) ) {
+        if(QFile::exists(propFName)) {
+            qDebug() << "QFile::exists(propFName) : " << QFile::exists(propFName);
+            cElementProperties *element_prop = new cElementProperties(ui->wdgtProp);
+            if( element_prop->init() )
+                qDebug() << "element_prop->init() : passed";
+            else
+                qDebug() << "element_prop->init() : failed";
+            if( element_prop->load_json_file(propFName))
+                qDebug() << "element_prop->load_json_file() : passed";
+            else
+                qDebug() << "element_prop->load_json_file() : failed";
+        }
+        else {
+            qDebug() << "QFile::exists(propFName) : failed";
+        }
         qDebug() << "QFile::exists(imgFName) : " << QFile::exists(imgFName);
         qDebug() << "QFile::exists(pntFName) : " << QFile::exists(pntFName);
         qDebug() << file2String(pntFName);

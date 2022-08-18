@@ -1,0 +1,35 @@
+Installation Horizontal(1) or Vertical(2)
+Power, KW
+AC(1) or DC(2)
+Brush(1) or Brushless(2)
+Flange mount(1) or Foot mount(2)
+Rigid(1) or Flexible mount(2)
+Fixed speed(1)  or Variable speed drive(2)
+Running speed  RPM
+Pole  , number
+Rotor slot number
+Cooling Internal fan(1)or External fan(2)
+Fan blade number
+Close couple(1), Belt pulley (2) , Exernal gear(3), Direct drive via coupling (4)
+Fix speed coupling(1) or Fluid coupling(2) or Variable speed belt(3)
+Sleeve bearing(1) or Rolls bearing(2) or Combination(3)
+DE bearing No.
+NDE bearing No.
+Known the natural frequency , specify in Hz
+Vane type(1) or piston type(2)
+Number of Vane or Piston or Blade or Lobe or screw
+Single bearing (1)or Between bearing(2) or Overhung(3) or Close couple(4)
+Number of gear teeth or spocket teeth or gear stage-1
+Number of stage	Pulley or spocket diameter
+Pulley or Gear ratio stage-1
+Number of gear stage-2
+NDE Number of bearing stage-2
+DE Number of bearing stage-2
+Gear ratio stage-2
+Number of gear stage-3
+NDE Number of bearing stage-3
+DE Number of bearing stage-3
+Gear ratio stage-3
+Number of gear stage-4
+NDE Number of bearing stage-4
+DE Number of bearing stage-4

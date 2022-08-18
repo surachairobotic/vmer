@@ -61,6 +61,9 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowTitle("V-Soft");
     this->setFocus();
 
+    ui->btn_addElement->setEnabled(false);
+    ui->btn_addModel->setEnabled(false);
+
 //    request = new cHTTPRequestGUI(this);
 //    if( !request->init() ){
 //        QMessageBox::warning(this, tr("Alert"), tr("Cannot initilize Request"));
@@ -69,6 +72,18 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     //openProject("C:/Users/surachai_probook/Downloads/VmerProjects/t8/t8.sqlite3");
+
+    int x = 10;
+    int *p;
+    p = &x;
+    qDebug() << "*p = " << *p;
+    testPointer(p);
+    qDebug() << "*p = " << *p;
+}
+
+void MainWindow::testPointer(int *k) {
+    int *z = new int(20);
+    *k = *z;
 }
 
 MainWindow::~MainWindow() {
@@ -163,6 +178,10 @@ void MainWindow::openProject(const QString &name, const QString &path, bool db) 
     displayElementTree();
     displayModelTree();
     displayRouteTree();
+
+    ui->btn_addElement->setEnabled(true);
+    ui->btn_addModel->setEnabled(true);
+
     qDebug() << "openProject(const QString &fname, const QString &path, bool db) - end";
 }
 
@@ -374,6 +393,20 @@ bool MainWindow::newPoint(int element_id) {
     //displayElementTree();
     return false;
 }
+bool MainWindow::newPoint2(int element_id) {
+    qDebug("newPoint");
+    int idP = 1;
+    for(int i=0; i<db->points.size(); i++) {
+        if(idP<=db->points[i].id)
+            idP=db->points[i].id;
+    }
+    idP+=1;
+    cPoint *pnt = new cPoint(idP, element_id, "point_"+QString::number(idP), "{\"V\":1,\"H\":0}", "");
+    db->insert(pnt);
+    //displayElementTree();
+    return false;
+}
+
 void MainWindow::delPoint(QTreeWidgetItem *item) {
     qDebug() << "delPoint : " << item->text(0);
     //db->delete_point()
@@ -599,7 +632,7 @@ void MainWindow::on_tabWidgetLeft_currentChanged(int index)
 {
     commonFunction::clearLayout(ui->vLayoutInfoTab, true);
     commonFunction::clearLayout(ui->vLayoutPropTab, true);
-    if(index == 3) {
+    if(index == 3 && request != nullptr) {
         request->create_route_tree();
     }
 }
@@ -638,3 +671,21 @@ void MainWindow::showReportWin() {
         report->my_show();
     }
 }
+
+void MainWindow::on_actionGraph_triggered() {
+    qDebug() << "on_actionGraph_triggered";
+    QFile file("C:\\Users\\Surachai\\Downloads\\normal 20220708_14-28-11.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+            return;
+    QTextStream in(&file);
+    QList<QString> stringList;
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        //if(line.size() < 1)
+        //    qDebug() << line.size();
+        stringList.push_back(line);
+        //process_line(line);
+    }
+    qDebug() << "end";
+}
+
