@@ -1,0 +1,6 @@
+220823-143811,info,port = 8085
+220823-143811,info,log = C:\vmer\vmer_server\log\220823.log
+220823-143811,info,dir created : C:\vmer\vmer_server\data
+220823-143811,info,dir created : C:\vmer\vmer_server\route
+220823-143829,info,Message from: 192.168.1.107:61187 - discover_devices
+220823-143829,info,discover_devices sent back
